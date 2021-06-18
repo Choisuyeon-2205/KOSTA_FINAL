@@ -1,6 +1,5 @@
 package com.kosta.finalProject.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.finalProject.models.CenterReviewVO;
 import com.kosta.finalProject.models.CenterVO;
-import com.kosta.finalProject.models.CurriculumRegisterVO;
-import com.kosta.finalProject.models.CurriculumRegisterVOId;
 import com.kosta.finalProject.models.CurriculumVO;
 import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.services.CenterReviewService;

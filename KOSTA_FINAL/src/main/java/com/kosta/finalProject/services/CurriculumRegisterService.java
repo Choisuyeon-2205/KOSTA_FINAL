@@ -31,7 +31,7 @@ public class CurriculumRegisterService {
 	}
 	
 	public CurriculumRegisterVO selectById(CurriculumRegisterVOId crid) {
-		return curregRepo.findById(crid).get();
+		return curregRepo.findById(crid).orElse(null);
 	}
 
 	public List<CurriculumRegisterVO> selectAll() {

@@ -43,6 +43,7 @@ public class CenterController {
 	public void selectAll(Model model) {
 		List<CenterVO> centerlist= centerservice.selectAll();	
 		model.addAttribute("centerlist",centerlist);
+
 	}
 	
 	@GetMapping("/center/centerdetail")
@@ -59,7 +60,14 @@ public class CenterController {
 		List<CurriculumVO> curlist= curservice.selectByCenter(cnum);
 		model.addAttribute("curlist",curlist);
 		
-		double gprefer= crservice.calAvgPreference(cnum);
+		double gprefer;
+		List<CenterReviewVO> reviews= crservice.selectByCenter(cnum);
+		if(reviews.isEmpty()) {
+			gprefer= 0.0;
+		}else {
+			gprefer= crservice.calAvgPreference(cnum);
+		}
+			
 		model.addAttribute("gprefer",gprefer);
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();		

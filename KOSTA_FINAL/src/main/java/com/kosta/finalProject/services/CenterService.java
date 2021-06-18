@@ -21,6 +21,7 @@ public class CenterService {
 		return (List<CenterVO>)centerRepo.findAll();
 	}
 	
+	
 	public CenterVO insertCenter(CenterVO center) {
 		return centerRepo.save(center);
 	}

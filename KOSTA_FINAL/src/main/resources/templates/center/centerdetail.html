@@ -357,7 +357,7 @@ ul.tabs li.current{
 			url:"/center/curriculumstate/"+cno,
 			type:"get",
 			success: function(data) {
-				var s= $(".curriculum_info li:first-child").html();
+				var s= $(".curriculum_info li:first-child(:contains('"+cno+"'))").next();
 				console.log(s);
 		    	//$(".all_star :nth-child("+Math.round(data)+")").addClass("on2").prevAll("a").addClass("on2");
 		    	}
@@ -414,7 +414,7 @@ ul.tabs li.current{
    		 var crPreference = $("input[name='crPreference']");
    		 var obj = {
    				 "cno":"[[${center.centerNum}]]", "crNum": crNum };
-   		reviewManager.remove(obj, printList);
+   		reviewManager.remove(obj, printList2);
    		 alert("삭제완료");
    		$("#reviewModal").hide();
 		crContents.val("");
@@ -478,7 +478,7 @@ ul.tabs li.current{
 				url:"/reviews/prefer/[[${center.centerNum}]]",
 				type:"get",
 				success: function(data) {
-					$("#prefer").html("평점: "+data);
+					$("#prefer").html("( "+data+" )");
 					$(".all_star a").parent().children("a").removeClass("on2");
 			    	$(".all_star :nth-child("+Math.round(data)+")").addClass("on2").prevAll("a").addClass("on2");
 			    	}
