@@ -25,6 +25,10 @@ public class CurriculumService {
 		return (List<CurriculumVO>)curRepo.findAll();
 	}
 	
+	public int getState(int curriculum_num) {
+		return curRepo.findCurrent(curriculum_num);
+	}
+	
 	public CurriculumVO insertCurriculum(CurriculumVO curriculum) {
 		return curRepo.save(curriculum);
 	}

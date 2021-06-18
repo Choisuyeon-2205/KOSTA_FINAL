@@ -352,9 +352,16 @@ ul.tabs li.current{
 	
 	function printResult(responsedata){
 		alert(responsedata);
-		console.log(responsedata);
 		
-		location.reload();
+		$.ajax({
+			url:"/center/curriculumstate/"+cno,
+			type:"get",
+			success: function(data) {
+				var s= $(".curriculum_info li:first-child").html();
+				console.log(s);
+		    	//$(".all_star :nth-child("+Math.round(data)+")").addClass("on2").prevAll("a").addClass("on2");
+		    	}
+			});
 	}
 	
 	/* review modal */
@@ -364,8 +371,10 @@ ul.tabs li.current{
 			var crContents = $("input[name='crContents']");
 	   		var crPreference = $("input[name='crPreference']");
 			crContents.val("");
+			document.getElementById("revInsertBtn").style.display = "";
+    	 	document.getElementById("revDeleteBtn").style.display = "";
 			$("#reviewModal").show();
-			$("#modal-title").text("리뷰를 추가합니다.");
+			$(".modal-title").text("리뷰 작성");
 			mode="ADD";
 			
 		});
@@ -373,7 +382,6 @@ ul.tabs li.current{
 		$("#revInsertBtn").click(function(){
 			var crContents= $("input[name='crContents']");
 			var crPreference= $("input[name='crPreference']");
-			alert(crPreference.val());
 			var curnum= $("#userCurlist option:selected").val();
 			var obj={ "cno":"[[${center.centerNum}]]" , "crContents":crContents.val(), "crPreference":crPreference.val(), "curnum":curnum};
 			
@@ -433,6 +441,13 @@ ul.tabs li.current{
 	 				$("#userCurlist").val($(this).val());	
 	 			}
 	 		});
+	    	 if(userId!="[[${userid}]]"){
+	    	 	document.getElementById("revInsertBtn").style.display = "none";
+	    	 	document.getElementById("revDeleteBtn").style.display = "none";
+	    	 }else{
+	    		 document.getElementById("revInsertBtn").style.display = "";
+		    	 document.getElementById("revDeleteBtn").style.display = "";
+	    	 }
 	    	 $("#reviewModal").show();
 	    	 $(".modal-title").text("리뷰 수정/삭제")
 	    	 

@@ -3,6 +3,8 @@ package com.kosta.finalProject.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,5 +54,11 @@ public class CurriculumController2 {
 		}
 		//return new ResponseEntity<>(curservice.selectAll(), HttpStatus.CREATED);
 		return result==null?"등록실패":"등록성공";
+	}
+	
+
+	@GetMapping("/center/curriculumstate/{curnum}")
+	public int getState(@PathVariable("curnum") int curriculumnum) {
+		return curservice.getState(curriculumnum);
 	}
 }

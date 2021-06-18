@@ -12,4 +12,7 @@ public interface CurriculumRepository extends CrudRepository<CurriculumVO, Integ
 
 	@Query(value="SELECT * FROM curriculum WHERE center_num=?1", nativeQuery = true)
 	public List<CurriculumVO> findByCenterNum(int center_num);
+	
+	@Query(value="SELECT curriculum_state FROM curriculum WHERE curriculum_num=?1", nativeQuery = true)
+	public int findCurrent(int curriculum_num);
 }

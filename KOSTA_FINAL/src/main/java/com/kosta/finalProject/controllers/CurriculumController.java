@@ -31,24 +31,4 @@ public class CurriculumController {
 		model.addAttribute("curriculum",curriculum);
 	}
 	
-	/*
-	@PostMapping("/center/registerCurriculum")
-	public String registerCurriculum(@RequestAttribute("cnum") int curnum, RedirectAttributes rttr, Authentication authentication) {
-		System.out.println(curnum);
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();		
-		UserVO user = UserVO.builder()
-				.userId(userDetails.getUsername())				
-				.build();	
-		CurriculumRegisterVOId crid= new CurriculumRegisterVOId();
-		CurriculumVO curriculum= curservice.selectById(curnum);
-		crid.setCurriculum(curriculum);
-		crid.setUser(user);
-		CurriculumRegisterVO crvo= new CurriculumRegisterVO();
-		crvo.setId(crid);
-		
-		CurriculumRegisterVO result= curregservice.insertCurriculumRegister(crvo);
-		rttr.addFlashAttribute("resultMessage", result==null?"등록실패":"등록성공");		
-		return "redirect:/center/centerlist";
-	}
-	*/
 }
