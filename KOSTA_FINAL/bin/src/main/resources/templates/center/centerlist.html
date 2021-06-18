@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#content{
+	width: 1500px;
+	height: 500px;
+	margin: 0 auto;
+}
+.w70 {width:70px; }
+.w200 {width:200px; }
+.w100 {width:100px; }
+.title {
+	height: 50px;
+	line-height: 50px;
+	background:skyblue;
+	font-weight: bold;
+}
+.t_line {border-right:solid 1px gray;}
+.lt_line {border-bottom:solid 1px gray;}
+.list {
+	height: 40px;
+	line-height: 40px;
+	background: #f3f3f3;
+}
+.center_list{
+	list-style: none;
+	width: 570px;
+}
+.fl {float:left; }
+.tc {text-align:center; }
+</style>
+</head>
+<body>
+<div class="panel panel-default" layout:fragment="content1">
+	<div id="content">
+	<ul class="center_list">
+		<li class="fl tc w200 title t_line">센터이름</li>
+		<li class="fl tc w100 title t_line">지역(특별시/광역시/도)</li>
+		<li class="fl tc w100 title t_line">지역2(시/군/구)</li>
+		<li class="fl tc w70 title t_line">평점</li>
+	</ul>
+	<ul class="center_list" th:each="center:${centerlist}" th:onclick="'window.location.href=\''+@{/center/centerdetail(cnum=${center.centerNum})}+'\''">
+		<li class="fl tc w200 list t_line lt_line">[[${center.centerTitle}]]</li>
+		<li class="fl tc w100 list t_line lt_line">[[${center.centerArea1}]]</li>
+		<li class="fl tc w100 list t_line lt_line">[[${center.centerArea2}]]</li>
+		<li class="fl tc w70 list t_line lt_line">[[${center.centerPreferance}]]</li>
+	</ul>
+	</div><br><br>
+</div>
+</body>
+</html>

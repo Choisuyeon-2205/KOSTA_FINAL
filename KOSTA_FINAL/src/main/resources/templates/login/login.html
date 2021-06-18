@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+ <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      <head>
+          <title>Spring Security Example </title>
+      </head>
+      <body>
+          <div th:if="${param.error}">
+              Invalid username and password.
+          </div>
+          <div th:if="${param.logout}">
+              You have been logged out.
+          </div>
+          <form th:action="@{/login/login}" method="post" class="login_button">
+              <div><label> User Name : <input type="text" name="username"/> </label></div>
+              <div><label> Password: <input type="password" name="password"/> </label></div>
+              <div><input type="submit" value="Sign In"/></div>
+          </form>
+          <form th:action="@{/login/signup}" method="get">
+              <input type="submit" value="Sign Up"/>
+          </form>
+                        <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code&client_id=792142333254-9hr0movghp81k68jdgrmu2bpbraerf88.apps.googleusercontent.com&redirect_uri=http://localhost:8080/auth/google/callback">Test</a>
+               <a href="http://localhost:8888/auth/GOOGLE">구글 아이디로 로그인</a>
+<!-- <script>
+
+	/* 로그인 버튼 클릭 메서드 */
+	$(".login_button").click(function(){
+		
+		//alert("로그인 버튼 작동");
+		
+		/* 로그인 메서드 서버 요청 */
+		$("#login_form").attr("action", "/hello");
+		$("#login_form").submit();
+		
+	});
+
+</script> -->
+          
+      </body>
+</html>

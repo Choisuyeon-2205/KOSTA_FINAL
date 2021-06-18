@@ -53,7 +53,7 @@ public class UserTest {
 					.userPw("qwer")
 					.userName("name" + i)
 					.nickName("nickname" + i)
-					.userAddress("address" + i)
+					
 					.userPhone("010-1111-2222" + i)
 					.userEmail("email" + i + "@gmail.com")
 					.userPhone("photo" + i + ".jpg")
@@ -70,12 +70,12 @@ public class UserTest {
 		.userPw("qwer")
 		.userName("name" + i)
 		.nickName("nickname" + i)
-		.userAddress("address" + i)
+		
 		.userPhone("010-1111-2222" + i)
 		.userEmail("email" + i + "@gmail.com")
 		.userPhone("photoo"+ i+ ".jpg")
 		.build();
-		loginservice.joinUser(user);
+	
 	});
 	}
 }

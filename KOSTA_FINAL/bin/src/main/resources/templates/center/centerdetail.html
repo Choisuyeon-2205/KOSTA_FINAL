@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+body{
+	
+	font-family: 'Trebuchet MS', serif;
+	line-height: 1.6
+}
+.container{
+	width: 1500px;
+	margin: 0 auto;
+}
+
+/* detail 정보 */
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+ul.tabs li{
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+	width: 300px;
+}
+
+ul.tabs li.current{
+	background: #ededed;
+	color: #222;
+}
+
+.tab-content{
+	display: none;
+	background: #ededed;
+	padding: 15px;
+	margin-bottom: 100px;
+	padding-bottom: 150px;
+	padding-top: 50px;
+}
+
+.tab-content.current{
+	display: inherit;
+}
+
+#title {
+	padding-left: 20px;
+}
+
+#detail_info{
+	list-style: none;
+}
+.detail_title{
+	font-weight: bolder;
+}
+
+/* trainer */
+.teacher_info{
+	list-style: none;
+	width: 970px;
+}
+.fl {float:left; }
+.tc {text-align:center; }
+
+/* 게시판 목록 */
+.w70 {width:70px; }
+.w300 {width:300px; }
+.w200 {width:200px; }
+.w120 {width:120px; }
+.w100 {width:100px; }
+.title {
+	height: 50px;
+	line-height: 50px;
+	background:skyblue;
+	font-weight: bold;
+}
+.t_line {border-right:solid 1px gray;}
+.lt_line {border-bottom:solid 1px gray;}
+.list {
+	height: 40px;
+	line-height: 40px;
+	background: #f3f3f3;
+}
+
+/* 커리큘럼 조회*/
+.curriculum_info{
+	list-style: none;
+	width: 1470px;
+}
+
+#etypelist {
+	margin-left: 40px;
+}
+
+/* star rating */
+.star_rating, .all_star {font-size:0; letter-spacing:-4px;}
+.star_rating a, .all_star a{
+    font-size:22px;
+    letter-spacing:0;
+    display:inline-block;
+    margin-left:5px;
+    color:#ccc;
+    text-decoration:none;
+}
+.star_rating a:first-child, .all_star a:first-child {margin-left:0;}
+.star_rating a.on, .all_star a.on2{color:yellow;}
+.all_star {
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+<div class="panel panel-default" layout:fragment="content1">
+	<div id="title">
+		<h3>[[${center.centerTitle}]]<br>
+		<div class="all_star">
+			<a class="on2">★</a>
+			<a class="on2">★</a>
+			<a class="on2">★</a>
+			<a class="on2">★</a>
+			<a class="on2">★</a>
+		</div>
+		<small id="prefer">( [[${gprefer}]] )</small>
+		</h3>
+	</div>
+	<div class="container">
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-1">Detail</li>
+			<li class="tab-link" data-tab="tab-2">Trainer</li>
+			<li class="tab-link" data-tab="tab-3">Curriculum</li>
+		</ul>
+	
+		<div id="tab-1" class="tab-content current">
+			<ui class="detail_info">
+				<li><span class="detail_title">센터번호:</span> [[${center.centerNum}]]</li>
+				<li><span class="detail_title">센터명:</span> [[${center.centerTitle}]]</li>
+				<li><span class="detail_title">정보:</span> [[${center.centerInfo}]]</li>
+				<li><span class="detail_title">평점:</span> [[${center.centerPreferance}]]</li>
+				<li><span class="detail_title">지역명1:</span> [[${center.centerArea1}]]</li>
+				<li><span class="detail_title">지역명2:</span> [[${center.centerArea2}]]</li>
+				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
+				<li><span class="detail_title">사업자번호:</span> [[${center.corporateNum}]]</li>
+			</ui>
+		</div>
+		<div id="tab-2" class="tab-content">
+		 	<ul class="teacher_info">
+			  	<li class="fl tc w70 title t_line">번호</li>
+			  	<li class="fl tc w100 title t_line">이름</li>
+			  	<li class="fl tc w100 title t_line">사진</li>
+			  	<li class="fl tc w120 title t_line">연락처</li>
+			  	<li class="fl tc w200 title t_line">이메일</li>
+			  	<li class="fl tc w300 title ">자기소개</li>
+	  		</ul>
+		    <ul class="teacher_info" th:each="trainer:${trainerlist}">
+		  	  <li class="fl tc w70 list t_line lt_line">[[${trainer.trainerNum}]]</li>
+		  	  <li class="fl tc w100 list t_line lt_line">[[${trainer.trainerName}]]</li>
+		  	  <li class="fl tc w100 list  lt_line t_line">[[${trainer.trainerPhoto}]]</li>
+		  	  <li class="fl tc w120 list t_line lt_line">[[${trainer.trainerPhone}]]</li>
+		  	  <li class="fl tc w200 list t_line lt_line">[[${trainer.trainerEmail}]]</li>
+		  	  <li class="fl tc w300 list  lt_line">[[${trainer.trainerInfo}]]</li><br>
+		    </ul>
+		</div>
+		<div id="tab-3" class="tab-content">
+			<select id="etypelist" onchange="listChange(this.value);">
+				<option selected="selected" th:value="전체조회">전체조회</option>
+			    <option  th:each="etype:${etypelist}" th:value="${etype.exerciseTypeNum}">[[${etype.exerciseTypeName}]]</option>
+			</select><br><br>
+			<ul class="curriculum_info info_header">
+			  <li class="fl tc w70 title t_line">번호</li>
+			  <li class="fl tc w300 title t_line">이름</li>
+			  <li class="fl tc w300 title t_line">정보</li>
+			  <li class="fl tc w120 title t_line">날짜</li>
+			  <li class="fl tc w200 title t_line">시간</li>
+			  <li class="fl tc w100 title t_line">총 정원수</li>
+			  <li class="fl tc w100 title t_line">현재 정원수</li>
+			  <li class="fl tc w100 title t_line">운동유형</li>
+			  <li class="fl tc w100 title">강사</li>
+			</ul>
+			
+			<!--  <ul class="curriculum_info" th:each="curriculum:${curlist}" th:target="_blank" th:onclick="'window.open(\''+@{/center/curriculumdetail(crnum=${curriculum.curriculumNum})}+'\',\'window_name\',\'width=450,height=500,location=no,status=no,scrollbars=yes\')'"> -->
+			<ul class="curriculum_info" th:each="curriculum:${curlist}" data-toggle="modal" data-target="#myModal">
+			  <li class="fl tc w70 list t_line lt_line">[[${curriculum.curriculumNum}]]</li>
+			  <li class="fl tc w300 list t_line lt_line">[[${curriculum.curriculumTitle}]]</li>
+			  <li class="fl tc w300 list  lt_line t_line">[[${curriculum.curriculumInfo}]]</li>
+			  <li class="fl tc w120 list t_line lt_line">[[${curriculum.curriculumDate}]]</li>
+			  <li class="fl tc w200 list t_line lt_line">[[${curriculum.curriculumTime}]]</li>
+			  <li class="fl tc w100 list  t_line lt_line">[[${curriculum.curriculumAll}]]</li>
+			  <li class="fl tc w100 list  t_line lt_line" id="current">[[${curriculum.curriculumState}]]</li>
+			  <li class="fl tc w100 list  t_line lt_line">[[${curriculum.etyperef.id.etype.exerciseTypeNum}]]</li>
+			  <li class="fl tc w100 list   lt_line">[[${curriculum.trainer.trainerName}]]</li>
+			</ul>
+		</div>
+		
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+    		<!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">강좌 등록</h4>
+		      </div>
+		      <div class="modal-body">
+		     	<label>강좌번호</label>
+		        <input type="text" name="curriculumNum" class="form-control">
+		        <label>강좌이름</label>
+		        <input type="text" name="curriculumTitle" class="form-control">
+		        <label>강좌정보</label>
+		        <input type="text" name="curriculumInfo" class="form-control">
+		        <label>총인원수</label>
+		        <input type="text" name="curriculumAll" class="form-control">
+		        <label>현재인원수</label>
+		        <input type="text" name="curriculumState" class="form-control">
+		        <label>강사이름</label>
+		        <input type="text" name="curriculumTrainer" class="form-control">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="curModalButton" class="btn btn-default" data-dismiss="modal">등록하기</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		
+		<div>
+	  		<button class="btn btn-warning" id="addReview" data-toggle="modal" data-target="#reviewModal">
+	  		리뷰작성</button>
+	  	</div>
+		
+		<!-- Modal -->
+		<div id="reviewModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+    		<!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">리뷰 작성</h4>
+		      </div>
+		      <div class="modal-body">
+		     	<label>리뷰내용</label>
+		        <input type="text" name="crContents" class="form-control"><br>
+		        <label>평점</label>
+		        <p class="star_rating">
+				    <a href="#" class="on">★</a>
+				    <a href="#" class="on">★</a>
+				    <a href="#" class="on">★</a>
+				    <a href="#" class="on">★</a>
+				    <a href="#" class="on">★</a>
+				</p>
+		        <input type="text" name="crPreference" class="form-control" value=5 readonly="readonly"><br>
+		        <label>수강한 커리큘럼</label><br>
+		        <select id="userCurlist">
+		        <option selected="selected" th:value=0>선택없음</option>
+			    <option  th:each="userCur:${userCurlist}" th:value="${userCur.curriculumNum}">[[${userCur.curriculumTitle}]]</option>
+				</select>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="revInsertBtn" class="btn btn-default" data-dismiss="modal">등록</button>
+		        <button type="button" id="revDeleteBtn" class="btn btn-default" data-dismiss="modal">삭제</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		<table border="1px solid black" class="table table-striped table-bordered table-hover">
+	  		<thead>
+		  		<tr>
+		  			<th>댓글번호</th>
+		  			<th>내용</th>
+		  			<th>평점</th>
+		  			<th>작성일</th>
+		  			<th>수정일</th>
+		  			<th>작성자</th>
+		  			<th>수강한과정</th>
+		  			<th>센터번호</th>
+		  		</tr>
+	  		</thead>
+	  		<tbody id="reviewTable" data-toggle="modal" data-target="#reviewModal">
+	  		</tbody>
+	  	</table>
+	</div>
+</div>
+<th:block layout:fragment="script1">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script th:src="@{/js/external.js}"></script>
+	<script th:src="@{/js/external2.js}"></script>
+	<script>
+	$(document).ready(function(){
+		/* tab */
+		$('ul.tabs li').click(function(){
+			var tab_id = $(this).attr('data-tab');
+	
+			$('ul.tabs li').removeClass('current');
+			$('.tab-content').removeClass('current');
+	
+			$(this).addClass('current');
+			$("#"+tab_id).addClass('current');
+		})
+	})
+	
+	/* curriculum selected box*/
+	function listChange(param){
+		if(param=="전체조회"){
+			$("ul li:nth-child(8):contains('')").parent().show();
+		}else{
+			$("ul li:nth-child(8):contains('" + param + "')").parent().show();
+			$("ul li:nth-child(8):not(:contains('" + param + "'))").parent().hide();
+			$("ul.info_header").show();
+		}
+	}
+	
+	/* modal */
+	$(".curriculum_info").on("click", function(){
+   	 var tds = $(this).find("li");
+   	 cno = tds[0].innerHTML;
+   	 var ctitle = tds[1].innerHTML;
+   	 var cinfo = tds[2].innerHTML;
+   	 var ctotal = tds[5].innerHTML;
+   	 var ccurrent = tds[6].innerHTML;
+   	 var ctrainer = tds[8].innerHTML;
+   	 $("input[name='curriculumNum']").val(cno);
+   	 $("input[name='curriculumTitle']").val(ctitle);
+   	 $("input[name='curriculumInfo']").val(cinfo);
+   	 $("input[name='curriculumAll']").val(ctotal);
+   	 $("input[name='curriculumState']").val(ccurrent);
+   	 $("input[name='curriculumTrainer']").val(ctrainer);
+   	 $("#myModal").show();   	 
+    });
+	
+	$("#curModalButton").click(function(){
+		var cno= $("input[name='curriculumNum']");
+		var ctotal= $("input[name='curriculumAll']").val();
+		var ccurrent= $("input[name='curriculumState']").val();
+		if(ctotal!=ccurrent){
+			var obj={ "cnum" :cno.val() };
+			replyManager.register(obj, printResult);			
+		}else{
+			alert("해당 강좌는 마감되었습니다.");
+		}
+		$("#myModal").hide();
+	})
+	
+	function printResult(responsedata){
+		alert(responsedata);
+		
+		$.ajax({
+			url:"/center/curriculumstate/"+cno,
+			type:"get",
+			success: function(data) {
+				var s= $(".curriculum_info li:first-child").html();
+				console.log(s);
+		    	//$(".all_star :nth-child("+Math.round(data)+")").addClass("on2").prevAll("a").addClass("on2");
+		    	}
+			});
+	}
+	
+	/* review modal */
+	var mode="";
+	    
+		$("#addReview").click(function(){
+			var crContents = $("input[name='crContents']");
+	   		var crPreference = $("input[name='crPreference']");
+			crContents.val("");
+			document.getElementById("revInsertBtn").style.display = "";
+    	 	document.getElementById("revDeleteBtn").style.display = "";
+			$("#reviewModal").show();
+			$(".modal-title").text("리뷰 작성");
+			mode="ADD";
+			
+		});
+		
+		$("#revInsertBtn").click(function(){
+			var crContents= $("input[name='crContents']");
+			var crPreference= $("input[name='crPreference']");
+			var curnum= $("#userCurlist option:selected").val();
+			var obj={ "cno":"[[${center.centerNum}]]" , "crContents":crContents.val(), "crPreference":crPreference.val(), "curnum":curnum};
+			
+			if(mode=="ADD"){
+				if(curnum!=0){
+					reviewManager.add(obj,printList2);
+					alert("입력완료");	
+				}else {
+					alert("수강했던 강좌를 선택하세요.");
+				} 		
+			}else if(mode=="MOD"){
+				if(userId!="[[${userid}]]"){
+					alert("다른 사람의 리뷰는 수정할 수 없습니다.")
+				}else{
+					obj["crNum"]=crNum;
+					obj["crFirst"]=crFirst;
+					reviewManager.update(obj,printList);
+					alert("수정완료");
+				}
+			}
+			
+			$("#reviewModal").hide();
+			crContents.val("");
+			crPreference.val("");
+		})
+		
+		$("#revDeleteBtn").click(function(){
+    	
+   		 var crContents = $("input[name='crContents']");
+   		 var crPreference = $("input[name='crPreference']");
+   		 var obj = {
+   				 "cno":"[[${center.centerNum}]]", "crNum": crNum };
+   		reviewManager.remove(obj, printList);
+   		 alert("삭제완료");
+   		$("#reviewModal").hide();
+		crContents.val("");
+		crPreference.val("");
+     	});
+		
+		$("#reviewTable").on("click", "tr", function(){
+	    	 mode= "MOD";
+	    	 var tds = $(this).find("td");
+	    	 crNum = tds[0].innerHTML;
+	    	 var crContents = tds[1].innerHTML;
+	    	 var crPreference = tds[2].innerHTML;
+	    	 crFirst = tds[3].innerHTML;
+	    	 var crUpdate = tds[4].innerHTML;
+	    	 userId = tds[5].innerHTML;
+	    	 var curriculumTitle = tds[6].innerHTML;
+	    	 var centerNum = tds[7].innerHTML;
+	    	 $("input[name='crContents']").val(crContents);
+	    	 $("input[name='crPreference']").val(crPreference);
+	    	 $(".star_rating a").parent().children("a").removeClass("on");
+	    	 $( ".star_rating :nth-child("+crPreference+")" ).addClass("on").prevAll("a").addClass("on");
+	    	 $("#userCurlist").find("option").each(function(index){
+	 			if ($(this).text() == curriculumTitle) {
+	 				$("#userCurlist").val($(this).val());	
+	 			}
+	 		});
+	    	 if(userId!="[[${userid}]]"){
+	    	 	document.getElementById("revInsertBtn").style.display = "none";
+	    	 	document.getElementById("revDeleteBtn").style.display = "none";
+	    	 }else{
+	    		 document.getElementById("revInsertBtn").style.display = "";
+		    	 document.getElementById("revDeleteBtn").style.display = "";
+	    	 }
+	    	 $("#reviewModal").show();
+	    	 $(".modal-title").text("리뷰 수정/삭제")
+	    	 
+	     });
+
+		reviewManager.getAll("[[${center.centerNum}]]", printList);
+		
+		function printList(rlist){
+			console.log(rlist);
+			var str=""
+			$.each(rlist, function(idx, item){
+				str+="<tr>";
+				str+="<td>"+item["crNum"]+"</td>";
+				str+="<td>"+item["crContents"]+"</td>";
+				str+="<td>"+item["crPreference"]+"</td>";
+				str+="<td>"+item["crFirst"]+"</td>";
+				str+="<td>"+item["crUpdate"]+"</td>";
+				str+="<td>"+item["user"].userId+"</td>";
+				str+="<td>"+item["curriculum"].curriculumTitle+"</td>";
+				str+="<td>"+item["center"].centerNum+"</td>";
+				str+="</tr>";
+			});
+			$("#reviewTable").html(str);
+		}
+		
+		function printList2(rlist){
+			$.ajax({
+				url:"/reviews/prefer/[[${center.centerNum}]]",
+				type:"get",
+				success: function(data) {
+					$("#prefer").html("평점: "+data);
+					$(".all_star a").parent().children("a").removeClass("on2");
+			    	$(".all_star :nth-child("+Math.round(data)+")").addClass("on2").prevAll("a").addClass("on2");
+			    	}
+				});
+			printList(rlist);
+			
+		}
+		
+		/* star rating */
+		$( ".star_rating a" ).click(function() {
+		     $(this).parent().children("a").removeClass("on");
+		     $(this).addClass("on").prevAll("a").addClass("on");
+		     
+		     $("input[name='crPreference']").val($('.on').length);
+		     return false;
+		});
+		
+		 $(".all_star a").parent().children("a").removeClass("on2");
+    	 $(".all_star :nth-child("+Math.round("[[${gprefer}]]")+")").addClass("on2").prevAll("a").addClass("on2");
+
+	</script>
+</th:block>
+</body>
+</html>

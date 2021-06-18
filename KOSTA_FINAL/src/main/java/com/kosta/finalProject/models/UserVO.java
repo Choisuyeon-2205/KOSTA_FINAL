@@ -7,6 +7,9 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -47,9 +50,9 @@ public class UserVO {
 	String userName;
 	
 	String nickName;
-
 	@Column(name="user_address", nullable = true)
-	String userAddress;
+	@Embedded
+	UserAddress userAddress;
 	@Column(name="user_phone", unique = true, nullable = false)
 	String userPhone;
 	@Column(name="user_email", nullable = true)
@@ -58,7 +61,8 @@ public class UserVO {
 	String userPhoto;
 
 	UserRoleEnumType urole;
-
+	
+	
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "mealId.user", cascade = CascadeType.ALL)

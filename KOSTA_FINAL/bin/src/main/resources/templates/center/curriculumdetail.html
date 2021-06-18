@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="panel panel-default" layout:fragment="content1">
+	<h2>[[${curriculum.curriculumTitle}]]</h2>
+	강좌소개: [[${curriculum.curriculumInfo}]]<br>
+	강습날짜: [[${curriculum.curriculumDate}]]<br>
+	강습시간: [[${curriculum.curriculumTime}]]<br>
+	총 인원수:[[${curriculum.curriculumAll}]]<br>
+	현재 인원수:[[${curriculum.curriculumState}]]<br>
+	운동종류:[[${curriculum.etyperef.id.etype.exerciseTypeName}]]<br><br><br>
+	<form th:action="@{/center/registerCurriculum(curnum=${curriculum.curriculumNum})}" method="post">
+		<!--  th:onclick="'window.location.href=\''+@{/center/registerCurriculum(curnum=${curriculum.curriculumNum})}+'\''" th:method="post"  -->
+		<input type="submit" id="insert" name="등록하기" value="등록하기" >
+		<input type="button" id="return" name="돌아하기" value="돌아가기" th:onclick="self.close();">
+	</form>
+</div>
+</body>
+<th:block layout:fragment="script1">
+	<script th:src="@{/js/external.js}"></script>
+	<script>
+	$(function(){
+
+	})
+	</script>
+</th:block>
+</html>
