@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+</head>
+<body>
+
+	<div class="panel panel-default">
+		<h1 class="panel-heading">새글 등록</h1>
+		<div class="panel-body">
+			<form th:action="@{/dietdiaryboard/register}" method="post" id="dietform" >
+				<input type="hidden" name="photo" id="dietphoto">
+
+
+				<!-- 제목 -->
+				<div class="form-group">
+					<label for="title">title:</label> <input type="text"
+						class="form-control" id="title" placeholder="적어" name="title">
+				</div>
+
+				<!-- 내용 -->
+				<div class="form-group">
+					<label for="content">content:</label>
+					<textarea class="form-control" rows="3" cols="" id="content"
+						name="content"></textarea>
+				</div>
+
+				<!-- 작성자 -->
+
+				<div class="form-group" th:each="dboard:${dboardlist}">
+					<label for="writer">writer:</label> <input type="text"
+						class="form-control" id="writer" name="writer" readonly="readonly">
+				</div>
+
+				
+
+			</form>
+			
+			<form onsubmit="return false;">
+				<div class="form-group">
+					<label for="photo">사진 등록</label> <input type="file"
+						id="photo" name="photo">
+				</div>
+				<button class="btn btn-primary" id="btn-save">등록</button>
+			</form>
+
+
+		</div>
+
+
+	</div>
+
+
+<script>
+      $('#btn-save').on('click', uploadImage);
+      
+      function uploadImage() {
+         var file = $('#photo')[0].files[0];
+        
+         console.log(file);
+         if(typeof file != "undefined") {
+         var formData = new FormData();
+         formData.append('data', file);
+         formData.append('path', "dietdiaryboard");
+         console.log(formData);
+         $.ajax({
+            type : 'POST',
+            url : '/upload',
+            data : formData,
+            processData : false,
+            contentType : false
+         }).done(function(responseBody) {
+      
+        
+               var fileInput = $('#photo');
+               var diet_image = fileInput[0].files[0].name; // 파일명 출력
+               $("#dietphoto").val(diet_image);
+              
+               $('#dietform').submit();
+         }).fail(function(error) {
+            alert('다시 등록해주세요');
+         })
+      }else {
+    	$('#dietform').submit();
+      }
+   }
+
+</script>
