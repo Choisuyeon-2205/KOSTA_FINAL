@@ -17,6 +17,14 @@ public class CenterService {
 		return centerRepo.findById((Integer)center_num).get();
 	}
 	
+	public List<CenterVO> selectByArea1(String area1) {
+		return centerRepo.findByCenterArea1(area1);
+	}
+	
+	public List<CenterVO>  selectByArea2(String area2) {
+		return centerRepo.findByCenterArea2(area2);
+	}
+	
 	public List<CenterVO> selectAll() {
 		return (List<CenterVO>)centerRepo.findAll();
 	}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.kosta.finalProject.models.AreasVO;
 import com.kosta.finalProject.models.CenterReviewVO;
 import com.kosta.finalProject.models.CenterVO;
 import com.kosta.finalProject.models.CurriculumRegisterVO;
@@ -16,6 +17,7 @@ import com.kosta.finalProject.models.CurriculumVO;
 import com.kosta.finalProject.models.ExerciseTypeVO;
 import com.kosta.finalProject.models.TrainerVO;
 import com.kosta.finalProject.models.UserVO;
+import com.kosta.finalProject.services.AreasService;
 import com.kosta.finalProject.services.CenterReviewService;
 import com.kosta.finalProject.services.CenterService;
 import com.kosta.finalProject.services.CurriculumRegisterService;
@@ -38,12 +40,18 @@ public class CenterController {
 	CenterReviewService crservice;
 	@Autowired
 	CurriculumRegisterService curRegService;
+	@Autowired
+	AreasService areaService;
 	
 	@GetMapping("/center/centerlist")
 	public void selectAll(Model model) {
 		List<CenterVO> centerlist= centerservice.selectAll();	
 		model.addAttribute("centerlist",centerlist);
-
+		
+		String[] area1s= areaService.selectAllArea1();
+		List<AreasVO> arealist= areaService.selectAll();
+		model.addAttribute("area1s",area1s);
+		model.addAttribute("arealist",arealist);
 	}
 	
 	@GetMapping("/center/centerdetail")
