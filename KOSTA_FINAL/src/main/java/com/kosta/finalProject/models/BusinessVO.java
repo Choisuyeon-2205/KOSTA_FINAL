@@ -3,6 +3,7 @@ package com.kosta.finalProject.models;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
@@ -34,9 +35,11 @@ public class BusinessVO {
 	String businessId;
 	String businessPassword;
 	String businessTitle;
-	String businessAddress;
+	@Embedded
+	BusinessAddress businessAddress;
 	String businessPhone;
 	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "business", //fk이름 "메여있다"
 			cascade = CascadeType.ALL,

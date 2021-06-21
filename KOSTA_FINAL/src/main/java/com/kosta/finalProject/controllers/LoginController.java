@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.kosta.finalProject.models.BusinessAddress;
+import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.UserAddress;
 import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.services.LoginService;
@@ -37,11 +39,6 @@ public class LoginController {
 
     @GetMapping(value = "/login")
     public void login() {
-    	
-       // HttpServletRequest req;
-       // String referer = req.getHeader("Referer"); // 현재 요청된 페이지의 이전 페이지 주소 정보를 포함
-        // req.getSession().setAttribute("prevPage", referer);
-       // return "login";
     }
 
     @RequestMapping("/hello")   
@@ -50,6 +47,13 @@ public class LoginController {
     }
     @PostMapping(value = "/login")
     public String logins() {
+    	System.out.println("login PostMapping");
+        return "/login/hello";
+    }
+    
+    @PostMapping(value = "/blogin")
+    public String login2() {
+    	System.out.println("login PostMapping");
         return "/login/hello";
     }
     
@@ -78,7 +82,21 @@ public class LoginController {
     public void signupget() { // 회원 추가
       
     }
-    
+    @GetMapping("/BusinessSignup")
+    public void BusinessSignup() { // 회원 추가
+      
+    }
+    @PostMapping("/BusinessSignUp")
+    public String BusinessSignup2(BusinessVO business, String Address1, String Address2, String Address3, String AddNum) { // 회원 추가
+    	System.out.println("PostMapping 도착");
+    	BusinessAddress  businessAddress= new BusinessAddress();
+    	businessAddress.setAddNum(AddNum);
+    	businessAddress.setAddress1(Address1);
+    	businessAddress.setAddress2(Address2);
+    	businessAddress.setAddress3(Address3);
+       loginservice.businessSingup(business, businessAddress);
+      return "redirect:/login/hello";
+    }
     public UserVO getUser() { //
         UserVO user = new UserVO();
         SecurityContext ctx = SecurityContextHolder.getContext();
@@ -106,6 +124,22 @@ public class LoginController {
         loginservice.certifiedPhoneNumber(user_phone,numStr);
         return numStr;
     }
+    
+    @RequestMapping("/businessPhone")
+    @ResponseBody
+    public String SMSController2(String businessPhone) {
+       System.out.println("***********USER PHONE************* " + businessPhone);
+        Random rand  = new Random();
+        String numStr = "";
+        for(int i=0; i<4; i++) {
+            String ran = Integer.toString(rand.nextInt(10));
+            numStr+=ran;
+        }
+        System.out.println("수신자 번호 : " + businessPhone);
+        System.out.println("인증번호 : " + numStr);
+        loginservice.certifiedPhoneNumber2(businessPhone,numStr);
+        return numStr;
+    }
    
    @ResponseBody
    @GetMapping("/duCheck")
@@ -113,5 +147,15 @@ public class LoginController {
 	   return loginservice.checkName(userId)? 0 : 1;
    }
 
+   @ResponseBody
+   @GetMapping("/nickCheck")
+   public int CheckNickName(String nickName) {
+	   return loginservice.checkNickName(nickName)? 0: 1;
+   }
     
+   @ResponseBody
+   @GetMapping("/businessCheck")
+   public int businessCheck(String businessId){
+	   return loginservice.businessId(businessId)? 0 : 1;
+   }
 }

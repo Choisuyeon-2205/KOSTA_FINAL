@@ -5,9 +5,7 @@
 <meta charset="UTF-8">
 <title>회원가입 페이지</title>
 </head>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 <body>
 	<form class="signup-form" action="./signUp" method="post">
 		<!--     <input type = "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
@@ -27,7 +25,8 @@
 		<input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly"><br>
 		<input type="hidden" id="numStr" name="numStr"> 
 		<label for="nickName"> 닉네임 </label> 
-		<input id="nickName" name="nickName" type="text" placeholder="특수문자를 제외하고 입력하세요" /><br>
+		<input id="nickName" name="nickName" type="text" placeholder="닉네임을 입력하세요" /> 
+		<input type="button" id="checkNick" value="중복확인"> <br> 
 		<label for="userEmail"> 이메일 </label> 
 		<input id="userEmail" name="userEmail" type="text" placeholder="abcd@email.com" /><br>
 		<label for="userPhoto">사진</label> 
@@ -43,6 +42,27 @@
 
 
 	<script>
+	$('#checkNick').click(function() {
+		$.ajax({
+			type : "GET",
+			url : "/login/nickCheck",
+			data : {
+				"nickName" : $('#nickName').val()
+			},
+			success : function(aa) {
+				console.log(aa);
+				if (aa == "1") {
+					Swal.fire('사용가능한 닉네임입니다.');
+					$('#nickName').attr('readonly', 'readonly');
+				} else {
+					Swal.fire('사용 불가능한 닉네임입니다.');
+					return $('#userPw').focus();
+				}
+			}
+
+		});
+	});
+	
 		$('#checkId').click(function() {
 			$.ajax({
 				type : "GET",

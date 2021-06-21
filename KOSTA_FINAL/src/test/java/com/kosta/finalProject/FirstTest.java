@@ -46,7 +46,7 @@ public class FirstTest {
 			BusinessVO b= new BusinessVO();
 			b.setBusinessId("business"+i);
 			b.setBusinessPassword("bp"+i);
-			b.setBusinessAddress("서울시 금천구"+i);
+		
 			b.setBusinessTitle("사업자"+i);
 			b.setBusinessPhone("010-1234-56"+i);
 			
