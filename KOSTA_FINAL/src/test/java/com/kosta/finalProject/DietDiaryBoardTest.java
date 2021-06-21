@@ -24,11 +24,11 @@ public class DietDiaryBoardTest {
 	@Autowired
 	DietDiaryBoardRepository repo;
 	
-	//@Test // 보드입력하기
+	@Test // 보드입력하기
 	public void insertBoard() {
-		IntStream.range(1, 5).forEach(i->{
+		IntStream.range(10, 170).forEach(i->{
 			UserVO user = new UserVO();
-			user.setUserId("test" + i);
+			user.setUserId("sample1");
 			DietDiaryBoardVO board = DietDiaryBoardVO.builder()
 					.title("제목" + i)
 					.content("내용" + i)
@@ -40,8 +40,8 @@ public class DietDiaryBoardTest {
 	}
 	
 	
-	@Transactional
-	@Test
+	//@Transactional
+	//@Test
 	 public void insertReply() {
 		repo.findById(1).ifPresent(b->{
 			List<DietDiaryReplyVO> replies = b.getDreplies();

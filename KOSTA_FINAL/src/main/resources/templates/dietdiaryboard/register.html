@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 <body>
 
-	<div class="panel panel-default">
-		<h1 class="panel-heading">새글 등록</h1>
+	<div class="panel panel-default" layout:fragment="content1" style="padding: 0px 200px 0px 200px; width: 100%">
+		<h1 class="panel-heading" style="text-align: center;">새글 등록</h1>
 		<div class="panel-body">
 			<form th:action="@{/dietdiaryboard/register}" method="post" id="dietform" >
-				<input type="hidden" name="photo" id="dietphoto">
+			<input type="hidden" name="photo" id="dietphoto">
 
 
 				<!-- 제목 -->
 				<div class="form-group">
 					<label for="title">title:</label> <input type="text"
-						class="form-control" id="title" placeholder="적어" name="title">
+						class="form-control" id="title" placeholder="제목을 적어다오" name="title">
 				</div>
 
 				<!-- 내용 -->
 				<div class="form-group">
 					<label for="content">content:</label>
 					<textarea class="form-control" rows="3" cols="" id="content"
-						name="content"></textarea>
+						name="content" placeholder="내용을 적어다오"></textarea>
 				</div>
 
 				<!-- 작성자 -->
@@ -45,7 +44,7 @@
 					<label for="photo">사진 등록</label> <input type="file"
 						id="photo" name="photo">
 				</div>
-				<button class="btn btn-primary" id="btn-save">등록</button>
+				<button class="btn btn-primary btn-lg btn-block" id="btn-save">등록</button>
 			</form>
 
 
@@ -54,7 +53,7 @@
 
 	</div>
 
-
+<th:block layout:fragment="script1">
 <script>
       $('#btn-save').on('click', uploadImage);
       
@@ -90,3 +89,4 @@
    }
 
 </script>
+</th:block>

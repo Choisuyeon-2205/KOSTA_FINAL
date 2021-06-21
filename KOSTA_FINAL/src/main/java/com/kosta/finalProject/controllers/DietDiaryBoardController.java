@@ -1,10 +1,13 @@
 package com.kosta.finalProject.controllers;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,11 +16,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.kosta.finalProject.models.DietDiaryBoardVO;
+import com.kosta.finalProject.models.PageMaker;
+import com.kosta.finalProject.models.PageVO;
 import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.services.DietDiaryBoardService;
 import com.kosta.finalProject.services.UserService;
+
 
 @Controller
 public class DietDiaryBoardController {
@@ -30,22 +37,35 @@ public class DietDiaryBoardController {
 	
 
 	@GetMapping("/dietdiaryboard/boardlist")
-	public void selectAll(Model model, HttpServletRequest request) {
+	public void selectAll(Model model, HttpServletRequest request, PageVO pagevo) {
 		model.addAttribute("dboardlist", service.selectAll());
-		
+//		
+//		Map<String, ?> flashMap =RequestContextUtils.getInputFlashMap(request);
+//        
+//        if(flashMap!=null) {
+//            
+//            PageVO p =(PageVO)flashMap.get("pagevo");
+//            System.out.println("flashMap p:" + p);
+//        }
+		Page<DietDiaryBoardVO> result = service.selectAll(pagevo);
+		 
+//		List<DietDiaryBoardVO> boardlist = result.getContent();
+				
+		model.addAttribute("boardResult", result);
+		model.addAttribute("pagevo", pagevo);
+		model.addAttribute("result", new PageMaker<>(result));
 	}
 
 	
 	
 	@GetMapping("/dietdiaryboard/boarddetail")
-	public void selectById(Model model, Integer diaryNum, Principal principal, Authentication authentication ) {
-		//System.out.println(service.selectById(diaryNum));
+	public void selectById(Model model, Integer diaryNum, Principal principal, Authentication authentication, PageVO pagevo ) {
+			//System.out.println(service.selectById(diaryNum));
 		model.addAttribute("dboard", service.selectById(diaryNum));
+		model.addAttribute("pagevo", pagevo);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		UserVO user =  uservice.selectById(userDetails.getUsername());
-				
-				 
-	      model.addAttribute("user",user);
+		model.addAttribute("user",user);
 	      //System.out.println("******************************" + user);
 		  //System.out.println("로그인한사람:" + userDetails);
 	}
@@ -76,34 +96,23 @@ public class DietDiaryBoardController {
 	}
 	
 	@PostMapping("/dietdiaryboard/update")
-	public String boardUpdate(DietDiaryBoardVO board, String userId, RedirectAttributes rttr, Authentication authentication) {
+	public String boardUpdate(DietDiaryBoardVO board, String userId, RedirectAttributes rttr, Authentication authentication, Integer page, Integer size, String type, String keyword) {
 		//System.out.println("업데이트###############" + userId);
 		//System.out.println("업데이트###############" + board);
 		board.setUser(uservice.selectById(userId));
 		DietDiaryBoardVO update_board = service.updateBoard(board);
 		
 		rttr.addFlashAttribute("resultMessage", update_board==null?"수정실패":"수정성공");
-		return "redirect:/dietdiaryboard/boardlist";
+		
+		//방법1...주소창에 안보이기 
+		PageVO pagevo = PageVO.builder()
+						.page(page).size(size).type(type).keyword(keyword)
+						.build();
+		rttr.addFlashAttribute("pagevo", pagevo);
+		//방법2...주소창에 보이기 
+		String param = "page=" + page + "&size=" + size + "&type="+type + "&keyword=" + keyword;
+		return "redirect:/dietdiaryboard/boardlist?" + param;
+			
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
