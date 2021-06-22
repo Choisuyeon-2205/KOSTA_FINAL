@@ -1,5 +1,15 @@
 package com.kosta.finalProject.models;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum UserRoleEnumType {
-	BUSINESS,ADMIN,USER
+	BUSINESS("ROLE_BUSINESS", "사업자"),
+    USER("ROLE_USER", "일반 사용자"),
+    ADMIN("ROLE_ADMIN", "관리자");
+
+	private final String key;
+	private final String title;
 }
