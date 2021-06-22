@@ -56,13 +56,13 @@ public class UserTest {
 					
 					.userPhone("010-1111-2222" + i)
 					.userEmail("email" + i + "@gmail.com")
-					.userPhone("photo" + i + ".jpg")
+				
 					.build();
 			System.out.println("UserToString" + user);
 			repo.save(user);
 		});
 	}
-	@Test
+//	@Test
 	public void insertUser2() {		
 	IntStream.range(1, 4).forEach(i->{
 		UserVO user = UserVO.builder()
@@ -73,7 +73,7 @@ public class UserTest {
 		
 		.userPhone("010-1111-2222" + i)
 		.userEmail("email" + i + "@gmail.com")
-		.userPhone("photoo"+ i+ ".jpg")
+	
 		.build();
 	
 	});

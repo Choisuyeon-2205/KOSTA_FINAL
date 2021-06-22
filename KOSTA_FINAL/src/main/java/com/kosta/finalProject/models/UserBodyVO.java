@@ -13,8 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -24,9 +30,9 @@ public class UserBodyVO {
 	
 	@Id
 	@Column(name="body_num")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BODY_SEQ_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int bodyNum;
-	@Column(length = 1) // length는 String만 사용 가능
+	@Column(length = 1) // length는 String만 사용 가능 
 	String gender;
 	@Column(name="user_age", length = 3)
 	int userAge;
@@ -37,9 +43,15 @@ public class UserBodyVO {
 	double weight;
 	@Column(name="user_image", nullable = true)
 	String userImage;
-	@Column(name="user_BMI" , nullable = true)
-	int userBmi;
+	@Column(nullable = true, name = "user_bmi")
+	double userBmi ;
 	
+
+
+
+
+
+	// =  weight * 9998 / (height * height) 
 	@OneToOne // 부모는 자식을 모르지만, 자식은 부모를 알아야 한다!
 	@JoinColumn(name = "user_id")
 	private UserVO user;

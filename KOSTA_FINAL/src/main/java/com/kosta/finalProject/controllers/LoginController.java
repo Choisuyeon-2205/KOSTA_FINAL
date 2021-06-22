@@ -3,9 +3,11 @@ package com.kosta.finalProject.controllers;
 
 
 
+import java.security.Principal;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,8 +26,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.kosta.finalProject.models.BusinessAddress;
 import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.UserAddress;
+import com.kosta.finalProject.models.UserBodyVO;
 import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.services.LoginService;
+import com.kosta.finalProject.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,15 +40,20 @@ public class LoginController {
 
    @Autowired
    LoginService loginservice;
+   
+   @Autowired
+   UserService userservice;
 
     @GetMapping(value = "/login")
     public void login() {
+    	System.out.println("login get.....");
     }
 
     @RequestMapping("/hello")   
     public void hello() {
    
     }
+    
     @PostMapping(value = "/login")
     public String logins() {
     	System.out.println("login PostMapping");
@@ -67,8 +76,8 @@ public class LoginController {
  
     }
     
-    @PostMapping("/signUp")
-    public String signup(UserVO user, String userAddress1, String userAddress2, String userAddress3, String AddNum) { // 회원 추가
+    @PostMapping( value = "/signUp")
+    public String signup(UserVO user, String userAddress1, String userAddress2, String userAddress3, String AddNum ) { // 회원 추가
     	System.out.println("PostMapping 도착");
     	UserAddress userAddress = new UserAddress();
     	userAddress.setAddNum(AddNum);
@@ -76,12 +85,30 @@ public class LoginController {
     	userAddress.setUserAddress2(userAddress2);
     	userAddress.setUserAddress3(userAddress3);
        loginservice.signup(user, userAddress);
-      return "redirect:/login/hello";
+       
+       
+     
+      return "redirect:/login/profile";
     }
     @GetMapping("/signup")
     public void signupget() { // 회원 추가
       
     }
+    @GetMapping("/profile")
+    public void profile() {
+    	
+    }
+    
+    @PostMapping("/profile")
+    public String profilePost(UserBodyVO body, Principal principal,Authentication authentication) {
+   	 UserVO user = new UserVO();
+   	 user.setUserId(principal.getName());
+	 body.setUser(user);
+    	loginservice.profileSave(body);
+    	
+    	 return "redirect:/login/login";
+    }
+    
     @GetMapping("/BusinessSignup")
     public void BusinessSignup() { // 회원 추가
       

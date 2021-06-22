@@ -2,10 +2,13 @@ package com.kosta.finalProject.services;
 
 
  
+import java.security.Principal; 
 import java.util.HashMap;
+
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +20,12 @@ import com.kosta.finalProject.login.SecurityUser;
 import com.kosta.finalProject.models.BusinessAddress;
 import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.UserAddress;
+import com.kosta.finalProject.models.UserBodyVO;
 import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.persistences.BusinessRepository;
 import com.kosta.finalProject.persistences.LoginRepository;
+import com.kosta.finalProject.persistences.UserBodyRepository;
+import com.kosta.finalProject.persistences.UserRepository;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -27,17 +33,44 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 public class LoginService implements UserDetailsService {
-     @Autowired
-      private LoginRepository repo;
-     
-     @Autowired
-     private BusinessRepository repo2;
-    
+	@Autowired
+	private LoginRepository repo;
+
+	@Autowired
+	private BusinessRepository repo2;
+
+	@Autowired
+	UserBodyRepository bodyrepo;
+
+	@Autowired
+	UserRepository userrpo;
         
       @Autowired
       private PasswordEncoder passwordEncoder;
 
   
+
+  	public UserVO selectById(String userId) {
+  		return userrpo.findById(userId).get();
+  	}
+  	
+	public void profileSave(UserBodyVO body) {
+		System.out.println("프로필저장 여기");
+
+		
+		  UserBodyVO newbody =UserBodyVO.builder()
+			  .userAge(body.getUserAge())
+			  .gender(body.getGender())
+			 .height(body.getHeight()) 
+			 .weight(body.getWeight())
+			 .userImage(body.getUserImage())
+			 .user(body.getUser()).build();
+		  bodyrepo.save(newbody);
+		 
+	}
+
+      
+      
       @Override
       public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException { 
           UserDetails user = repo.findById(userId)
@@ -57,7 +90,6 @@ public class LoginService implements UserDetailsService {
              .userAddress(userAddress) 
              .userEmail(user.getUserEmail())
              .userPhone(user.getUserPhone())
-             .userPhoto(user.getUserPhoto())
              .userPw(user.getUserPw()).build();
         repo.save(newUser);		
       }
