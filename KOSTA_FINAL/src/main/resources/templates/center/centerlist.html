@@ -99,13 +99,6 @@ layout:decorate="~{layout/layout1}">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script th:src="@{/js/getArea.js}"></script>
 	<script>
-
-	function call(obj){
-		alert($(obj).attr("data2"));
-		window.location.href="/center/centerdetail?cnum="+$(obj).attr("data2");
-	}
-	
-	
 	/* star rating */
 	$(".star").parent().children("a").removeClass("on");
 	//var s= $(".star").prev().text();
@@ -114,7 +107,9 @@ layout:decorate="~{layout/layout1}">
 	//$(".star:nth-child("+Math.round(s)+")").addClass("on").prevAll("a").addClass("on");
 	
 	/* select box */
-
+	function call(obj){
+		window.location.href="/center/centerdetail?cnum="+$(obj).attr("data2");
+	}
 	
 	$("#selectArea1").on('change',function(){		
 		getManager.getArea2(this.value, printList); //지역 소구분 변경
@@ -123,7 +118,6 @@ layout:decorate="~{layout/layout1}">
 	});
 	
 	function printList(rlist){ //지역 소구분 html 변경
-		console.log(rlist);
 		$("#selectArea2 option").remove();
 		var str=""
 		$.each(rlist, function(idx, item){
@@ -138,13 +132,12 @@ layout:decorate="~{layout/layout1}">
 	});
 	
 	function printCenterList(rlist){ //center list html 변경
-		console.log(rlist);
 		$("#products ul").remove();
 		var str=""
 		$.each(rlist, function(idx, item){
 			str+= "<ul class='item'  onClick='call(this);' data2 ="+item["centerNum"]+">"
 			str+= "<li><h4>"+item["centerTitle"]+"</h4></li>"
-			str+= "<li>"+item["centerArea1"]+item["centerArea2"]+"</li>"
+			str+= "<li>"+item["centerArea1"]+" "+item["centerArea2"]+"</li>"
 			str+= "<li>"+item["centerPreferance"]+"</li>"
 			str+= "</ul>"
 		});

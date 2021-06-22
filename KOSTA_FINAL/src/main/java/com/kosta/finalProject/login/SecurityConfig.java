@@ -3,6 +3,7 @@ package com.kosta.finalProject.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		// hasRole : 특정권한을 가진 사람만 접근가능하다는 의미
 		http.authorizeRequests() // HttpServletRequest에 따라 접근(access)을 제한
 
-				.antMatchers("/login/**","/auth/**", "/upload/**").permitAll() //   누구나 접근 허용
+				.antMatchers("/login/**","/auth/**", "/upload/**","/business/**").permitAll() //   누구나 접근 허용
 				.antMatchers("/admin/**").hasRole("ADMIN") // /admin으로 시작하는 경로는  ADMIN롤을 가진 사용자만  접근 가능(자동으로 ROLE_가 삽입)
 				.antMatchers("/BUSINESS/**").hasRole("BUSINESS")
 				.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
@@ -58,4 +59,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 				.and().csrf().disable();  //csrf(크로스사이트 위조요청에 대한 설정) 토큰 비활성화 (test시에는 disable권장)            
 		http.exceptionHandling().accessDeniedPage("/accessDenied"); // 403 예외처리 핸들링   권한이 없는 대상이 접속을시도했을 때
 	}
+	
+	
+	@Override
+	  public void configure(AuthenticationManagerBuilder auth) throws Exception { // 9
+	    auth.userDetailsService(loginService)
+	    	// 해당 서비스(userService)에서는 UserDetailsService를 implements해서 
+	        // loadUserByUsername() 구현해야함 (서비스 참고)
+	    	.passwordEncoder(new BCryptPasswordEncoder()); 
+	   }
 }

@@ -2,13 +2,11 @@ package com.kosta.finalProject.services;
 
 
  
-import java.security.Principal; 
 import java.util.HashMap;
-
+import java.util.Optional;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -74,18 +72,22 @@ public class LoginService implements UserDetailsService {
       
       @Override
       public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException { 
-          UserDetails user = repo.findById(userId)
-                .filter(u ->u!=null).map(u->new SecurityUser(u)).get();
-          if(userId==null) {
-        	  UserDetails business = repo2.findById(userId)
+    	  System.out.println(userId);
+    	  
+    	  UserDetails user = null;
+    	  Optional<UserVO> obj =  repo.findById(userId) ;
+    	  if(!(obj.isEmpty())) {
+    		  user = repo.findById(userId)
+    	        	  .filter(u ->u!=null).map(u->new SecurityUser(u)).get();
+    	  }else {
+    		  user = repo2.findById(userId)
                       .filter(u ->u!=null).map(u->new SecurityBusiness(u)).get();
-        	  return business;
-          }
-             return user;
+    	  }
+ 
+          
+            return user;
       }
       
-      
-     
       public void signup(UserVO user, UserAddress userAddress) {
          BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
          user.setUserPw(passwordEncoder.encode(user.getUserPw()));

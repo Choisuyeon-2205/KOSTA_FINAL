@@ -12,27 +12,25 @@
           <div th:if="${param.logout}">
               You have been logged out.
           </div>
-          
-          
-          
-      
-          
+                  
           	<div id="userDiv">
           		<form id="userForm" action="./login" method="post">
           	  <label> UserID : <input type="text" name="username"/> </label>
               <label> Password: <input type="password" name="password"/> </label>
-              
+              <input type="radio"  name="loginType" id="user" value="user" checked="checked">일반회원 로그인  
+         	  <input type="radio"  name="loginType" id="business" value="business">사업자 로그인
+              <input type="submit" id="loginbutton" value="로그인버튼">
           		</form>
           	</div>
+          	<!-- 
           	<div id="BusinessDiv">
-          		<form id="BusinessForm" action="./blogin" method="post">
+          		<form id="BusinessForm" action="./login" method="post">
           	   <label> BusinessID : <input type="text" name="businessId"/> </label>
                <label> Password: <input type="password" name="businessPassword"/> </label>             
           		</form>
           	</div>
-                  <input type="radio"  name="loginType" id="user" value="user" checked="checked">일반회원 로그인
-         		  <input type="radio"  name="loginType" id="business" value="business">사업자 로그인
-              <button id="loginbutton">로그인버튼</button>
+          	 -->
+                  
           
           <form th:action="@{/login/signup}" method="get">
               <input type="submit" value="회원가입" id="loginButton"/>
@@ -47,6 +45,7 @@
  
       </body>
       <script>
+      /*
 	$('#BusinessDiv').hide();
     	  
       
@@ -69,7 +68,7 @@
 	    		 $("#BusinessForm").submit();
 	    	 }
 	      });
-      
+      */
       </script>
 
 </html>
