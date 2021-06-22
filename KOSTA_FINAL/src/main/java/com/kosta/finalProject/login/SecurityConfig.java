@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		// hasRole : 특정권한을 가진 사람만 접근가능하다는 의미
 		http.authorizeRequests() // HttpServletRequest에 따라 접근(access)을 제한
 
-				.antMatchers("/login/**","/auth/**", "/upload/**","/business/**").permitAll() //   누구나 접근 허용
+				.antMatchers("/login/**","/auth/**", "/upload/**","/business/**", "/body/**").permitAll() //   누구나 접근 허용
 				.antMatchers("/admin/**").hasRole("ADMIN") // /admin으로 시작하는 경로는  ADMIN롤을 가진 사용자만  접근 가능(자동으로 ROLE_가 삽입)
 				.antMatchers("/BUSINESS/**").hasRole("BUSINESS")
 				.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능

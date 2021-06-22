@@ -48,10 +48,10 @@ public class UserBodyVO {
 	
 
 
+	
 
 
-
-	// =  weight * 9998 / (height * height) 
+	// bmi = weight/((height/100) * (height/100));
 	@OneToOne // 부모는 자식을 모르지만, 자식은 부모를 알아야 한다!
 	@JoinColumn(name = "user_id")
 	private UserVO user;
