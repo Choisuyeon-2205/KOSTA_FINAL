@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kosta.finalProject.login.SecurityBusiness;
 import com.kosta.finalProject.login.SecurityUser;
 import com.kosta.finalProject.models.BusinessAddress;
 import com.kosta.finalProject.models.BusinessVO;
@@ -76,6 +77,12 @@ public class LoginService implements UserDetailsService {
           UserDetails user = repo.findById(userId)
                 .filter(u ->u!=null).map(u->new SecurityUser(u)).get();
              return user;
+      }
+      
+      public UserDetails loadBusiness(String businessId) throws UsernameNotFoundException {
+    	  UserDetails business = repo2.findById(businessId)
+    			  .filter(u ->u!=null).map(u->new SecurityBusiness(u)).get();
+    	return business;  
       }
      
       public void signup(UserVO user, UserAddress userAddress) {

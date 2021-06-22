@@ -61,8 +61,9 @@ public class LoginController {
     }
     
     @PostMapping(value = "/blogin")
-    public String login2() {
-    	System.out.println("login PostMapping");
+    public String login2(BusinessVO businessId) {
+    	System.out.println("login PostMapping"); 	
+    	System.out.println(businessId.getBusinessId());
         return "/login/hello";
     }
     
