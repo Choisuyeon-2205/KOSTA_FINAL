@@ -63,32 +63,32 @@ public class UserVO {
 	@Column(name="user_photo", nullable = true)
 	String userPhoto;
 
-	@Enumerated(EnumType.STRING)
+//	@Enumerated(EnumType.STRING)
 	UserRoleEnumType urole;
 	
-	@Enumerated(EnumType.STRING)
-	private SocialLoginType social;
-	
-	@Builder
-	public UserVO(String userName, String userEmail, String userPhoto, UserRoleEnumType urole, SocialLoginType social) {
-		super();
-		this.userName = userName;
-		this.userEmail = userEmail;
-		this.userPhoto = userPhoto;
-		this.urole = urole;
-		this.social = social;
-	}
-
-	public String getUserRoleEnumTypeKey() {
-		return this.urole.getKey();
-	}
-	
-    public UserVO update(String userName, String userPhoto){
-        this.userName = userName;
-        this.userPhoto = userPhoto;
-        
-		return this;
-    }
+//	@Enumerated(EnumType.STRING)
+//	private SocialLoginType social;
+//	
+//	@Builder
+//	public UserVO(String userName, String userEmail, String userPhoto, UserRoleEnumType urole, SocialLoginType social) {
+//		super();
+//		this.userName = userName;
+//		this.userEmail = userEmail;
+//		this.userPhoto = userPhoto;
+//		this.urole = urole;
+//		this.social = social;
+//	}
+//
+//	public String getUserRoleEnumTypeKey() {
+//		return this.urole.getKey();
+//	}
+//	
+//    public UserVO update(String userName, String userPhoto){
+//        this.userName = userName;
+//        this.userPhoto = userPhoto;
+//        
+//		return this;
+//    }
 	
 	
 
