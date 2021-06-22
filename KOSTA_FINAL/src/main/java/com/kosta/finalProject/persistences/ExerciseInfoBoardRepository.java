@@ -1,23 +1,21 @@
 package com.kosta.finalProject.persistences;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
-import com.kosta.finalProject.models.DietDiaryBoardVO;
-import com.kosta.finalProject.models.QDietDiaryBoardVO;
+import com.kosta.finalProject.models.ExerciseInfoBoardVO;
+import com.kosta.finalProject.models.QExerciseInfoBoardVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
-public interface DietDiaryBoardRepository extends CrudRepository<DietDiaryBoardVO, Integer>, QuerydslPredicateExecutor<DietDiaryBoardVO> {
+public interface ExerciseInfoBoardRepository extends CrudRepository<ExerciseInfoBoardVO, Integer>, QuerydslPredicateExecutor<ExerciseInfoBoardVO>{
 
-	
 	public default Predicate makePredicate(String type, String keyword) {
 		BooleanBuilder builder = new BooleanBuilder();
-		QDietDiaryBoardVO board = QDietDiaryBoardVO.dietDiaryBoardVO;
-		builder.and(board.diaryNum.gt(0)); //and diaryNum>0
+		QExerciseInfoBoardVO board = QExerciseInfoBoardVO.exerciseInfoBoardVO;
+		builder.and(board.infoNum.gt(0)); //and infoNum>0
 		if(type==null) return builder;
 		switch (type) {
 		case "title":
@@ -35,9 +33,7 @@ public interface DietDiaryBoardRepository extends CrudRepository<DietDiaryBoardV
 		return builder;
 	}
 	
+	public Page<ExerciseInfoBoardVO> findByContent(String content, Pageable page);
 	
-	public Page<DietDiaryBoardVO> findByContent(String content, Pageable page);
-
-	public Page<DietDiaryBoardVO> findAll(Predicate p, Pageable pageable);
-	
+	public Page<ExerciseInfoBoardVO> findAll(Predicate p, Pageable pageable);
 }

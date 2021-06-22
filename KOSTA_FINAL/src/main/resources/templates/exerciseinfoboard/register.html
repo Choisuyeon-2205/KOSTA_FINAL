@@ -11,11 +11,11 @@
 	<div class="panel panel-default" layout:fragment="content1" style="padding: 0px 200px 0px 200px; width: 100%">
 		<h1 class="panel-heading" style="text-align: center;">새글 등록</h1>
 		<div class="panel-body">
-			<form th:action="@{/dietdiaryboard/register}" method="post" id="dietform" >
-			<input type="hidden" name="photo" id="dietphoto">
+			<form th:action="@{/exerciseinfoboard/register}" method="post" id="infoform" >
+			<input type="hidden" name="photo" id="infophoto">
+	
 
-
-				<!-- 제목 -->
+	<!-- 제목 -->
 				<div class="form-group">
 					<label for="title">title:</label> <input type="text"
 						class="form-control" id="title" placeholder="제목을 적어다오" name="title">
@@ -30,15 +30,14 @@
 
 				<!-- 작성자 -->
 
-				<div class="form-group" th:each="dboard:${dboardlist}">
+				<div class="form-group" th:each="eboard:${eboardlist}">
 					<label for="writer">writer:</label> <input type="text"
 						class="form-control" id="writer" name="writer" readonly="readonly">
 				</div>
 
-				
-
 			</form>
-			
+
+
 			<form onsubmit="return false;">
 				<div class="form-group">
 					<label for="photo">사진 등록</label> <input type="file"
@@ -46,9 +45,7 @@
 				</div>
 				<button class="btn btn-primary btn-lg btn-block" id="btn-save">등록</button>
 			</form>
-
-
-		</div>
+				</div>
 
 
 	</div>
@@ -64,7 +61,7 @@
          if(typeof file != "undefined") {
          var formData = new FormData();
          formData.append('data', file);
-         formData.append('path', "dietdiaryboard");
+         formData.append('path', "exerciseinfoboard");
          console.log(formData);
          $.ajax({
             type : 'POST',
@@ -76,19 +73,20 @@
       
         
                var fileInput = $('#photo');
-               var diet_image = fileInput[0].files[0].name; // 파일명 출력
-               $("#dietphoto").val(diet_image);
+               var info_image = fileInput[0].files[0].name; // 파일명 출력
+               $("#infophoto").val(info_image);
               
-               $('#dietform').submit();
+               $('#infoform').submit();
          }).fail(function(error) {
             alert('다시 등록해주세요');
          })
       }else {
-    	$('#dietform').submit();
+    	$('#infoform').submit();
       }
    }
 
 </script>
 </th:block>
+
 </body>
 </html>

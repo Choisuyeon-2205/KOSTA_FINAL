@@ -8,54 +8,54 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.kosta.finalProject.models.DietDiaryBoardVO;
+import com.kosta.finalProject.models.ExerciseInfoBoardVO;
 import com.kosta.finalProject.models.PageVO;
-import com.kosta.finalProject.persistences.DietDiaryBoardRepository;
+import com.kosta.finalProject.persistences.ExerciseInfoBoardRepository;
 import com.querydsl.core.types.Predicate;
 
 @Service
-public class DietDiaryBoardService {
+public class ExerciseInfoBoardService {
 
 	@Autowired
-	DietDiaryBoardRepository repo;
+	ExerciseInfoBoardRepository repo;
 
 	// page
-	public Page<DietDiaryBoardVO> selectAll(PageVO pvo) {
+	public Page<ExerciseInfoBoardVO> selectAll(PageVO pvo) {
 		Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());
-
-		// makePaging(방향, sort할 field)
-		Pageable pageable = pvo.makePaging(0, "diaryNum");
-		Page<DietDiaryBoardVO> result = repo.findAll(p, pageable);
+		Pageable pageable = pvo.makePaging(0, "infoNum");
+		Page<ExerciseInfoBoardVO> result = repo.findAll(p, pageable);
 		return result;
 	}
 
 	// list조회
-	public List<DietDiaryBoardVO> selectAll() {
-		return (List<DietDiaryBoardVO>) repo.findAll();
+	public List<ExerciseInfoBoardVO> selectAll() {
+		return (List<ExerciseInfoBoardVO>) repo.findAll();
 	}
 
 	// 아이디로 찾기
-	public DietDiaryBoardVO selectById(Integer diaryNum) {
-		return repo.findById(diaryNum).get();
+	public ExerciseInfoBoardVO selectById(Integer infoNum) {
+		return repo.findById(infoNum).get();
 	}
 
 	// 삽입
-	public DietDiaryBoardVO insertBoard(DietDiaryBoardVO board) {
+	public ExerciseInfoBoardVO insertBoard(ExerciseInfoBoardVO board) {
 		return repo.save(board);
 	}
 
 	// 수정
-	public DietDiaryBoardVO updateBoard(DietDiaryBoardVO board) {
+	public ExerciseInfoBoardVO updateBoard(ExerciseInfoBoardVO board) {
 		return repo.save(board);
 	}
 
 	// 제거
-	public int deleteBoard(Integer diaryNum) {
+	public int deleteBoard(Integer infoNum) {
 		int ret = 0;
 		try {
-			repo.deleteById(diaryNum);
+			repo.deleteById(infoNum);
 			ret = 1;
 		} catch (Exception ex) {
 		}
 		return ret;
 	}
+
 }

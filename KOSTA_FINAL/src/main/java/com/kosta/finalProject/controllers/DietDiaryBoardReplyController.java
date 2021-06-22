@@ -34,6 +34,12 @@ public class DietDiaryBoardReplyController {
 	@Autowired
 	DietDiaryReplyService service;
 	
+	@Autowired
+	UserService uservice;
+	
+	@Autowired
+	DietDiaryBoardService dietservice;
+	
 	//특정 board에 모든댓글 조회
 	@GetMapping("/dboard/{diaryNum}")
 	public ResponseEntity<List<DietDiaryReplyVO>> selectAll(@PathVariable int diaryNum) {
@@ -52,11 +58,7 @@ public class DietDiaryBoardReplyController {
 	}
 
 	
-	@Autowired
-	UserService uservice;
 	
-	@Autowired
-	DietDiaryBoardService dietservice;
 	
 	//특정보드 댓글 입력 후 재조회
 	@PostMapping("/{diaryNum}")
@@ -82,42 +84,10 @@ public class DietDiaryBoardReplyController {
 	//댓글 삭제
 	@DeleteMapping("/{diaryNum}/{diaryRplNum}")
 	public ResponseEntity<List<DietDiaryReplyVO>> deleteByRplno(@PathVariable Integer diaryRplNum , @PathVariable Integer diaryNum) {
-		System.out.println("test" + diaryNum + diaryRplNum);
+		//System.out.println("test" + diaryNum + diaryRplNum);
 		service.deleteReply(diaryRplNum);
 		DietDiaryBoardVO dboard = DietDiaryBoardVO.builder().diaryNum(diaryNum).build();
 		return new ResponseEntity<>(service.selectAll(dboard), HttpStatus.OK);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

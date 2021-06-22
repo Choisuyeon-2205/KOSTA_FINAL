@@ -1,4 +1,5 @@
 
+
 /**
  * 공통자바스크립트
  */
@@ -7,14 +8,14 @@ var replyManager = (function(){
 	var getAll = function(obj, callback){
 		console.log("getAll......." + obj);
 		//$.getJSON은 AJAX의 하나의 방법이다.
-		$.getJSON("/replies/dboard/"+ obj, callback)
+		$.getJSON("/replies/eboard/all/"+ obj, callback)
 		
 		
 	};
 	var add = function(obj, callback){
 		console.log("add reply.......");
 		$.ajax({
-			url:"/replies/" + obj["diaryNum"],
+			url:"/replies/eboard/" + obj["infoNum"],
 			data: JSON.stringify(obj),
 			dataType:"json",
 			type:"post",
@@ -26,7 +27,7 @@ var replyManager = (function(){
 	var remove = function(obj, callback){
 		console.log("remove reply.........");
 		$.ajax({
-			url:"/replies/" + obj["diaryNum"] + "/" + obj["diaryRplNum"],
+			url:"/replies/eboard/" + obj["infoNum"] + "/" + obj["infoRplNum"],
 			type:"delete",
 			success:callback
 		});
@@ -37,6 +38,9 @@ var replyManager = (function(){
 			 "remove" : remove
 	  };
 })();
+
+
+
 
 
 
