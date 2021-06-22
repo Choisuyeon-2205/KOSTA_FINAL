@@ -41,7 +41,6 @@ public class BusinessVO {
 	BusinessAddress businessAddress;
 	String businessPhone;
 	
-	@Enumerated(EnumType.STRING)
 	UserRoleEnumType brole;
 	
 	@JsonIgnore

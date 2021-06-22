@@ -76,14 +76,15 @@ public class LoginService implements UserDetailsService {
       public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException { 
           UserDetails user = repo.findById(userId)
                 .filter(u ->u!=null).map(u->new SecurityUser(u)).get();
+          if(userId==null) {
+        	  UserDetails business = repo2.findById(userId)
+                      .filter(u ->u!=null).map(u->new SecurityBusiness(u)).get();
+        	  return business;
+          }
              return user;
       }
       
-      public UserDetails loadBusiness(String businessId) throws UsernameNotFoundException {
-    	  UserDetails business = repo2.findById(businessId)
-    			  .filter(u ->u!=null).map(u->new SecurityBusiness(u)).get();
-    	return business;  
-      }
+      
      
       public void signup(UserVO user, UserAddress userAddress) {
          BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
