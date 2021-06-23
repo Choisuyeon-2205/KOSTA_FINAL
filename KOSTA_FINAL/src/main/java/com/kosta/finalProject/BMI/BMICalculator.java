@@ -1,5 +1,8 @@
 package com.kosta.finalProject.BMI;
 
+import org.springframework.stereotype.Component;
+
+//@Component
 public class BMICalculator {
 
 	private double lowweight;
@@ -12,7 +15,7 @@ public class BMICalculator {
 		double h = height*0.01;
 		double result = weight / (h*h);
 		
-		System.out.println("지수" + (int)result);
+		System.out.println("BMI 지수 : " + (int)result);
 		
 		if(result>obbesity) {
 			System.out.println("비만");

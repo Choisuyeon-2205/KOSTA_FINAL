@@ -49,12 +49,12 @@ public class UserService implements UserDetailsService{
   	}
   	
   	
-  	public void updateBMI(double bmi) {
-  		UserBodyVO body = UserBodyVO.builder()
-  				.userBmi(bmi).build();
+  	public void updateBMI(UserBodyVO body) {
   		bodyrepo.save(body);
   	}
 
+  	
+  	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		UserDetails user = repo.findById(userId)

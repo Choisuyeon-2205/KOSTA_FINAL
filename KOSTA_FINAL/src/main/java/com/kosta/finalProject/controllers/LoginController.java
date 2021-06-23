@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.kosta.finalProject.BMI.BMICalculator;
 import com.kosta.finalProject.models.BusinessAddress;
 import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.UserAddress;
@@ -43,6 +44,9 @@ public class LoginController {
    
    @Autowired
    UserService userservice;
+   
+//   @Autowired
+//   BMICalculator bmi;
 
     @GetMapping(value = "/login")
     public void login() {
@@ -104,10 +108,19 @@ public class LoginController {
    	 UserVO user = new UserVO();
    	 user.setUserId(principal.getName());
 	 body.setUser(user);
-    	loginservice.profileSave(body);
-    	
-    	 return "redirect:/login/login";
+    	BMICalculator bmi = new BMICalculator();
+    	body.setUserBmi(bmi.bmicalculator(body.getWeight(), body.getHeight()));
+    	System.out.println("UserBodyVO : " + body);
+    	userservice.updateBMI(body);
+    	return "redirect:/login/myprofile";
     }
+    
+    @GetMapping("/myprofile")
+    public void myprofile() {
+    	
+    }
+    
+    
     
     @GetMapping("/BusinessSignup")
     public void BusinessSignup() { // 회원 추가
