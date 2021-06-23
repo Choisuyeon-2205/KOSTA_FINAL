@@ -36,6 +36,28 @@ public class UserService implements UserDetailsService{
 	@Autowired
 	UserBodyRepository bodyrepo;
 	
+	
+	// 수정하기 ..  결과값이1이면 ㅇㅋ 0 이면 오류
+	public int updateBody(UserBodyVO body) {
+		int result = 0;
+		try {
+			bodyrepo.save(body);
+			result = 1;
+		} catch (Exception e) {
+			return 0;
+		}
+		return result;
+	}
+
+	// 리스트 뿌리기
+	public List<UserVO> userList() {
+		return (List<UserVO>) repository.findAll();
+	}
+
+	// 리스트 뿌리기
+	public List<UserBodyVO> userBodyList() {
+		return bodyrepo.findAll();
+	}
 
 
   	public UserVO selectById(String userId) {
