@@ -1,33 +1,72 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-@import url('https://fonts.googleapis.com/css?family=Rakkas');
-body{
-  background-color:#232728;
-  overflow:hidden;
-  font-family:'Rakkas';
-}
-.page-header{
-  position:absolute;
-  left:50%;
-  top:50%;
-  text-align:center;
-  transform:translate(-50%, -50%);
-  color:#DBAB4C;
-  font-size:4em;
-}
-</style>
 </head>
-<body>
+
+	<style th:fragment="header1">
+	.fit{padding: 0 35px;}
+
+	ul,ol,li{list-style:none; }
+	header  {height: 81px;  text-align: center;  background-color: rgba(140,140,140,0.5);}
+	header h1 { position: absolute; left: 50px; top: auto; padding: 14px 0 0; margin-top: 0;}
+	header h1 .aa  {display:inline-block; width: 80px; height: 50px; color: transparent; background: url("/image/logo2.png") no-repeat; background-size: 80px 50px; }
+	header .lnb li {display: inline-block;  }
+	header .lnb li :hover{  background-color: rgba( 234, 234, 234, 0.5 );}
+	header .lnb li a {display: block; height: 81px;  font-size: 21px; font-weight:bold; color: #333; line-height: 81px; text-decoration: none; }
+	header .lnb li a:active{color: white}
+	header .spot {position: absolute;right: 50px; top: 0px; }
+	header .spot li {position: relative; float: left;  }
+	header .spot li:after {content: ""; position: absolute; left: 0; top: 50%; width: 1px; height: 7px; background:#ccc; transform: translateY(-50%); }
+	header .spot li:first-child:after{ display: none;} 
+	header .spot li a {display: block; height: 81px; padding:  0 10px; line-height: 81px; text-decoration: none; color: black;}
+	header .spot li:last-child a { padding-right: 0;}
+	header ul li ul { width:145px;display:none;position: absolute;	font-size:14px;background: rgb(213,213,213);}
+	header ul li:hover ul { display:block; }
+	header ul li ul li { display: block;} 
+	header ul li ul li:hover {background-color: rgb(116,116,116)} 
+	ul.sub2 {text-align: center; padding: 20px;}
+
+	</style>
+
+<body>	
+
 	<header class="page-header" th:fragment="header1">
-		<div style="text-align : center;">
-			<a href="/center/centerlist"target="_blank">
-				<img id="logo" src="/image/logo2.png"  width="100px" height="100px" >
-			<a>
-		</div>
+	<h1> <a>FitPle     </a> <a href="#a" class="aa">FitPle</a></h1>
+
+	
+	
+	<nav class="lnb">
+		<ul>
+			<li><a href="#a" class="fit">MyFitPle</a></li>		 
+			<li><a href="#a"  class="fit">FitnessCenter</a></li>		 
+			<li><a href="#a"  class="fit">Community</a>		
+				<ul class="sub2">
+					<li class="fit2"><a href="#a">ExerciseInfo</a></li>
+					<li class="fit2"><a href="#a">DietDiary</a></li>
+					<li class="fit2"><a href="#a">Health</a></li>
+					<li class="fit2"><a href="#a">Sharing</a></li>
+				</ul> </li>
+			<li><a href="#a" class="fit">Store</a></li>		 
+		</ul>
+	</nav>
+
+	<nav class="spot">
+		<ul>
+			<li sec:authorize-expr="!isAuthenticated()"><a href="/login/login"  th:href="@{/login/login}">Login</a></li>
+			<li ><a sec:authentication="name">name </a></li>
+			<li  sec:authorize-expr="isAuthenticated()"> <a href="/login/logout" th:href="@{/login/logout}">Logout</a></li>
+		</ul>
+	</nav>
+<!--
+<div th:if="${#authorization.expr('isAuthenticated()')}">
+        <h2 th:text="${#authentication.name}">Name</h2>
+        <a href="/logout" th:href="@{/logout}">Logout</a>
+    </div>
+    <div th:unless="${#authorization.expr('isAuthenticated()')}">
+        <a href="/login" th:href="@{/login}">Login</a>
+    </div>
+  -->
 	</header>
 </body>
 </html>

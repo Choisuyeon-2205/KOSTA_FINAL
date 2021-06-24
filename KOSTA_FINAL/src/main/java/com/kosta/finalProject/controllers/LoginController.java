@@ -63,16 +63,11 @@ public class LoginController {
     	System.out.println("login PostMapping");
         return "/login/hello";
     }
-    
-//    @PostMapping(value = "/blogin")
-//    public String login2() {
-//    	System.out.println("login PostMapping"); 	
-//        return "/login/hello";
-//    }
+
     
     @RequestMapping("/login/logout")
     public String logout() {
- 
+ System.out.println("로그아웃처리..");
        return "/login/login";
     }
     @RequestMapping("/accessDenied")

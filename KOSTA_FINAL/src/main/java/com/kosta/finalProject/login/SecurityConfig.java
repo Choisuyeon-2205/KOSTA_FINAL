@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 				.permitAll()
 				.and()
 				.logout() // 로그아웃에 관한 설정을 의미
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
+				.logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
+				.logoutSuccessUrl("/login/hello") // 로그아웃 성공시 리다이렉트 주소
 				.invalidateHttpSession(true)  // 세션 지우기
 				.and().csrf().disable();  //csrf(크로스사이트 위조요청에 대한 설정) 토큰 비활성화 (test시에는 disable권장)            
 		http.exceptionHandling().accessDeniedPage("/accessDenied"); // 403 예외처리 핸들링   권한이 없는 대상이 접속을시도했을 때
