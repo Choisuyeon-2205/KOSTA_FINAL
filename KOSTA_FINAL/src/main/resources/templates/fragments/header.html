@@ -19,7 +19,7 @@
 	header .spot li {position: relative; float: left;  }
 	header .spot li:after {content: ""; position: absolute; left: 0; top: 50%; width: 1px; height: 7px; background:#ccc; transform: translateY(-50%); }
 	header .spot li:first-child:after{ display: none;} 
-	header .spot li a {display: block; height: 81px; padding:  0 10px; line-height: 81px; text-decoration: none; color: black;}
+	header .spot li a {display: inline-block; height: 81px; padding:  0 10px; line-height: 81px; text-decoration: none; color: black;}
 	header .spot li:last-child a { padding-right: 0;}
 	header ul li ul { width:145px;display:none;position: absolute;	font-size:14px;background: rgb(213,213,213);}
 	header ul li:hover ul { display:block; }
@@ -53,9 +53,16 @@
 
 	<nav class="spot">
 		<ul>
-			<li sec:authorize-expr="!isAuthenticated()"><a href="/login/login"  th:href="@{/login/login}">Login</a></li>
-			<li ><a sec:authentication="name">name </a></li>
-			<li  sec:authorize-expr="isAuthenticated()"> <a href="/login/logout" th:href="@{/login/logout}">Logout</a></li>
+			
+			<li sec:authorize-expr="!isAuthenticated()">		   
+			      <a >손님 </a> 
+			      <a href="/login/login"  th:href="@{/login/login}">Login</a>   
+			</li>
+			
+			<li  sec:authorize-expr="isAuthenticated()"> 
+				<a sec:authentication="name" >name </a> 
+			      <a href="/login/logout" th:href="@{/login/logout}">Logout</a> 
+		     </li>
 		</ul>
 	</nav>
 <!--
