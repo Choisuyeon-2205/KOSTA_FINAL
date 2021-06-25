@@ -38,7 +38,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/login/*")
+@RequestMapping /* ("/login/*") */
 public class LoginController {
 
    @Autowired
@@ -49,27 +49,27 @@ public class LoginController {
    
    private final HttpSession httpSession; // 로그인 여부를 확인하기 위한 세션
 
-    @GetMapping(value = "/login")
+    @GetMapping(value = "/main")
     public void login() {
     	System.out.println("login get.....");
     }
 
-    @RequestMapping("/hello")   
-    public void hello() {
+    @RequestMapping("/main")   
+    public void main() {
    
     }
     
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/login/login")
     public String logins() {
     	System.out.println("login PostMapping");
-        return "/login/hello";
+        return "/main";
     }
 
     
     @RequestMapping("/login/logout")
     public String logout() {
  System.out.println("로그아웃처리..");
-       return "/login/login";
+       return "/main";
     }
     @RequestMapping("/accessDenied")
     public void accessDenied() {
@@ -79,17 +79,15 @@ public class LoginController {
   //  소셜 로그인
   @GetMapping(value = "/") // Http 주소 연결하는 부분
   public String index(Model model) { // Model <- Back과 Front 사이의 정보 이동을 돕는 역할
-  	
   	SessionUser user = (SessionUser) httpSession.getAttribute("user"); // 로그인을 했을 경우, user에 정보를 저장함
-  	
   	if(user != null) { // 로그인이 되어있다면 "logName"이라는 변수명으로 회원이름을 넘긴다
   		model.addAttribute("logName", user.getName());
   	}
-  	return "/login/myprofile"; // main.html 연결
+  	return "/main"; // main.html 연결
   	
   }
     
-    @PostMapping( value = "/signUp")
+    @PostMapping( value = "/login/signUp")
     public String signup(UserVO user, String userAddress1, String userAddress2, String userAddress3, String AddNum ) { // 회원 추가
     	System.out.println("PostMapping 도착");
     	UserAddress userAddress = new UserAddress();
@@ -97,22 +95,20 @@ public class LoginController {
     	userAddress.setUserAddress1(userAddress1);
     	userAddress.setUserAddress2(userAddress2);
     	userAddress.setUserAddress3(userAddress3);
-       loginservice.signup(user, userAddress);
-       
-       
-     
-      return "redirect:/login/profile";
+       loginservice.signup(user, userAddress); 
+  
+      return "redirect:/main";
     }
-    @GetMapping("/signup")
+    @GetMapping("/login/signup")
     public void signupget() { // 회원 추가
       
     }
-    @GetMapping("/profile")
+    @GetMapping("/login/profile")
     public void profile() {
     	
     }
     
-    @PostMapping("/profile")
+    @PostMapping("/login/profile")
     public String profilePost(UserBodyVO body, Principal principal,Authentication authentication) {
    	 UserVO user = new UserVO();
    	 user.setUserId(principal.getName());
@@ -121,21 +117,21 @@ public class LoginController {
     	body.setUserBmi(bmi.bmicalculator(body.getWeight(), body.getHeight()));
     	System.out.println("UserBodyVO : " + body);
     	userservice.updateBMI(body);
-    	return "redirect:/login/myprofile";
+    	return "redirect:/main";
     }
     
-    @GetMapping("/myprofile")
+    @GetMapping("/login/myprofile")
     public void myprofile() {
     	
     }
     
     
     
-    @GetMapping("/BusinessSignup")
+    @GetMapping("/login/BusinessSignup")
     public void BusinessSignup() { // 회원 추가
       
     }
-    @PostMapping("/BusinessSignUp")
+    @PostMapping("/login/BusinessSignUp")
     public String BusinessSignup2(BusinessVO business, String Address1, String Address2, String Address3, String AddNum) { // 회원 추가
     	System.out.println("PostMapping 도착");
     	BusinessAddress  businessAddress= new BusinessAddress();
@@ -144,7 +140,7 @@ public class LoginController {
     	businessAddress.setAddress2(Address2);
     	businessAddress.setAddress3(Address3);
        loginservice.businessSingup(business, businessAddress);
-      return "redirect:/login/hello";
+      return "redirect:/main";
     }
     public UserVO getUser() { //
         UserVO user = new UserVO();
@@ -158,7 +154,7 @@ public class LoginController {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }
     
-    @RequestMapping("/testtest")
+    @RequestMapping("/login/testtest")
     @ResponseBody
     public String SMSController(String user_phone) {
        System.out.println("***********USER PHONE************* " + user_phone);
@@ -174,7 +170,7 @@ public class LoginController {
         return numStr;
     }
     
-    @RequestMapping("/businessPhone")
+    @RequestMapping("/login/businessPhone")
     @ResponseBody
     public String SMSController2(String businessPhone) {
        System.out.println("***********USER PHONE************* " + businessPhone);
@@ -191,19 +187,19 @@ public class LoginController {
     }
    
    @ResponseBody
-   @GetMapping("/duCheck")
+   @GetMapping("/login/duCheck")
    public int checkId(String userId){
 	   return loginservice.checkName(userId)? 0 : 1;
    }
 
    @ResponseBody
-   @GetMapping("/nickCheck")
+   @GetMapping("/login/nickCheck")
    public int CheckNickName(String nickName) {
 	   return loginservice.checkNickName(nickName)? 0: 1;
    }
     
    @ResponseBody
-   @GetMapping("/businessCheck")
+   @GetMapping("/login/businessCheck")
    public int businessCheck(String businessId){
 	   return loginservice.businessId(businessId)? 0 : 1;
    }

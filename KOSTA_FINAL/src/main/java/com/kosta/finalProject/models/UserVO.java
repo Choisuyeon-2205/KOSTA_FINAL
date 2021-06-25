@@ -64,7 +64,7 @@ public class UserVO {
 	String userPhoto;
 
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column(nullable = true)
 	UserRoleEnumType urole;
 
 	@Builder

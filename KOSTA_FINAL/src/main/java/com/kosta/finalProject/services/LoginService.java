@@ -20,6 +20,7 @@ import com.kosta.finalProject.models.BusinessAddress;
 import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.UserAddress;
 import com.kosta.finalProject.models.UserBodyVO;
+import com.kosta.finalProject.models.UserRoleEnumType;
 import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.persistences.BusinessRepository;
 import com.kosta.finalProject.persistences.LoginRepository;
@@ -91,17 +92,17 @@ public class LoginService implements UserDetailsService {
       public void signup(UserVO user, UserAddress userAddress) {
          BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
          user.setUserPw(passwordEncoder.encode(user.getUserPw()));
+         user.setUrole(UserRoleEnumType.USER);
          System.out.println(user);
          System.out.println(userAddress);
-        UserVO newUser = UserVO.builder()
-       		 .userId(user.getUserId())
-             .userName(user.getUserName())
-             .nickName(user.getNickName())
-             .userAddress(userAddress) 
-             .userEmail(user.getUserEmail())
-             .userPhone(user.getUserPhone())
-             .userPw(user.getUserPw()).build();
-        repo.save(newUser);		
+         user.setUserAddress(userAddress);
+			/*
+			 * UserVO newUser = UserVO.builder() .userId(user.getUserId())
+			 * .userName(user.getUserName()) .nickName(user.getNickName())
+			 * .userAddress(userAddress) .userEmail(user.getUserEmail())
+			 * .userPhone(user.getUserPhone()) .userPw(user.getUserPw()).build();
+			 */
+        repo.save(user);		
       }
       
       public void businessSingup(BusinessVO business, BusinessAddress businessAddress) {

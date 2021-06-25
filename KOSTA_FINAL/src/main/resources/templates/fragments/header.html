@@ -2,21 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-</head>
-
-	<style th:fragment="header1">
+<head>
+<style th:fragment="header1">
 	.fit{padding: 0 35px;}
 
 	ul,ol,li{list-style:none; }
-	header  {height: 81px;  text-align: center;  background-color: rgba(140,140,140,0.5);}
-	header h1 { position: absolute; left: 50px; top: auto; padding: 14px 0 0; margin-top: 0;}
-	header h1 .aa  {display:inline-block; width: 80px; height: 50px; color: transparent; background: url("/image/logo2.png") no-repeat; background-size: 80px 50px; }
+	 header  {height: 81px;  text-align: center;}
+	header h1 { position: absolute; left: 50px; top: auto; padding: 14px 0 0; margin-top: 0; }
+	header h1 a { color: black;	}
+	.logo  {display:inline-block; width: 80px; height: 50px;  background:url("/image/logo2.png") no-repeat; background-size: 80px 50px;   
+	
+	}
 	header .lnb li {display: inline-block;  }
 	header .lnb li :hover{  background-color: rgba( 234, 234, 234, 0.5 );}
 	header .lnb li a {display: block; height: 81px;  font-size: 21px; font-weight:bold; color: #333; line-height: 81px; text-decoration: none; }
 	header .lnb li a:active{color: white}
-	header .spot {position: absolute;right: 50px; top: 0px; }
-	header .spot li {position: relative; float: left;  }
+	header .spot {position: absolute; right: 50px; top: 0px; margin-right: 40px; }
+	header .spot li {position: relative;  display: inline-block; }
 	header .spot li:after {content: ""; position: absolute; left: 0; top: 50%; width: 1px; height: 7px; background:#ccc; transform: translateY(-50%); }
 	header .spot li:first-child:after{ display: none;} 
 	header .spot li a {display: inline-block; height: 81px; padding:  0 10px; line-height: 81px; text-decoration: none; color: black;}
@@ -26,37 +28,44 @@
 	header ul li ul li { display: block;} 
 	header ul li ul li:hover {background-color: rgb(116,116,116)} 
 	ul.sub2 {text-align: center; padding: 20px;}
-
+		
 	</style>
+</head>
+
+	
 
 <body>	
 
 	<header class="page-header" th:fragment="header1">
-	<h1> <a>FitPle     </a> <a href="#a" class="aa">FitPle</a></h1>
+	<div style="margin-top: -35px; padding:0px 40px" >
+	<h1> <a th:href="@{/main}">FitPle     </a> 
+	     <a th:href="@{/main}" class="logo">
+	       <!--  <img th:src="@{/image/logo2.png}"/> -->
+         </a>
+	</h1>
 
-	
+ 
 	
 	<nav class="lnb">
-		<ul>
+		<ul style=" background-color: rgba(140,140,140,0.5); ">
 			<li><a href="#a" class="fit">MyFitPle</a></li>		 
 			<li><a href="#a"  class="fit">FitnessCenter</a></li>		 
 			<li><a href="#a"  class="fit">Community</a>		
-				<ul class="sub2">
-					<li class="fit2"><a href="#a">ExerciseInfo</a></li>
-					<li class="fit2"><a href="#a">DietDiary</a></li>
-					<li class="fit2"><a href="#a">Health</a></li>
-					<li class="fit2"><a href="#a">Sharing</a></li>
+				<ul class="sub2"style="width: 185px">
+					<li class="fit2"><a th:href="@{/exerciseinfo/boardlist}">ExerciseInfo</a></li>
+					<li class="fit2"><a th:href="@{/dietdiaryboard/boardlist}">DietDiary</a></li>
+					<li class="fit2"><a th:href="@{/healthboard/boardlist}">Health</a></li>
+					<li class="fit2"><a th:href="@{/sharingboard/boardlist}">Sharing</a></li>
 				</ul> </li>
-			<li><a href="#a" class="fit">Store</a></li>		 
+			<li><a th:href="@{/naversearch/searchstore}" class="fit">Store</a></li>		 
 		</ul>
 	</nav>
 
 	<nav class="spot">
-		<ul>
-			
+		<ul>		
 			<li sec:authorize-expr="!isAuthenticated()">		   
-			      <a >손님 </a> 
-			      <a href="/login/login"  th:href="@{/login/login}">Login</a>   
+			      <a >손님 </a> <!-- href="/login/login"    -->
+			      <a  data-toggle="modal" data-target="#myModal">Login</a>   
 			</li>
 			
 			<li  sec:authorize-expr="isAuthenticated()"> 
@@ -65,6 +74,8 @@
 		     </li>
 		</ul>
 	</nav>
+	</div>
+	
 <!--
 <div th:if="${#authorization.expr('isAuthenticated()')}">
         <h2 th:text="${#authentication.name}">Name</h2>

@@ -17,9 +17,10 @@
 <body>
   	<header th:replace="/fragments/header::header1"> </header>
   	<!-- 하위 HTML에서 content 재정의할 예정 -->
-  	<div class="panel panel-default" layout:fragment="content1">
-  	</div><th:block layout:fragment="style2">
-</th:block>
+  	<div class="panel panel-default" layout:fragment="content1" style="border:none	">
+  	</div>
+  	<th:block layout:fragment="style2">
+    </th:block>
 <!-- 	<footer th:replace="/fragments/footer::footer1"></footer> -->
 	<!-- 하위 HTML에서 javascript 재정의할 예정  th:block은 없어지는 태그-->
 	<th:block layout:fragment="script1">

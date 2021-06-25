@@ -4,22 +4,15 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
-
 <head>
-
-<title>임시페이지 입니다.</title>
+<meta charset="UTF-8">
+<title>Welcome to FitPle</title>
 </head>
 <body>
-
-
-
 	<div class="panel panel-default" layout:fragment="content1" >
-		<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-			<form th:action="@{/login/logout}" method="post">
-			<input type="submit" value="Sign Out" />
-		</form>
-		
-		
+	
+	<h1>메인페이지입니다.</h1>
+			
  <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -32,7 +25,7 @@
         </div>
         <div class="modal-body">
           <div id="userDiv">
-          		<form id="userForm" action="/login/hello" method="post">
+          		<form id="userForm" action="main" method="post">
           	  <label> UserID : <input type="text" name="username"/> </label>
               <label> Password: <input type="password" name="password"/> </label>
               <input type="radio"  name="loginType" id="user" value="user" checked="checked">일반회원 로그인  
@@ -61,6 +54,8 @@
   </div>
 		
 		
+		
 	</div>
+		
 </body>
 </html>
