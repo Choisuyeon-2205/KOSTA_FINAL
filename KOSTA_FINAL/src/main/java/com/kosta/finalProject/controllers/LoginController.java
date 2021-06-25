@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.kosta.finalProject.BMI.BMICalculator;
+import com.kosta.finalProject.login.oauth.SessionUser;
 import com.kosta.finalProject.models.BusinessAddress;
 import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.UserAddress;
@@ -45,8 +47,7 @@ public class LoginController {
    @Autowired
    UserService userservice;
    
-//   @Autowired
-//   BMICalculator bmi;
+   private final HttpSession httpSession; // 로그인 여부를 확인하기 위한 세션
 
     @GetMapping(value = "/login")
     public void login() {
@@ -74,6 +75,19 @@ public class LoginController {
     public void accessDenied() {
  
     }
+    
+  //  소셜 로그인
+  @GetMapping(value = "/") // Http 주소 연결하는 부분
+  public String index(Model model) { // Model <- Back과 Front 사이의 정보 이동을 돕는 역할
+  	
+  	SessionUser user = (SessionUser) httpSession.getAttribute("user"); // 로그인을 했을 경우, user에 정보를 저장함
+  	
+  	if(user != null) { // 로그인이 되어있다면 "logName"이라는 변수명으로 회원이름을 넘긴다
+  		model.addAttribute("logName", user.getName());
+  	}
+  	return "/login/myprofile"; // main.html 연결
+  	
+  }
     
     @PostMapping( value = "/signUp")
     public String signup(UserVO user, String userAddress1, String userAddress2, String userAddress3, String AddNum ) { // 회원 추가

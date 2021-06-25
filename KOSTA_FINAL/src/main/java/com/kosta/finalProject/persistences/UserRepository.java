@@ -13,6 +13,7 @@ import com.kosta.finalProject.models.UserVO;
 public interface UserRepository extends CrudRepository<UserVO, String>,JpaRepository<UserVO, String> {
 	List<UserVO> findByUserId(String userId);
 	Optional<UserVO> findByUserName(String name);
+	Optional<UserVO> findByUserEmail(String email);
 	
 	@Query("select user from UserVO user ")
 	public List<UserVO> selectAll();

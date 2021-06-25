@@ -46,6 +46,8 @@ public class UserBodyVO {
 	@Column(nullable = true, name = "user_bmi")
 	double userBmi ;
 	
+	@Column(nullable = true)
+	int buddyCheck;
 
 
 	
