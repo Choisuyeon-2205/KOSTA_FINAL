@@ -7,82 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome to FitPle</title>
-<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <style>
-.ac {
-background-color: rgba(255,255,255,0.5)
-}
-	.modal-login {
-		width: 320px;
-		margin: 30px auto;
-	}
-	.modal-login .modal-content {
-		border-radius: 1px;
-		border: none;
-	}
-	.modal-title{
-	text-align: center;
-	}
-	
-	.modal-login .modal-header {
-        position: relative;
-		justify-content: center;
-        background: #f2f2f2;
-	}
-    .modal-login .modal-body {
-        padding: 30px;
-    }
-    .modal-login .modal-footer {
-        background: #f2f2f2;
-    }
-	.modal-login h4 {
-		text-align: center;
-		font-size: 26px;
-	}
-    .modal-login label {
-        font-weight: normal;
-        font-size: 13px;
-    }
-	.modal-login .form-control, .modal-login .btn {
-		min-height: 38px;
-		border-radius: 2px; 
-	}
-	.modal-login .hint-text {
-		text-align: center;
-	}
-	.modal-login .close {
-        position: absolute;
-		top: 15px;
-		right: 15px;
-	}
-    .modal-login .checkbox-inline {
-        margin-top: 12px;
-    }
-    .modal-login input[type="checkbox"]{
-        margin-top: 2px;
-    }
-	.modal-login .btn {
-        min-width: 100px;
-		background: #3498db;
-		border: none;
-		line-height: normal;
-	}
-	.modal-login .btn:hover, .modal-login .btn:focus {
-		background: #248bd0;
-	}
-	.modal-login .hint-text a {
-		color: #999;
-	}
-	.trigger-btn {
-		display: inline-block;
-		margin: 100px auto;
-	}
-	.signup{
-	display: inline-flex;
-	}
 #videoBG{
      position: absolute;
      top: 0px;
@@ -92,67 +18,20 @@ background-color: rgba(255,255,255,0.5)
      width: auto;
      height: auto;
      z-index: -1;
-     overflow: hidden;
+  
 }
-
 </style>
 </head>
 <body>
 
 	<div class="panel panel-default" layout:fragment="content1" >
+
 	<video id = "videoBG" autoplay loop muted>
 	<source src="image/gym.mp4" type="video/mp4">	
 	</video>
-
-			
- <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"> LOGIN </h4>
-        </div>
-        <div class="modal-body">
-          <div id="userDiv" class="form-group">
-          
-          		<form id="userForm" action="main" method="post">
-          			<div class="form-group">
-          	  <label> UserID </label> <input type="text" name="username"  class="form-control" required="required"/>
-          	  		</div>
-          	  		<div class="form-group">
-              <label> Password  </label> <input type="password" name="password" class="form-control" required="required"/>
-             		</div><br>
-            <label class="checkbox-inline pull-left" >  <input type="radio"  name="loginType" id="user" value="user" checked="checked">USER LOGIN  </label>
-         	 <label class="checkbox-inline pull-left"> <input type="radio"  name="loginType" id="business" value="business">BUSINESS LOGIN</label>
-              <input type="submit" id="loginbutton" value="LOGIN" class="btn btn-primary pull-right">
-          		</form>	<br>	
-          		</div>
-          	<div class="signup">
-          	 <form th:action="@{/login/signup}" method="get">
-            	 <input type="submit" value="USER SIGNUP" id="loginButton"  class="btn btn-default"/>
-             </form>
-             <form th:action="@{/login/BusinessSignup}" method="get">
-             	<input type="submit" value="BUSINESS SIGNUP"  class="btn btn-default"/>
-             </form>   
-             </div>  
-             </div>
-        </div>
-        <div class="modal-footer">  
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-        
-        
-      </div>
-      
-    </div>
-  </div>
-		
-		
 		
 	
-		
+	
+  </div>
 </body>
 </html>
