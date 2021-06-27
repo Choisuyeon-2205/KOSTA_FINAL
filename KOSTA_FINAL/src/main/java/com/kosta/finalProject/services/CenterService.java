@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.CenterVO;
 import com.kosta.finalProject.persistences.CenterRepository;
 
@@ -29,6 +30,9 @@ public class CenterService {
 		return (List<CenterVO>)centerRepo.findAll();
 	}
 	
+	public List<CenterVO> selectByBusiness(BusinessVO business){
+		return centerRepo.findByBusiness(business);
+	}
 	
 	public CenterVO insertCenter(CenterVO center) {
 		return centerRepo.save(center);

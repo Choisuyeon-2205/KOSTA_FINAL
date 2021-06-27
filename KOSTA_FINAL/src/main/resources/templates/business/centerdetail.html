@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+body{
+	
+	font-family: 'Trebuchet MS', serif;
+	line-height: 1.6
+}
+.container{
+	width: 1500px;
+	margin: 0 auto;
+}
+
+/* detail 정보 */
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+ul.tabs li{
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+	width: 300px;
+}
+
+ul.tabs li.current{
+	background: #ededed;
+	color: #222;
+}
+
+.tab-content{
+	display: none;
+	background: #ededed;
+	padding: 15px;
+	margin-bottom: 100px;
+	padding-bottom: 150px;
+	padding-top: 50px;
+}
+
+.tab-content.current{
+	display: inherit;
+}
+
+#title {
+	padding-left: 20px;
+	display: inline-block;
+	margin-bottom: 30px;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+#deleteButton {
+	display: inline-block;
+	margin-left: 20px;
+}
+
+.detail_info{
+	list-style: none;
+}
+.detail_title{
+	font-weight: bolder;
+}
+
+/* trainer */
+.teacher_info{
+	list-style: none;
+	width: 950px;
+}
+.fl {float:left; }
+.tc {text-align:center; }
+
+/* 게시판 목록 */
+.w70 {width:70px; }
+.w300 {width:300px; }
+.w200 {width:200px; }
+.w120 {width:120px; }
+.w100 {width:100px; }
+.title {
+	height: 50px;
+	line-height: 50px;
+	background:skyblue;
+	font-weight: bold;
+}
+.t_line {border-right:solid 1px gray;}
+.lt_line {border-bottom:solid 1px gray;}
+.list {
+	height: 40px;
+	line-height: 40px;
+	background: #f3f3f3;
+}
+
+/* 커리큘럼 조회*/
+.curriculum_info{
+	list-style: none;
+	width: 1450px;
+}
+
+.review_info{
+	list-style: none;
+	width: 1000px;
+}
+
+
+#etypelist {
+	margin-left: 40px;
+}
+
+/* star rating */
+.all_star {font-size:0; letter-spacing:-4px;}
+.all_star a{
+    font-size:22px;
+    letter-spacing:0;
+    display:inline-block;
+    margin-left:5px;
+    color:#ccc;
+    text-decoration:none;
+}
+.all_star a:first-child {margin-left:0;}
+.all_star a.on2{color:yellow;}
+.all_star {
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+<div>
+	<div id="title">
+		<h3>[[${center.centerTitle}]]<br>
+		<div class="all_star">
+			<a class="on2">★</a>
+			<a class="on2">★</a>
+			<a class="on2">★</a>
+			<a class="on2">★</a>
+			<a class="on2">★</a>
+		</div>
+		<small id="prefer">( [[${gprefer}]] )</small>
+		</h3>
+	</div>
+	<div id="deleteButton">
+		<button type="button" id="centerDelete" class="btn btn-default" data-dismiss="modal">삭제</button>
+	</div>
+	<div class="container">
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-1">Detail</li>
+			<li class="tab-link" data-tab="tab-2">Trainer</li>
+			<li class="tab-link" data-tab="tab-3">Curriculum</li>
+			<li class="tab-link" data-tab="tab-4">Review</li>
+		</ul>
+	
+		<div id="tab-1" class="tab-content current">
+			<ui class="detail_info">
+				<li><span class="detail_title">센터번호:</span> [[${center.centerNum}]]</li>
+				<li><span class="detail_title">센터명:</span> [[${center.centerTitle}]]</li>
+				<li><span class="detail_title">정보:</span> [[${center.centerInfo}]]</li>
+				<li><span class="detail_title">평점:</span> [[${center.centerPreferance}]]</li>
+				<li><span class="detail_title">전화번호:</span> [[${center.centerPhone}]]</li>
+				<li><span class="detail_title">지역명1:</span> [[${center.centerArea1}]]</li>
+				<li><span class="detail_title">지역명2:</span> [[${center.centerArea2}]]</li>
+				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
+				<li><span class="detail_title">사업자번호:</span> [[${center.business.businessId}]]</li>
+			</ui>
+			<br>
+			<button type="button" id="cdetailButton" data-toggle="modal" data-target="#cdetailModal">수정하기</button>
+		</div>
+		
+		<!-- Modal -->
+		<div id="cdetailModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+    		<!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">정보 수정</h4>
+		      </div>
+		      <div class="modal-body">
+		     	<label>센터번호</label>
+		        <input type="text" name="centerNum" class="form-control" readonly="readonly">
+		        <label>센터명</label>
+		        <input type="text" name="centerTitle" class="form-control">
+		        <label>센터정보</label>
+		        <input type="text" name="centerInfo" class="form-control">
+		        <label>평점</label>
+		        <input type="text" name="centerPreferance" class="form-control" readonly="readonly">
+		        <label>전화번호</label>
+		        <input type="text" name="centerPhone" class="form-control"><br>
+		        <label>주소</label>
+		        <input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum"> 
+				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br><br>
+				<input type="text" id="sample6_address" placeholder="주소" name="userAddress1" class="form-control"><br> 
+				<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="userAddress2">
+				<input type="text" id="sample6_extraAddress" placeholder="참고항목" name="userAddress3"> <br> <br> 
+		        <label>지역1</label>
+		        <select name="centerArea1" id="centerArea1">
+		        <option th:selected="${area1}==${center.centerArea1}" th:each="area1:${area1s}" th:value="${area1}">[[${area1}]]</option>
+	      		</select><br><br>
+		        <label>지역2</label>
+		        <select name="centerArea2" id="centerArea2">
+		        <option th:each="area:${arealist}" th:selected="${area.area2}==${center.centerArea2}" th:if="${area.area1}=='서울특별시'" th:value="${area.area2}">[[${area.area2}]]</option>
+	      		</select>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="cdetailUpdate" class="btn btn-default" data-dismiss="modal">수정하기</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		
+		<div id="tab-2" class="tab-content">
+		    <!-- 트레이너 추가 -->
+		  	<div>
+		  		<button class="btn btn-warning" id="addTrainer" data-toggle="modal" data-target="#trainerModal">
+		  		트레이너 추가</button>
+		  	</div>
+		  	<table border="1px solid black" class="table table-striped table-bordered table-hover">
+		  		<thead>
+			  		<tr>
+			  			<th>트레이너 번호</th>
+			  			<th>이름</th>
+			  			<th>전화번호</th>
+			  			<th>이메일</th>
+			  			<th>소개</th>
+			  			<th>운동유형번호</th>
+			  		</tr>
+		  		</thead>
+		  		<tbody id="trainerTable" data-toggle="modal" data-target="#trainerModal">
+		  		</tbody>
+		  	</table>
+		</div>
+		
+		
+		<!-- Modal -->
+		<div id="trainerModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+    		<!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Modal Header</h4>
+		      </div>
+		      <div class="modal-body">
+			        <label>번호</label>
+			        <input type="text" name="trainerNum" class="form-control" readonly="readonly">
+			        <label>이름</label>
+			        <input type="text" name="trainerName" class="form-control">
+			        <label>핸드폰번호</label>
+			        <input type="text" name="trainerPhone" class="form-control">
+			        <label>이메일</label>
+			        <input type="text" name="trainerEmail" class="form-control">
+			        <label>운동유형</label><br>
+		        	<select name="exerciseTypeNum" id="exerciseTypeNum">
+		        	<option th:each="etype:${etypelist}" th:value="${etype.exerciseTypeNum}">[[${etype.exerciseTypeName}]]</option>  <!-- th:selected="${etype}==${trainer.etyperef.exerciseTypeNum}" -->
+	      			</select><br>
+			        <label>소개</label>
+			        <input type="text" name="trainerInfo" class="form-control">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="trainerInsertButton" class="btn btn-default" data-dismiss="modal">입력/수정</button>
+		        <button type="button" id="trainerDeleteButton" class="btn btn-default" data-dismiss="modal">삭제</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		
+		<div id="tab-3" class="tab-content">
+			<!-- 커리큘럼 추가 -->
+		  	<div>
+		  		<button class="btn btn-warning" id="addCurriculum" data-toggle="modal" data-target="#curriculumModal">
+		  		커리큘럼 추가</button>
+		  	</div>
+		  	<table border="1px solid black" class="table table-striped table-bordered table-hover">
+		  		<thead>
+			  		<tr>
+			  			<th>번호</th>
+			  			<th>이름</th>
+			  			<th>정보</th>
+			  			<th>날짜</th>
+			  			<th>시간</th>
+			  			<th>가격</th>
+			  			<th>총 정원수</th>
+			  			<th>현재 정원수</th>
+			  			<th>운동유형</th>
+			  			<th>강사</th>
+			  		</tr>
+		  		</thead>
+		  		<tbody id="curriculumTable" data-toggle="modal" data-target="#curriculumModal">
+		  		</tbody>
+		  	</table>
+		</div>
+		
+		<!-- Modal -->
+		<div id="curriculumModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+    		<!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">커리큘럼 추가</h4>
+		      </div>
+		      <div class="modal-body">
+			        <label>번호</label>
+			        <input type="text" name="curriculumNum" class="form-control" readonly="readonly">
+			        <label>커리큘럼명</label>
+			        <input type="text" name="curriculumTitle" class="form-control">
+			        <label>소개</label>
+			        <input type="text" name="curriculumInfo" class="form-control">
+			        <label>요일</label>
+			        <input type="text" name="curriculumDate" class="form-control">
+			        <label>시간</label>
+			        <input type="text" name="curriculumTime" class="form-control">
+			        <label>회비</label>
+			        <input type="text" name="curriculumPrice" class="form-control">
+			        <label>총인원수</label>
+			        <input type="text" name="curriculumAll" class="form-control">
+			        <label>등록인원수</label>
+			        <input type="text" name="curriculumState" class="form-control" readonly="readonly" value="0">
+			        <label>운동유형</label><br>
+		        	<select name="curexerciseTypeNum" id="curexerciseTypeNum">
+		        	<option th:each="etype:${etypelist}" th:value="${etype.exerciseTypeNum}">[[${etype.exerciseTypeName}]]</option>
+	      			</select><br>
+			        <label>트레이너</label><br>
+			        <select name="curtrainer" id=curtrainer>
+		        	<option th:each="trainer:${trainerlist}" th:value="${trainer.trainerNum}">[[${trainer.trainerName}]]</option> 
+	      			</select><br>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="curInsertButton" class="btn btn-default" data-dismiss="modal">입력/수정</button>
+		        <button type="button" id="curDeleteButton" class="btn btn-default" data-dismiss="modal">삭제</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+		
+		<div id="tab-4" class="tab-content">
+		 	<ul class="review_info">
+			  	<li class="fl tc w70 title t_line">번호</li>
+			  	<li class="fl tc w300 title t_line">내용</li>
+			  	<li class="fl tc w70 title t_line">평점</li>
+			  	<li class="fl tc w200 title t_line">작성일</li>
+			  	<li class="fl tc w200 title t_line">수정일</li>
+			  	<li class="fl tc w100 title ">작성자</li>
+	  		</ul>
+		    <ul class="review_info" th:each="review:${revlist}">
+		  	  <li class="fl tc w70 list t_line lt_line">[[${review.crNum}]]</li>
+		  	  <li class="fl tc w300 list t_line lt_line">[[${review.crContents}]]</li>
+		  	  <li class="fl tc w70 list  lt_line t_line">[[${review.crPreference}]]</li>
+		  	  <li class="fl tc w200 list t_line lt_line">[[${review.crFirst}]]</li>
+		  	  <li class="fl tc w200 list t_line lt_line">[[${review.crUpdate}]]</li>
+		  	  <li class="fl tc w100 list  lt_line">[[${review.user.userId}]]</li>
+		    </ul>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script th:src="@{/js/getArea.js}"></script>
+<script th:src="@{/js/center.js}"></script>
+<script th:src="@{/js/trainer.js}"></script>
+<script th:src="@{/js/curriculum.js}"></script>
+<script>
+
+	$(document).ready(function(){
+		
+		$('ul.tabs li').click(function(){
+			var tab_id = $(this).attr('data-tab');
+	
+			$('ul.tabs li').removeClass('current');
+			$('.tab-content').removeClass('current');
+	
+			$(this).addClass('current');
+			$("#"+tab_id).addClass('current');
+		})
+	})
+	
+	$("#centerArea1").on('change',function(){		
+	getManager.getArea2(this.value, printList); //지역 소구분 변경
+			
+	});
+
+	function printList(rlist){ //지역 소구분 html 변경
+		$("#centerArea2 option").remove();
+		var str=""
+		$.each(rlist, function(idx, item){
+			str+="<option value='"+item["area2"]+"'>"+item["area2"]+"</option>";
+			
+		});
+		$("#centerArea2").append(str);
+	}
+	
+	function sample6_execDaumPostcode() {
+	new daum.Postcode(
+			{
+				oncomplete : function(data) {
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+					// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+					// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+					var addr = ''; // 주소 변수
+					var extraAddr = ''; // 참고항목 변수
+
+					//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+					if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+						addr = data.roadAddress;
+					} else { // 사용자가 지번 주소를 선택했을 경우(J)
+						addr = data.jibunAddress;
+					}
+
+					// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+					if (data.userSelectedType === 'R') {
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== ''
+								&& /[동|로|가]$/g.test(data.bname)) {
+							extraAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== ''
+								&& data.apartment === 'Y') {
+							extraAddr += (extraAddr !== '' ? ', '
+									+ data.buildingName
+									: data.buildingName);
+						}
+						// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraAddr !== '') {
+							extraAddr = ' (' + extraAddr + ')';
+						}
+						// 조합된 참고항목을 해당 필드에 넣는다.
+						document.getElementById("sample6_extraAddress").value = extraAddr;
+
+					} else {
+						document.getElementById("sample6_extraAddress").value = '';
+					}
+
+					// 우편번호와 주소 정보를 해당 필드에 넣는다.
+					document.getElementById('sample6_postcode').value = data.zonecode;
+					document.getElementById("sample6_address").value = addr;
+					// 커서를 상세주소 필드로 이동한다.
+					document.getElementById("sample6_detailAddress")
+							.focus();
+				}
+			}).open();
+	}
+	
+	
+	$("#cdetailButton").on("click", function(){
+   	 $("input[name='centerNum']").val("[[${center.centerNum}]]");
+   	 $("input[name='centerTitle']").val("[[${center.centerTitle}]]");
+   	 $("input[name='centerInfo']").val("[[${center.centerInfo}]]");
+   	 $("input[name='centerPreferance']").val("[[${center.centerPreferance}]]");
+   	 $("input[name='centerPhone']").val("[[${center.centerPhone}]]");
+   	 $("input[name='centerAddress']").val("[[${center.centerAddress}]]");
+   	 $("input[name='centerArea1']").val("[[${center.centerArea1}]]");
+   	 $("input[name='centerArea2']").val("[[${center.centerArea2}]]");
+   	 $(".modal-title").text("센터정보를 수정합니다.");
+   	 $("#cdetailModal").show();   	 
+    });
+	
+	$("#cdetailUpdate").click(function(){
+		var centerTitle= $("input[name='centerTitle']");
+		var centerInfo= $("input[name='centerInfo']");
+		var centerPreferance= $("input[name='centerPreferance']");
+		var centerArea1=$("#centerArea1 option:selected").val();
+		var centerArea2=$("#centerArea2 option:selected").val();
+		var centerPhone=$("input[name='centerPhone']");
+		var centerAddress= $("#sample6_address").val()+" "+$("#sample6_detailAddress").val()+"("+$("#sample6_postcode").val()+")";
+		var obj={ "centerTitle":centerTitle.val() , "centerInfo":centerInfo.val(), "centerPreferance":centerPreferance.val(), "centerPhone":centerPhone.val(), "centerArea1":centerArea1, "centerArea2":centerArea2, "centerAddress":centerAddress};
+		obj["cnum"]= $("input[name='centerNum']").val();
+		if($("#sample6_address").val()==""){
+			alert("주소를 입력하세요.")
+		}else{
+			centerManager.update(obj,printCenter);
+		}
+		$("#cdetailModal").hide();
+	})
+	
+	function call(obj){
+		window.location.href="/center/centerdetail?cnum="+$(obj).attr("data2");
+	}
+	
+	function printCenter(center){
+		var str=""
+		str+= "<ui class='detail_info'>";
+		str+= "<li><span class='detail_title'>센터번호:</span>"+ center.centerNum+"</li>";
+		str+= "<li><span class='detail_title'>센터명:</span>"+center.centerTitle+"</li>";
+		str+= "<li><span class='detail_title'>정보:</span>"+center.centerInfo+"</li>";
+		str+= "<li><span class='detail_title'>평점:</span>"+center.centerPreferance+"</li>";
+		str+= "<li><span class='detail_title'>전화번호:</span>"+center.centerPhone+"</li>";
+		str+= "<li><span class='detail_title'>지역명1:</span>"+center.centerArea1+"</li>";;
+		str+= "<li><span class='detail_title'>지역명2:</span>"+center.centerArea2+"</li>";
+		str+= "<li><span class='detail_title'>상세주소:</span>"+center.centerAddress+"</li>";
+		str+= "<li><span class='detail_title'>사업자번호:</span>"+center.business.businessId+"</li>";
+		str+= "</ul>"
+		str+="<br><button type='button' id='cdetailButton' data-toggle='modal' data-target='#cdetailModal'>수정하기</button>"
+		$("#tab-1").html(str);
+	}
+	
+	$("#centerDelete").click(function(){
+  		 var obj = {"cnum":"[[${center.centerNum}]]" };
+  		 centerManager.remove(obj, printResult);
+  		 
+    	});
+	
+	function printResult(response){
+		if(response=="삭제실패")
+			alert("트레이너와 커리큘럼이 존재할 경우 삭제할 수 없습니다.");
+		else
+			window.location.href='/business/myCenters';
+	}
+	
+	$(".all_star a").parent().children("a").removeClass("on2");
+	$(".all_star :nth-child("+Math.round("[[${gprefer}]]")+")").addClass("on2").prevAll("a").addClass("on2");
+	 
+	 //trainer modal
+	 var tmode="";
+	    
+		$("#addTrainer").click(function(){
+			$("#trainerModal").show();
+			$(".modal-title").text("트레이너를 추가합니다.");
+			tmode="ADD";
+			
+		});
+		
+		
+		$("#trainerInsertButton").click(function(){
+			var trainerName= $("input[name='trainerName']");
+			var trainerPhone= $("input[name='trainerPhone']");
+			var trainerEmail= $("input[name='trainerEmail']");
+			var trainerInfo= $("input[name='trainerInfo']");
+			var exerciseTypeNum= $("#exerciseTypeNum option:selected").val();
+			var obj={ "cnum":"[[${center.centerNum}]]" ,"trainerName":trainerName.val(), "trainerPhone":trainerPhone.val(), "trainerEmail":trainerEmail.val(), "trainerInfo":trainerInfo.val(), "exerciseTypeNum":exerciseTypeNum };
+			
+			if(tmode=="ADD"){
+				trainerManager.add(obj,printTlist);
+				alert("입력완료");			
+			}else if(tmode=="MOD"){
+				obj["tnum"]=tnum;
+				trainerManager.update(obj,printTlist);
+				alert("수정완료");
+			}
+			
+			$("#trainerModal").hide();
+			trainerName.val("");
+			trainerEmail.val("");
+			trainerInfo.val("");
+		})
+		
+		
+		$("#trainerDeleteButton").click(function(){
+		var trainerName= $("input[name='trainerName']");
+		var trainerPhone= $("input[name='trainerPhone']");
+		var trainerEmail= $("input[name='trainerEmail']");
+		var trainerInfo= $("input[name='trainerInfo']");
+		 var obj = { "cnum":"[[${center.centerNum}]]", "tnum": tnum };
+		 trainerManager.remove(obj, printTlist);
+		 alert("삭제완료");
+		 $("#trainerModal").hide();
+		 trainerName.val("");
+		 trainerPhone.val("");
+		 trainerEmail.val("");
+		 trainerInfo.val("");
+  	});
+		
+		$("#trainerTable").on("click", "tr", function(){
+			tmode= "MOD";
+	    	 var tds = $(this).find("td");
+	    	 tnum = tds[0].innerHTML;
+	    	 var tname = tds[1].innerHTML;
+	    	 var tphone = tds[2].innerHTML;
+	    	 var temail = tds[3].innerHTML;
+	    	 var tinfo = tds[4].innerHTML;
+	    	 var tetype= tds[5].innerHTML;
+	    	 $("input[name='trainerNum']").val(tnum);
+	    	 $("input[name='trainerName']").val(tname);
+	    	 $("input[name='trainerPhone']").val(tphone);
+	    	 $("input[name='trainerEmail']").val(temail);
+	    	 $("input[name='trainerInfo']").val(tinfo);
+	    	 
+	    	 $("#exerciseTypeNum").find("option").each(function(index){
+	 			if ($(this).text() == tetype) {
+	 				$("#exerciseTypeNum").val($(this).val());	
+	 			}
+	    	 });
+	    	 $("#trainerModal").show();
+	    	 $(".modal-title").text("트레이너 수정/삭제")
+	    	 
+	     });
+	
+		trainerManager.getAll("[[${center.centerNum}]]", printTlist);
+		
+		function printTlist(tlist){
+			console.log(tlist);
+			var str=""
+			$.each(tlist, function(idx, item){
+				str+="<tr>";
+				str+="<td>"+item["trainerNum"]+"</td>";
+				str+="<td>"+item["trainerName"]+"</td>";
+				str+="<td>"+item["trainerPhone"]+"</td>";
+				str+="<td>"+item["trainerEmail"]+"</td>";
+				str+="<td>"+item["trainerInfo"]+"</td>";
+				str+="<td>"+item["etyperef"].id.etype.exerciseTypeName+"</td>";
+				str+="</tr>";
+			});
+			$("#trainerTable").html(str);
+		}
+		
+		//Curriculum modal
+		 var cmode="";
+		    
+			$("#addCurriculum").click(function(){
+				$("#curriculumModal").show();
+				$(".modal-title").text("교육과정을 추가합니다.");
+				cmode="ADD";
+				
+			});
+			
+			
+			$("#curInsertButton").click(function(){
+				var curriculumTitle= $("input[name='curriculumTitle']");
+				var curriculumInfo= $("input[name='curriculumInfo']");
+				var curriculumDate= $("input[name='curriculumDate']");
+				var curriculumTime= $("input[name='curriculumTime']");
+				var curriculumAll= $("input[name='curriculumAll']");
+				var curriculumState= $("input[name='curriculumState']");
+				var curriculumPrice= $("input[name='curriculumPrice']");
+				var exerciseTypeNum= $("#curexerciseTypeNum option:selected").val();
+				var trainerNum= $("#curtrainer option:selected").val();
+				var obj={ "cnum":"[[${center.centerNum}]]" ,"curriculumTitle":curriculumTitle.val(), "curriculumInfo":curriculumInfo.val(), "curriculumDate":curriculumDate.val(), "curriculumTime":curriculumTime.val(),
+						"curriculumAll":curriculumAll.val(), "curriculumState":curriculumState.val(), "curriculumPrice":curriculumPrice.val(), "exerciseTypeNum":exerciseTypeNum, "trainerNum": trainerNum };
+				
+				if(cmode=="ADD"){
+					curriculumManager.add(obj,printClist);
+					alert("입력완료");			
+				}else if(cmode=="MOD"){
+					obj["curnum"]=curnum;
+					curriculumManager.update(obj,printClist);
+					alert("수정완료");
+				}
+				
+				$("#curriculumModal").hide();
+				curriculumTitle.val("");
+				curriculumInfo.val("");
+				curriculumDate.val("");
+				curriculumTime.val("");
+				curriculumAll.val("");
+				curriculumState.val("");
+				curriculumPrice.val("");
+			})
+			
+			
+			$("#curDeleteButton").click(function(){
+			var trainerName= $("input[name='trainerName']");
+			var trainerPhone= $("input[name='trainerPhone']");
+			var trainerEmail= $("input[name='trainerEmail']");
+			var trainerInfo= $("input[name='trainerInfo']");
+			 var obj = { "cnum":"[[${center.centerNum}]]", "curnum": curnum };
+			 curriculumManager.remove(obj, printClist);
+			 alert("삭제완료");
+			 $("#curriculumModal").hide();
+			 trainerName.val("");
+			 trainerPhone.val("");
+			 trainerEmail.val("");
+			 trainerInfo.val("");
+	  	});
+			
+			$("#curriculumTable").on("click", "tr", function(){
+				cmode= "MOD";
+		    	 var tds = $(this).find("td");
+		    	 curnum = tds[0].innerHTML;
+		    	 var curtitle = tds[1].innerHTML;
+		    	 var curinfo = tds[2].innerHTML;
+		    	 var curdate = tds[3].innerHTML;
+		    	 var curtime = tds[4].innerHTML;
+		    	 var curprice= tds[5].innerHTML;
+		    	 var curall= tds[6].innerHTML;
+		    	 var curstate= tds[7].innerHTML;
+		    	 var curetype= tds[8].innerHTML;
+		    	 var curtrainer= tds[9].innerHTML;
+		    	 $("input[name='curriculumNum']").val(curnum);
+		    	 $("input[name='curriculumTitle']").val(curtitle);
+		    	 $("input[name='curriculumInfo']").val(curinfo);
+		    	 $("input[name='curriculumDate']").val(curdate);
+		    	 $("input[name='curriculumTime']").val(curtime);
+		    	 $("input[name='curriculumAll']").val(curall);
+		    	 $("input[name='curriculumState']").val(curstate);
+		    	 $("input[name='curriculumPrice']").val(curprice);
+		    	 
+		    	 $("#curexerciseTypeNum").find("option").each(function(index){
+		 			if ($(this).text() == curetype) {
+		 				$("#curexerciseTypeNum").val($(this).val());	
+		 			}
+		    	 });
+		    	 $("#curtrainer").find("option").each(function(index){
+			 			if ($(this).text() == curtrainer) {
+			 				$("#curtrainer").val($(this).val());	
+			 			}
+			    	 });
+		    	 $("#curriculumModal").show();
+		    	 $(".modal-title").text("커리큘럼 수정/삭제")
+		    	 
+		     });
+		
+			curriculumManager.getAll("[[${center.centerNum}]]", printClist);
+			
+			function printClist(clist){
+				console.log(clist);
+				var str=""
+				$.each(clist, function(idx, item){
+					str+="<tr>";
+					str+="<td>"+item["curriculumNum"]+"</td>";
+					str+="<td>"+item["curriculumTitle"]+"</td>";
+					str+="<td>"+item["curriculumInfo"]+"</td>";
+					str+="<td>"+item["curriculumDate"]+"</td>";
+					str+="<td>"+item["curriculumTime"]+"</td>";
+					str+="<td>"+item["curriculumPrice"]+"</td>";
+					str+="<td>"+item["curriculumAll"]+"</td>";
+					str+="<td>"+item["curriculumState"]+"</td>";
+					str+="<td>"+item["etyperef"].id.etype.exerciseTypeName+"</td>";
+					str+="<td>"+item["trainer"].trainerName+"</td>";
+					str+="</tr>";
+				});
+				$("#curriculumTable").html(str);
+			}
+</script>
+</body>
+</html>

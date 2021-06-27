@@ -18,7 +18,8 @@ public class TrainerService {
 	}
 	
 	public List<TrainerVO> selectByCenter(int center_num) {
-		return (List<TrainerVO>)trainerRepo.findByCenterNum(center_num);
+		 
+		return  trainerRepo.findByCenterNum(center_num);
 	}
 	
 	public List<TrainerVO> selectAll() {

@@ -27,11 +27,12 @@ import lombok.ToString;
 @Table(name="center")
 public class CenterVO {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CENTER_SEQ_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int centerNum;
 	String corporateNum;
 	String centerTitle;
 	String centerInfo;
+	String centerPhone;
 	Long centerPreferance;
 	String centerAddress;
 	String centerArea1;

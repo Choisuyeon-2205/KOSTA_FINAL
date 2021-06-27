@@ -3,13 +3,21 @@ package com.kosta.finalProject.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.kosta.finalProject.models.AreasVO;
+import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.CenterReviewVO;
 import com.kosta.finalProject.models.CenterVO;
 import com.kosta.finalProject.models.CurriculumRegisterVO;
@@ -85,5 +93,41 @@ public class CenterController {
 		model.addAttribute("userid",user.getUserId());
 		List<CurriculumVO> userCurlist= curRegService.selectByCurRegId(cnum, user.getUserId());
 		model.addAttribute("userCurlist",userCurlist);
+	}
+	
+	@PutMapping("/center/updateCenter/{cnum}")
+	public ResponseEntity<CenterVO> updateCenter(@PathVariable int cnum,
+			@RequestBody CenterVO center, Authentication authentication) {
+		
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();		
+		BusinessVO business = BusinessVO.builder()
+				.businessId(userDetails.getUsername())
+				.build();
+		center.setBusiness(business);
+		center.setCenterNum(cnum);
+		
+		centerservice.updateCenter(center);
+		
+		return new ResponseEntity<>(center, HttpStatus.OK);
+	}
+	
+	@PostMapping("/center/insertCenter")
+	public ResponseEntity<CenterVO> insertCenter(@RequestBody CenterVO center, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();		
+		BusinessVO business = BusinessVO.builder()
+				.businessId(userDetails.getUsername())
+				.build();
+		center.setBusiness(business);
+		center.setCenterPreferance(0l);
+		centerservice.insertCenter(center);
+		
+		return new ResponseEntity<>(center, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/center/deleteCenter/{cnum}")
+	public  ResponseEntity<String> deleteCenter(@PathVariable int cnum) {
+		int result= centerservice.deleteCenter(cnum);
+
+		return result==1? new ResponseEntity<>("삭제완료", HttpStatus.OK):new ResponseEntity<>("삭제실패", HttpStatus.OK);
 	}
 }

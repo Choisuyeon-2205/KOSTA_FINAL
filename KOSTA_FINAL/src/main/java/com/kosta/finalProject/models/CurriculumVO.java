@@ -41,7 +41,8 @@ public class CurriculumVO {
 	String curriculumTime;
 	int curriculumAll;
 	int curriculumState;
-	
+	int curriculumPrice;
+
 	@CreationTimestamp
 	Timestamp curriculumFirst;
 	

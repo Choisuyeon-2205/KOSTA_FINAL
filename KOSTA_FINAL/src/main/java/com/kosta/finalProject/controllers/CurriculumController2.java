@@ -1,21 +1,36 @@
 package com.kosta.finalProject.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import com.kosta.finalProject.models.CenterVO;
 import com.kosta.finalProject.models.CurriculumRegisterVO;
 import com.kosta.finalProject.models.CurriculumRegisterVOId;
 import com.kosta.finalProject.models.CurriculumVO;
+import com.kosta.finalProject.models.ExerciseTypeRefVO;
+import com.kosta.finalProject.models.ExerciseTypeRefVOId;
+import com.kosta.finalProject.models.ExerciseTypeVO;
+import com.kosta.finalProject.models.TrainerVO;
 import com.kosta.finalProject.models.UserVO;
+import com.kosta.finalProject.services.CenterService;
 import com.kosta.finalProject.services.CurriculumRegisterService;
 import com.kosta.finalProject.services.CurriculumService;
+import com.kosta.finalProject.services.ExerciseTypeRefService;
+import com.kosta.finalProject.services.ExerciseTypeService;
+import com.kosta.finalProject.services.TrainerService;
 
 @RestController
 public class CurriculumController2 {
@@ -23,6 +38,14 @@ public class CurriculumController2 {
 	CurriculumService curservice;
 	@Autowired
 	CurriculumRegisterService curregservice;
+	@Autowired
+	ExerciseTypeRefService etrservice;
+	@Autowired
+	TrainerService tservice;
+	@Autowired
+	ExerciseTypeService etservice;
+	@Autowired
+	CenterService cservice;
 
 	@PostMapping("/center/registerCurriculum/{cnum}")
 	public String registerCurriculum(@PathVariable("cnum") int curnum, RedirectAttributes rttr, Authentication authentication) {
@@ -59,5 +82,68 @@ public class CurriculumController2 {
 	@GetMapping("/center/curriculumstate/{curnum}")
 	public int getState(@PathVariable("curnum") int curriculumnum) {
 		return curservice.getState(curriculumnum);
+	}
+	
+	//커리큘럼 모두 조회
+	@GetMapping("/curriculum/{cnum}")
+	public ResponseEntity<List<CurriculumVO>> selectAll(@PathVariable int cnum) {
+		return new ResponseEntity<>(curservice.selectByCenter(cnum), HttpStatus.OK);
+	}
+			
+	@PostMapping("/curriculum/insertCurriculum/{cnum}/{exerciseTypeNum}/{trainerNum}")
+	public ResponseEntity<List<CurriculumVO>> CurriculumInsertPost(@PathVariable int cnum, @PathVariable int exerciseTypeNum, @PathVariable int trainerNum , @RequestBody CurriculumVO curriculum) {
+		ExerciseTypeRefVOId etyperefvoid= new ExerciseTypeRefVOId();
+		CenterVO center= cservice.selectById(cnum);
+		ExerciseTypeVO etype= etservice.selectByNum(exerciseTypeNum);
+		etyperefvoid.setCenter(center);
+		etyperefvoid.setEtype(etype);
+				
+		//유형찾기...있으면...없으면 insert
+		ExerciseTypeRefVO etyperefvo= etrservice.selectByExerciseTypeRefVOId(etyperefvoid);
+		if(etyperefvo==null) {
+				etyperefvo= ExerciseTypeRefVO.builder().id(etyperefvoid).build();
+				etrservice.insertExerciseTypeRef(etyperefvo);			
+		}
+		curriculum.setEtyperef(etyperefvo);
+		
+		TrainerVO trainer= tservice.selectById(trainerNum);
+		curriculum.setTrainer(trainer);
+		
+		curservice.insertCurriculum(curriculum);
+				
+		return new ResponseEntity<>(curservice.selectByCenter(cnum), HttpStatus.OK);
+		}
+			
+	@PutMapping("/curriculum/updateCurriculum/{curnum}/{cnum}/{exerciseTypeNum}/{trainerNum}")
+	public ResponseEntity<List<CurriculumVO>> updateTrainer(@PathVariable int curnum, @PathVariable int cnum, @PathVariable int exerciseTypeNum, @PathVariable int trainerNum,
+					@RequestBody CurriculumVO curriculum) {
+		ExerciseTypeRefVOId etyperefvoid= new ExerciseTypeRefVOId();
+		CenterVO center= cservice.selectById(cnum);
+		ExerciseTypeVO etype= etservice.selectByNum(exerciseTypeNum);
+		etyperefvoid.setCenter(center);
+		etyperefvoid.setEtype(etype);
+				
+		//유형찾기...있으면...없으면 insert
+		ExerciseTypeRefVO etyperefvo= etrservice.selectByExerciseTypeRefVOId(etyperefvoid);
+		if(etyperefvo==null) {
+				etyperefvo= ExerciseTypeRefVO.builder().id(etyperefvoid).build();
+				etrservice.insertExerciseTypeRef(etyperefvo);			
+		}
+		curriculum.setEtyperef(etyperefvo);
+		
+		TrainerVO trainer= tservice.selectById(trainerNum);
+		curriculum.setTrainer(trainer);
+		curriculum.setCurriculumNum(curnum);
+		
+		curservice.updateCurriculum(curriculum);
+				
+		return new ResponseEntity<>(curservice.selectByCenter(cnum), HttpStatus.OK);
+		}
+			
+	@DeleteMapping("/curriculum/deleteCurriculum/{cnum}/{curnum}")
+	public ResponseEntity<List<CurriculumVO>> deleteTrainer(@PathVariable int cnum, @PathVariable int curnum) {
+		curservice.deleteCurriculum(curnum);
+				
+		return new ResponseEntity<>(curservice.selectByCenter(cnum), HttpStatus.OK);
 	}
 }

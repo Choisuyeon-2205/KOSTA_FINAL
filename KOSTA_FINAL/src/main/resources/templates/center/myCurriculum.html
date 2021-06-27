@@ -32,7 +32,7 @@ layout:decorate="~{layout/layout1}">
 }
 .mycurlist{
 	list-style: none;
-	width: 1250px;
+	width: 1320px;
 }
 .fl {float:left; }
 .tc {text-align:center; }
@@ -49,6 +49,7 @@ layout:decorate="~{layout/layout1}">
 		<li class="fl tc w70 title t_line">시간</li>
 		<li class="fl tc w50 title t_line">전체정원수</li>
 		<li class="fl tc w50 title t_line">현재정원수</li>
+		<li class="fl tc w70 title t_line">가격</li>
 		<li class="fl tc w100 title t_line">등록일</li>
 		<li class="fl tc w100 title t_line">변경일</li>
 	</ul>
@@ -60,6 +61,7 @@ layout:decorate="~{layout/layout1}">
 		<li class="fl tc w70 list t_line lt_line">[[${curriculum.curriculumTime}]]</li>
 		<li class="fl tc w50 list t_line lt_line">[[${curriculum.curriculumAll}]]</li>
 		<li class="fl tc w50 list t_line lt_line">[[${curriculum.curriculumState}]]</li>
+		<li class="fl tc w50 list t_line lt_line">[[${curriculum.curriculumPrice}]]</li>
 		<li class="fl tc w100 list t_line lt_line">[[${curriculum.curriculumFirst}]]</li>
 		<li class="fl tc w100 list t_line lt_line">[[${curriculum.curriculumUpdate}]]</li>
 	</ul>
