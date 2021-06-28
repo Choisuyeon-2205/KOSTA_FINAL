@@ -4,11 +4,28 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum SocialLoginType {
-	GOOGLE("구글"),
-	FACEBOOK("페이스북"),
-	KAKAO("카카오"),
-	NAVER("네이버"),
-	GITHUB("깃허브");
+	GOOGLE("google"),
+	FACEBOOK("facebook"),
+	KAKAO("kakao"),
+	NAVER("naver");
 	
-	private final String title;
+	private final String ROLE_PREFIX = "ROLE_";
+	private String name;
+	
+	private SocialLoginType(String name) {
+		this.name = name;
+	}
+	
+	public String getRoleType() {
+		return ROLE_PREFIX + name.toUpperCase();
+	}
+	
+	public String getValue() {
+		return name;
+	}
+	
+	public boolean isEquals(String authority) {
+		return this.getRoleType().equals(authority);
+	}
+	
 }

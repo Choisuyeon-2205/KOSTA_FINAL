@@ -45,6 +45,8 @@ public class UserBodyVO {
 	String userImage;
 	@Column(nullable = true, name = "user_bmi")
 	double userBmi ;
+	@Column(nullable = true)
+	int bmiGroup;
 	
 	@Column(nullable = true)
 	int buddyCheck;

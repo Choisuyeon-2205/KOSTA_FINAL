@@ -5,11 +5,20 @@ import org.springframework.stereotype.Component;
 //@Component
 public class BMICalculator {
 
-	private double lowweight;
-	private double normal;
-	private double overweight;
-	private double obbesity;
+	int group;
 	
+	public int getGroup() {
+		return group;
+	}
+
+
+
+	public void setGroup(int group) {
+		this.group = group;
+	}
+
+
+
 	public double bmicalculator(double weight, double height) {
 		
 		double h = height*0.01;
@@ -17,34 +26,23 @@ public class BMICalculator {
 		
 		System.out.println("BMI 지수 : " + (int)result);
 		
-		if(result>obbesity) {
+		if(result>=25.0) {
 			System.out.println("비만");
-		}else if(result>overweight) {
+			group = 1;
+		}else if(result >= 23.0 && result < 25.0) {
 			System.out.println("과체중");
-		}else if(result>normal) {
+			group = 2;
+		}else if(result >= 18.5 && result < 23.0) {
 			System.out.println("정상");
+			group = 3;
 		}else {
 			System.out.println("저체중");
+			group = 4;
 		}
 		
 		return result;
 	}
 
-	public void setLowweight(double lowweight) {
-		this.lowweight = lowweight;
-	}
 
-	public void setNormal(double normal) {
-		this.normal = normal;
-	}
-
-	public void setOverweight(double overweight) {
-		this.overweight = overweight;
-	}
-
-	public void setObbesity(double obbesity) {
-		this.obbesity = obbesity;
-	}
-	
 	
 }

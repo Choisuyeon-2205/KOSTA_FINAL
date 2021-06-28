@@ -64,9 +64,9 @@ public class UserService implements UserDetailsService{
   		return repository.findById(userId).get();
   	}
 
-  	public void insertBMI(double bmi) {
+  	public void insertBMI(double bmi, int group) {
   		UserBodyVO body = UserBodyVO.builder()
-  				.userBmi(bmi).build();
+  				.userBmi(bmi).bmiGroup(group).build();
   		bodyrepo.save(body);
   	}
   	
