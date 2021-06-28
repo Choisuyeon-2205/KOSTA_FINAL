@@ -25,12 +25,12 @@ color: white;
 text-align: center;
 }
 
-.aa .hero h2{ font-size: 60px; margin-bottom: 20px;}
+.aa .hero h2{ color: white; font-size: 60px; margin-bottom: 20px; background-color: rgba(116,116,116,0.7);}
 
 .aa .hero p{  font-size: 22px;}
 
-.aa .hero button {background-color: none; border: 2px solid; color: white; padding: 15px 20px; border-radius: 20px; margin-top: 30px; outline: none; cursor: pointer;}
-.aa .hero button:hover { background-color:gray; }	
+.aa .hero .ac {background-color: none; border: 2px solid; color: white; padding: 15px 20px; border-radius: 20px; margin-top: 30px; outline: none; cursor: pointer;}
+.aa .hero .ac:hover { background-color:gray; }	
 #videoBG{
      position: absolute;
      top: 0px;
@@ -49,14 +49,14 @@ text-align: center;
 </head>
 <body>
 
-	<div class="aa" layout:fragment="content1" >
+	<div class="aa" layout:fragment="content1"  >
 	<video id = "videoBG" autoplay loop muted>
 	<source src="image/gym.mp4" type="video/mp4">	
 	</video>
 	<div class="hero">
 	<h2> HELLO FITPLE </h2>
 	<p> FITPLE과 함께 운동하세요</p>
-	<button>Enjoy</button>
+	<button class="ac">Enjoy</button>
 	</div>
 
 

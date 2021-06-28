@@ -112,7 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			.permitAll()
 			.and()
 			.logout() // 로그아웃에 관한 설정을 의미
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
 			.logoutSuccessUrl("/main") // 로그아웃 성공시 리다이렉트 주소
 			.invalidateHttpSession(true)  // 세션 지우기
 		.and()
