@@ -78,9 +78,8 @@ public class DietDiaryBoardController {
 	@PostMapping("/dietdiaryboard/register")
 	public String boardRegisterPost(DietDiaryBoardVO board, RedirectAttributes rttr, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		UserVO user = UserVO.builder()
-				.userId(userDetails.getUsername())
-				.build();
+		//UserVO user = UserVO.builder().userId(userDetails.getUsername()).build();
+		UserVO user = uservice.selectById(userDetails.getUsername());
 		board.setUser(user); 
 		DietDiaryBoardVO ins_board = service.insertBoard(board);
 		

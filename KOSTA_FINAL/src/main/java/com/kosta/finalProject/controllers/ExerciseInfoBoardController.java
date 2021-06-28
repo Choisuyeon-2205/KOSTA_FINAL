@@ -58,7 +58,8 @@ public class ExerciseInfoBoardController {
 	@PostMapping("/exerciseinfoboard/register")
 	public String boardRegisterPost(ExerciseInfoBoardVO board, RedirectAttributes rttr, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		UserVO user = UserVO.builder().userId(userDetails.getUsername()).build();
+		//UserVO user = UserVO.builder().userId(userDetails.getUsername()).build();
+		UserVO user = uservice.selectById(userDetails.getUsername());
 		board.setUser(user);
 		ExerciseInfoBoardVO ins_board = service.insertBoard(board);
 
