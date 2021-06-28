@@ -19,4 +19,8 @@ public interface CurriculumRegisterRepository extends CrudRepository<CurriculumR
 	
 	@Query(value="SELECT cr.curriculum_num, u.user_id, u.user_name, u.nick_name, u.add_num, u.user_address1, u.user_address3, u.user_address2, u.user_phone, u.user_email FROM curriculumreg cr LEFT OUTER JOIN user_tb u ON (cr.user_id=u.user_id) WHERE cr.curriculum_num IN (SELECT curriculum_num FROM curriculum WHERE center_num= ?1)", nativeQuery = true)
 	public List<Object[]> allFindByCenterNum(int center_num);
+	
+	@Query(value="SELECT cr.curriculum_num, u.user_id, u.user_name, u.nick_name, u.add_num, u.user_address1, u.user_address3, u.user_address2, u.user_phone, u.user_email FROM curriculumreg cr LEFT OUTER JOIN user_tb u ON (cr.user_id=u.user_id) WHERE cr.curriculum_num=?1", nativeQuery = true)
+	public List<Object[]> allFindByCurriculumNum(int curriculum_num);
+	
 }

@@ -76,6 +76,10 @@ public class CurriculumRegisterService {
 		return curregRepo.allFindByCenterNum(center_num);
 	}
 	
+	public List<Object[]> selectByCurriculumNum(int curriculum_num) {
+		return curregRepo.allFindByCurriculumNum(curriculum_num);
+	}
+	
 	public CurriculumRegisterVO selectById(CurriculumRegisterVOId crid) {
 		return curregRepo.findById(crid).orElse(null);
 	}

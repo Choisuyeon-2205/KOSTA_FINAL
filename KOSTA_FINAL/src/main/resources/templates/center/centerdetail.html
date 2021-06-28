@@ -14,6 +14,7 @@ body{
 .container{
 	width: 1500px;
 	margin: 0 auto;
+	padding-left: 35px;
 }
 
 /* detail 정보 */
@@ -50,7 +51,7 @@ ul.tabs li.current{
 }
 
 #title {
-	padding-left: 20px;
+	padding-left: 40px;
 }
 
 #detail_info{
@@ -148,6 +149,7 @@ ul.tabs li.current{
 				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
 				<li><span class="detail_title">사업자번호:</span> [[${center.business.businessId}]]</li>
 			</ui>
+			<input type="button" value="지도 검색" th:onClick="call(this);" th:data2 ="${center.centerAddress}" >
 		</div>
 		<div id="tab-2" class="tab-content">
 		 	<ul class="teacher_info">
@@ -513,6 +515,9 @@ ul.tabs li.current{
 		 $(".all_star a").parent().children("a").removeClass("on2");
     	 $(".all_star :nth-child("+Math.round("[[${gprefer}]]")+")").addClass("on2").prevAll("a").addClass("on2");
 
+    	 function call(obj){
+    			window.location.href="/center/googleMap?address="+$(obj).attr("data2");
+    		}
 	</script>
 </th:block>
 </body>

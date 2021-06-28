@@ -3,6 +3,10 @@
  */
 
 var getManager= ( function(){
+	var getAll= function(obj, callback){
+		console.log("getAll......."+obj);
+		$.getJSON("/center/getAll/"+obj,callback);
+	};
 	var getArea2= function(obj, callback){
 		console.log("getAll......."+obj);
 		$.getJSON("/center/getArea2/"+obj,callback);
@@ -16,5 +20,6 @@ var getManager= ( function(){
 	
 	return { "getArea2":getArea2,
 		"getByArea1":getByArea1,
-		"getByArea2":getByArea2 };
+		"getByArea2":getByArea2,
+		"getAll":getAll };
 })();

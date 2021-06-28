@@ -56,6 +56,29 @@ public class CurriculumController2 {
 	public ResponseEntity<List<Object[]>> selectAllByCenterNum(@PathVariable int cnum) {
 		return new ResponseEntity<>(curregservice.selectByCenterNum(cnum), HttpStatus.OK);
 	}
+	
+	//센터에 등록한 사람 커리큘럼별 조회 
+		@GetMapping("/curreg/getByCurnum/{curnum}")
+		public ResponseEntity<List<Object[]>> selectAllByCurNum(@PathVariable int curnum) {
+			return new ResponseEntity<>(curregservice.selectByCurriculumNum(curnum), HttpStatus.OK);
+		}
+	
+	//센터 등록정보 삭제
+	@DeleteMapping("/curreg/deleteCurreg/{cnum}/{curnum}/{userid}")
+	public ResponseEntity<List<Object[]>> deleteTrainer(@PathVariable int cnum, @PathVariable int curnum, @PathVariable String userid) {
+		CurriculumRegisterVOId crid= new CurriculumRegisterVOId();
+		CurriculumVO curriculum= curservice.selectById(curnum);
+		crid.setCurriculum(curriculum);
+		UserVO user= uservice.selectById(userid);
+		crid.setUser(user);
+		int result= curregservice.deleteCurriculumRegister(crid);
+		if(result!=0) { //등록성공했을 때만 count
+			curriculum.setCurriculumState(curriculum.getCurriculumState()-1);
+			curservice.updateCurriculum(curriculum);
+		}
+		
+		return new ResponseEntity<>(curregservice.selectByCenterNum(cnum), HttpStatus.OK);
+	}
 
 	@RequestMapping("/center/registerCurriculum/{cnum}")
 	public String registerCurriculum(@PathVariable("cnum") int curnum, RedirectAttributes rttr, Authentication authentication) {
