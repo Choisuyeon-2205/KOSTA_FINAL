@@ -5,32 +5,15 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
 <head>
-<meta charset="UTF-8">
-<title>Welcome to FitPle</title>
-
+<meta charset="UTF-8"  name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>FitPle</title>
+<link rel="stylesheet" href="css/main.css" />
+<noscript><link rel="stylesheet" href="css/noscript.css" /></noscript>
 <th:block layout:fragment="style2">
 <style>
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
 
-.aa .hero{
-position: absolute;
-left: 37%;
-top: 50%;
-transform: tranlate(-50%, -50%);
-color: white;
-text-align: center;
-}
 
-.aa .hero h2{ color: white; font-size: 60px; margin-bottom: 20px; background-color: rgba(116,116,116,0.7);}
 
-.aa .hero p{  font-size: 22px;}
-
-.aa .hero .ac {background-color: none; border: 2px solid; color: white; padding: 15px 20px; border-radius: 20px; margin-top: 30px; outline: none; cursor: pointer;}
-.aa .hero .ac:hover { background-color:gray; }	
 #videoBG{
      position: absolute;
      top: 0px;
@@ -43,21 +26,163 @@ text-align: center;
   
 }
 
+
 </style>
     </th:block>
 
 </head>
 <body>
 
-	<div class="aa" layout:fragment="content1"  >
+	<div class="is-preload" layout:fragment="content1"  >
 	<video id = "videoBG" autoplay loop muted>
 	<source src="image/gym.mp4" type="video/mp4">	
 	</video>
-	<div class="hero">
-	<h2> HELLO FITPLE </h2>
-	<p> FITPLE과 함께 운동하세요</p>
-	<button class="ac">Enjoy</button>
-	</div>
+	<div >
+
+		<!-- Wrapper -->
+			
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>This is <br>
+						FITPLE</h1>
+						<p>Hello, Exercise with Fitple. and share your opinion. <a href="https://github.com/Choisuyeon-2205/KOSTA_FINAL">@github</a> for <a href="./main">FITPLE</a><br />
+						And compete with your partner.<a href=""><br>Let's FITPLE!</a>.</p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+			
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li class="active"><a href="index.html">Fitness People</a></li>
+							<li><a href="generic.html">Business Page</a></li>
+							<li><a href="elements.html">Reference</a></li>
+						</ul>
+					
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Featured Post -->
+							<article class="post featured">
+								<header class="major">
+									
+									<span><a href="#">And this is a<br />
+									massive headline</a></span>
+									<p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br />
+									facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br />
+									amet nullam sed etiam veroeros.</p> <br>
+								</header>
+								
+								
+							</article>
+
+						<!-- Posts -->
+							<section class="posts">
+								<article>
+									<header>
+									
+										<h2><a href="#">Sed magna<br />
+										ipsum faucibus</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="image/exercise1.jpg" alt="" /></a>
+									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
+									<ul class="actions special">
+										<li><a href="#" class="button">Full Story</a></li>
+									</ul>
+								</article>
+								<article>
+									<header>
+										
+										<h2><a href="#">Primis eget<br />
+										imperdiet lorem</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="image/exercise2.jpg" alt="" /></a>
+									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
+									<ul class="actions special">
+										<li><a href="#" class="button">Full Story</a></li>
+									</ul>
+								</article>
+								<article>
+									<header>
+										
+										<h2><a href="#">Ante mattis<br />
+										interdum dolor</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="image/exercise0.jpg" alt="" /></a>
+									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
+									<ul class="actions special">
+										<li><a href="#" class="button">Full Story</a></li>
+									</ul>
+								</article>
+								<article>
+									<header>
+										
+										<h2><a href="#">Tempus sed<br />
+										nulla imperdiet</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="image/exercise3.jpg" alt="" /></a>
+									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
+									<ul class="actions special">
+										<li><a href="#" class="button">Full Story</a></li>
+									</ul>
+								</article>
+								<article>
+									<header>
+										
+										<h2><a href="#">Odio magna<br />
+										sed consectetur</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="image/exercise4.jpg" alt="" /></a>
+									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
+									<ul class="actions special">
+										<li><a href="#" class="button">Full Story</a></li>
+									</ul>
+								</article>
+								<article>
+									<header>
+										
+										<h2><a href="#">Augue lorem<br />
+										primis vestibulum</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="image/exercise1.jpg" alt="" /></a>
+									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
+									<ul class="actions special">
+										<li><a href="#" class="button">Full Story</a></li>
+									</ul>
+								</article>
+							</section>
+
+						<!-- Footer -->
+							<footer>
+								<div class="pagination">
+								
+									<a href="#" class="page active">1</a>
+									<a href="#" class="page">2</a>
+									<a href="#" class="page">3</a>
+									<span class="extra">&hellip;</span>
+									<a href="#" class="page">8</a>
+									<a href="#" class="page">9</a>
+									<a href="#" class="page">10</a>
+									<a href="#" class="next">Next</a>
+								</div>
+							</footer>
+
+					</div>
+
+				
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Warren BuFIT </li><li>Design: <a href="">오정훈</a></li></ul>
+					</div>
+
+			
 
 
 
@@ -67,5 +192,6 @@ text-align: center;
 
 	  </div>
 
+		
 </body>
 </html>
