@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>business mypage</title>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+	background: lightblue;
+}
+#mypage_form {
+	border: 1px solid gray;
+	  position: relative;
+	  z-index: 1;
+	  background: #FFFFFF;
+	  max-width: 500px;
+	  margin: 0 auto 100px;
+	  padding: 45px;
+	  text-align: center;
+	  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+#mypage_form input[type="submit"] {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4682B4;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+#mypage_form input[type="text"] {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+h1 {
+	text-align: center;
+}
+.label{
+	color:#aaa;
+	font-size:12px;
+}
+</style>
+</head>
+<body>
+<h1>내 정보 조회</h1>
+<form id="mypage_form" action="">
+	<label for="businessNum" class="label">사업자번호</label>
+	<input type="text" th:value="${business.businessId}"><br>
+	<label for="businessNum" class="label">사업자명</label>
+	<input type="text" th:value="${business.businessTitle}"><br>
+	<label for="businessNum" class="label">주소</label>
+	<input type="text" th:value="${business.businessAddress.Address1}+' '+${business.businessAddress.Address3}+' '+${business.businessAddress.Address2}+' ('+${business.businessAddress.AddNum}+')'"><br>
+	<label for="businessNum" class="label">연락처</label>
+	<input type="text" th:value="${business.businessPhone}"><br>
+	<input type="submit" value="수정하기">
+</form>
+</body>
+</html>

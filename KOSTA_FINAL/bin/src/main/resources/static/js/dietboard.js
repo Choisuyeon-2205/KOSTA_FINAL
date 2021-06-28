@@ -1,3 +1,4 @@
+
 /**
  * 공통자바스크립트
  */
@@ -36,12 +37,6 @@ var replyManager = (function(){
 			 "remove" : remove
 	  };
 })();
-
-
-
-
-
-
 
 
 

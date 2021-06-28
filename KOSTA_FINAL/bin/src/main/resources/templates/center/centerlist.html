@@ -11,46 +11,140 @@ layout:decorate="~{layout/layout1}">
 	height: 500px;
 	margin: 0 auto;
 }
-.w70 {width:70px; }
-.w200 {width:200px; }
-.w100 {width:100px; }
 .title {
 	height: 50px;
 	line-height: 50px;
 	background:skyblue;
 	font-weight: bold;
 }
-.t_line {border-right:solid 1px gray;}
-.lt_line {border-bottom:solid 1px gray;}
 .list {
 	height: 40px;
 	line-height: 40px;
 	background: #f3f3f3;
 }
-.center_list{
+.item{
 	list-style: none;
-	width: 570px;
+	width: 300px;
+	float: left;
+	padding: 10px;
+	border: 1px solid black;
+	margin: 10px;
+    border-radius: 1em;
+   	box-shadow: 5px 5px gray;
 }
-.fl {float:left; }
-.tc {text-align:center; }
+.item:hover {
+	background-color: lightgray;
+}
+.item:active {
+	background-color: gray;
+}
+
+/* star rating */
+.star {font-size:0; letter-spacing:-4px;}
+.star a {
+    font-size:22px;
+    letter-spacing:0;
+    display:inline-block;
+    margin-left:5px;
+    color:#ccc;
+    text-decoration:none;
+}
+.star a:first-child { margin-left:0; }
+.star a.on { color:red; }
+.star {
+	display: inline-block;
+}
+
+/*select box */
+#select-wrap1, #select-wrap2 {
+	display: inline-block;
+}
+
+#selectMyCur {
+	margin: 30px;
+	float: right;
+}
 </style>
 </head>
 <body>
-<div class="panel panel-default" layout:fragment="content1">
+<div class="panel panel-default" layout:fragment="content1" >
+	<input type="button" id="selectMyCur" value="내 커리큘럼 조회"  th:onclick="'window.location.href=\''+@{/center/myCurriculum}+'\''"><br><br>
 	<div id="content">
-	<ul class="center_list">
-		<li class="fl tc w200 title t_line">센터이름</li>
-		<li class="fl tc w100 title t_line">지역(특별시/광역시/도)</li>
-		<li class="fl tc w100 title t_line">지역2(시/군/구)</li>
-		<li class="fl tc w70 title t_line">평점</li>
-	</ul>
-	<ul class="center_list" th:each="center:${centerlist}" th:onclick="'window.location.href=\''+@{/center/centerdetail(cnum=${center.centerNum})}+'\''">
-		<li class="fl tc w200 list t_line lt_line">[[${center.centerTitle}]]</li>
-		<li class="fl tc w100 list t_line lt_line">[[${center.centerArea1}]]</li>
-		<li class="fl tc w100 list t_line lt_line">[[${center.centerArea2}]]</li>
-		<li class="fl tc w70 list t_line lt_line">[[${center.centerPreferance}]]</li>
-	</ul>
+		<div class="real-select group">
+	      <div id="select-wrap1">
+	      	<h4>지역1</h4>
+	        <select name="selectArea1" id="selectArea1">
+		        <option th:each="area1:${area1s}" th:value="${area1}">[[${area1}]]</option>
+	      	</select>
+      	  </div>
+      	  <div id="select-wrap2">
+	      	<h4>지역2</h4>
+	        <select name="selectArea2" id="selectArea2">
+		        <option th:each="area:${arealist}" th:if="${area.area1}=='서울특별시'" th:value="${area.area2}">[[${area.area2}]]</option>
+	      	</select>
+      	  </div>
+      	 </div>
+	    <div id="products" class="row list-group">
+		<ul class="item" th:each="center:${centerlist}"
+		         th:onClick="call(this);" th:data2 ="${center.centerNum}" >
+			<li><h4>[[${center.centerTitle}]]</h4></li>
+			<li>[[${center.centerArea1}]] [[${center.centerArea2}]]</li>
+			<li>[[${center.centerPreferance}]]</li>
+			<li class="star">평점:</li>
+		</ul>
+		</div>
 	</div><br><br>
 </div>
+<th:block layout:fragment="script1">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script th:src="@{/js/getArea.js}"></script>
+	<script>
+	/* star rating */
+	$(".star").parent().children("a").removeClass("on");
+	//var s= $(".star").prev().text();
+	//$(".star").innerHTML("★");
+	//alert(s);
+	//$(".star:nth-child("+Math.round(s)+")").addClass("on").prevAll("a").addClass("on");
+	
+	/* select box */
+	function call(obj){
+		window.location.href="/center/centerdetail?cnum="+$(obj).attr("data2");
+	}
+	
+	$("#selectArea1").on('change',function(){		
+		getManager.getArea2(this.value, printList); //지역 소구분 변경
+		getManager.getByArea1(this.value, printCenterList); //list 변경
+				
+	});
+	
+	function printList(rlist){ //지역 소구분 html 변경
+		$("#selectArea2 option").remove();
+		var str=""
+		$.each(rlist, function(idx, item){
+			str+="<option value='"+item["area2"]+"'>"+item["area2"]+"</option>";
+			
+		});
+		$("#selectArea2").append(str);
+	}
+	
+	$("#selectArea2").on('change',function(){
+		getManager.getByArea2(this.value, printCenterList);	
+	});
+	
+	function printCenterList(rlist){ //center list html 변경
+		$("#products ul").remove();
+		var str=""
+		$.each(rlist, function(idx, item){
+			str+= "<ul class='item'  onClick='call(this);' data2 ="+item["centerNum"]+">"
+			str+= "<li><h4>"+item["centerTitle"]+"</h4></li>"
+			str+= "<li>"+item["centerArea1"]+" "+item["centerArea2"]+"</li>"
+			str+= "<li>"+item["centerPreferance"]+"</li>"
+			str+= "</ul>"
+		});
+		$("#products").append(str);
+		
+	}
+	</script>
+</th:block>
 </body>
 </html>

@@ -96,7 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		// hasRole : 특정권한을 가진 사람만 접근가능하다는 의미
 		http.authorizeRequests() // HttpServletRequest에 따라 접근(access)을 제한
 
-			.antMatchers("/main","/fragments/**","/login/**","/exerciseinfoboard/**","/dietdiaryboard/**","/healthboard/**","/sharingboard/**","/naversearch/**","/auth/**", "/upload/**","/business/**", "/body/**").permitAll() //   누구나 접근 허용
+			.antMatchers("/main/**","/fragments/**","/login/**","/exerciseinfoboard/**","/dietdiaryboard/**","/healthboard/**","/sharingboard/**","/naversearch/**","/auth/**", "/upload/**","/business/**", "/body/**").permitAll() //   누구나 접근 허용
 			.antMatchers("/admin/**").hasRole("ADMIN") // /admin으로 시작하는 경로는  ADMIN롤을 가진 사용자만  접근 가능(자동으로 ROLE_가 삽입)
 			.antMatchers("/BUSINESS/**").hasRole("BUSINESS")
 			.antMatchers("/facebook").hasAuthority(FACEBOOK.getRoleType())
@@ -113,7 +113,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			.and()
 			.logout() // 로그아웃에 관한 설정을 의미
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
+			.logoutSuccessUrl("/main") // 로그아웃 성공시 리다이렉트 주소
 			.invalidateHttpSession(true)  // 세션 지우기
 		.and()
 			.csrf().disable()

@@ -142,6 +142,7 @@ ul.tabs li.current{
 				<li><span class="detail_title">센터명:</span> [[${center.centerTitle}]]</li>
 				<li><span class="detail_title">정보:</span> [[${center.centerInfo}]]</li>
 				<li><span class="detail_title">평점:</span> [[${center.centerPreferance}]]</li>
+				<li><span class="detail_title">전화번호:</span> [[${center.centerPhone}]]</li>
 				<li><span class="detail_title">지역명1:</span> [[${center.centerArea1}]]</li>
 				<li><span class="detail_title">지역명2:</span> [[${center.centerArea2}]]</li>
 				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
@@ -177,8 +178,9 @@ ul.tabs li.current{
 			  <li class="fl tc w300 title t_line">정보</li>
 			  <li class="fl tc w120 title t_line">날짜</li>
 			  <li class="fl tc w200 title t_line">시간</li>
-			  <li class="fl tc w100 title t_line">총 정원수</li>
-			  <li class="fl tc w100 title t_line">현재 정원수</li>
+			  <li class="fl tc w70 title t_line">가격</li>
+			  <li class="fl tc w70 title t_line">총 정원수</li>
+			  <li class="fl tc w70 title t_line">현재 정원수</li>
 			  <li class="fl tc w100 title t_line">운동유형</li>
 			  <li class="fl tc w100 title">강사</li>
 			</ul>
@@ -190,8 +192,9 @@ ul.tabs li.current{
 			  <li class="fl tc w300 list  lt_line t_line">[[${curriculum.curriculumInfo}]]</li>
 			  <li class="fl tc w120 list t_line lt_line">[[${curriculum.curriculumDate}]]</li>
 			  <li class="fl tc w200 list t_line lt_line">[[${curriculum.curriculumTime}]]</li>
-			  <li class="fl tc w100 list  t_line lt_line">[[${curriculum.curriculumAll}]]</li>
-			  <li class="fl tc w100 list  t_line lt_line" id="current">[[${curriculum.curriculumState}]]</li>
+			  <li class="fl tc w70 list  t_line lt_line">[[${curriculum.curriculumPrice}]]</li>
+			  <li class="fl tc w70 list  t_line lt_line">[[${curriculum.curriculumAll}]]</li>
+			  <li class="fl tc w70 list  t_line lt_line" id="current">[[${curriculum.curriculumState}]]</li>
 			  <li class="fl tc w100 list  t_line lt_line">[[${curriculum.etyperef.id.etype.exerciseTypeNum}]]</li>
 			  <li class="fl tc w100 list   lt_line">[[${curriculum.trainer.trainerName}]]</li>
 			</ul>
@@ -209,17 +212,18 @@ ul.tabs li.current{
 		      </div>
 		      <div class="modal-body">
 		     	<label>강좌번호</label>
-		        <input type="text" name="curriculumNum" class="form-control">
+		        <input type="text" name="curriculumNum" class="form-control" readonly="readonly">
 		        <label>강좌이름</label>
-		        <input type="text" name="curriculumTitle" class="form-control">
+		        <input type="text" name="curriculumTitle" class="form-control" readonly="readonly">
 		        <label>강좌정보</label>
-		        <input type="text" name="curriculumInfo" class="form-control">
+		        <input type="text" name="curriculumInfo" class="form-control" readonly="readonly">
 		        <label>총인원수</label>
-		        <input type="text" name="curriculumAll" class="form-control">
+		        <input type="text" name="curriculumAll" class="form-control" readonly="readonly">
 		        <label>현재인원수</label>
-		        <input type="text" name="curriculumState" class="form-control">
+		        <input type="text" name="curriculumState" class="form-control" readonly="readonly">
 		        <label>강사이름</label>
-		        <input type="text" name="curriculumTrainer" class="form-control">
+		        <input type="text" name="curriculumTrainer" class="form-control" readonly="readonly">
+		        * 신청 시, 내 정보가 운동 센터에 제공됩니다. 
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" id="curModalButton" class="btn btn-default" data-dismiss="modal">등록하기</button>
@@ -357,7 +361,7 @@ ul.tabs li.current{
 			url:"/center/curriculumstate/"+cno,
 			type:"get",
 			success: function(data) {
-				var s= $(".curriculum_info li:first-child").html();
+				var s= $(".curriculum_info li:first-child(:contains('"+cno+"'))").next();
 				console.log(s);
 		    	//$(".all_star :nth-child("+Math.round(data)+")").addClass("on2").prevAll("a").addClass("on2");
 		    	}
@@ -386,12 +390,16 @@ ul.tabs li.current{
 			var obj={ "cno":"[[${center.centerNum}]]" , "crContents":crContents.val(), "crPreference":crPreference.val(), "curnum":curnum};
 			
 			if(mode=="ADD"){
-				if(curnum!=0){
-					reviewManager.add(obj,printList2);
-					alert("입력완료");	
-				}else {
-					alert("수강했던 강좌를 선택하세요.");
-				} 		
+				if(crPreference.val()==null){
+					alert("평점을 입력하세요.")
+				}else{
+					if(curnum!=0){
+						reviewManager.add(obj,printList2);
+						alert("입력완료");	
+					}else {
+						alert("수강했던 강좌를 선택하세요.");
+					} 		
+				}
 			}else if(mode=="MOD"){
 				if(userId!="[[${userid}]]"){
 					alert("다른 사람의 리뷰는 수정할 수 없습니다.")
@@ -414,7 +422,7 @@ ul.tabs li.current{
    		 var crPreference = $("input[name='crPreference']");
    		 var obj = {
    				 "cno":"[[${center.centerNum}]]", "crNum": crNum };
-   		reviewManager.remove(obj, printList);
+   		reviewManager.remove(obj, printList2);
    		 alert("삭제완료");
    		$("#reviewModal").hide();
 		crContents.val("");
@@ -478,7 +486,7 @@ ul.tabs li.current{
 				url:"/reviews/prefer/[[${center.centerNum}]]",
 				type:"get",
 				success: function(data) {
-					$("#prefer").html("평점: "+data);
+					$("#prefer").html("( "+data+" )");
 					$(".all_star a").parent().children("a").removeClass("on2");
 			    	$(".all_star :nth-child("+Math.round(data)+")").addClass("on2").prevAll("a").addClass("on2");
 			    	}

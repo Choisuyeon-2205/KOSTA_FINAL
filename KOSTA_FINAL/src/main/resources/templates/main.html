@@ -8,7 +8,29 @@
 <meta charset="UTF-8">
 <title>Welcome to FitPle</title>
 
+<th:block layout:fragment="style2">
 <style>
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.aa .hero{
+position: absolute;
+left: 37%;
+top: 50%;
+transform: tranlate(-50%, -50%);
+color: white;
+text-align: center;
+}
+
+.aa .hero h2{ font-size: 60px; margin-bottom: 20px;}
+
+.aa .hero p{  font-size: 22px;}
+
+.aa .hero button {background-color: none; border: 2px solid; color: white; padding: 15px 20px; border-radius: 20px; margin-top: 30px; outline: none; cursor: pointer;}
+.aa .hero button:hover { background-color:gray; }	
 #videoBG{
      position: absolute;
      top: 0px;
@@ -20,18 +42,30 @@
      z-index: -1;
   
 }
+
 </style>
+    </th:block>
+
 </head>
 <body>
 
-	<div class="panel panel-default" layout:fragment="content1" >
-
+	<div class="aa" layout:fragment="content1" >
 	<video id = "videoBG" autoplay loop muted>
 	<source src="image/gym.mp4" type="video/mp4">	
 	</video>
-		
-	
-	
-  </div>
+	<div class="hero">
+	<h2> HELLO FITPLE </h2>
+	<p> FITPLE과 함께 운동하세요</p>
+	<button>Enjoy</button>
+	</div>
+
+
+
+
+
+
+
+	  </div>
+
 </body>
 </html>
