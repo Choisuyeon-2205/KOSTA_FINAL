@@ -24,7 +24,9 @@ public class CurriculumRegisterService {
 	CurriculumRegisterRepository curregRepo;
 	
 	public List<CurriculumVO> selectByCurRegId(int center_num, String user_id) {
+		System.out.println("Center:"+center_num+", userid: "+user_id);
 		List<Object[]> objects= curregRepo.findByCurRegId(center_num, user_id);
+		System.out.println("service"+objects);
 		List<CurriculumVO> curriculums= new ArrayList<>();
 		objects.forEach(arr->{
 			CurriculumVO curriculum= CurriculumVO.builder()
@@ -68,6 +70,10 @@ public class CurriculumRegisterService {
 			curriculums.add(curriculum);
 		});
 		return curriculums;
+	}
+	
+	public List<Object[]> selectByCenterNum(int center_num) {
+		return curregRepo.allFindByCenterNum(center_num);
 	}
 	
 	public CurriculumRegisterVO selectById(CurriculumRegisterVOId crid) {

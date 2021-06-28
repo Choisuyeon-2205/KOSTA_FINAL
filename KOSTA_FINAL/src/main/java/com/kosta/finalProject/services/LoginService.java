@@ -85,7 +85,6 @@ public class LoginService implements UserDetailsService {
                       .filter(u ->u!=null).map(u->new SecurityBusiness(u)).get();
     	  }
  
-          
             return user;
       }
       

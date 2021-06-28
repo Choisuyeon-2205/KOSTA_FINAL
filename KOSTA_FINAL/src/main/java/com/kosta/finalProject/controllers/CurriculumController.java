@@ -13,6 +13,7 @@ import com.kosta.finalProject.models.CurriculumVO;
 import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.services.CurriculumRegisterService;
 import com.kosta.finalProject.services.CurriculumService;
+import com.kosta.finalProject.services.UserService;
 
 @Controller
 public class CurriculumController {
@@ -21,13 +22,13 @@ public class CurriculumController {
 	CurriculumService curservice;
 	@Autowired
 	CurriculumRegisterService curregservice;
+	@Autowired
+	UserService uservice;
 	
 	@GetMapping("/center/myCurriculum")
 	public void selectMyCurriculum(Model model, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();		
-		UserVO user = UserVO.builder()
-				.userId(userDetails.getUsername())				
-				.build();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		UserVO user = uservice.selectById(userDetails.getUsername());
 		
 		List<CurriculumVO> mycurlist= curregservice.selectAllByCurRegId(user.getUserId());
 		model.addAttribute("mycurlist",mycurlist);

@@ -146,7 +146,7 @@ ul.tabs li.current{
 				<li><span class="detail_title">지역명1:</span> [[${center.centerArea1}]]</li>
 				<li><span class="detail_title">지역명2:</span> [[${center.centerArea2}]]</li>
 				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
-				<li><span class="detail_title">사업자번호:</span> [[${center.corporateNum}]]</li>
+				<li><span class="detail_title">사업자번호:</span> [[${center.business.businessId}]]</li>
 			</ui>
 		</div>
 		<div id="tab-2" class="tab-content">
@@ -186,7 +186,7 @@ ul.tabs li.current{
 			</ul>
 			
 			<!--  <ul class="curriculum_info" th:each="curriculum:${curlist}" th:target="_blank" th:onclick="'window.open(\''+@{/center/curriculumdetail(crnum=${curriculum.curriculumNum})}+'\',\'window_name\',\'width=450,height=500,location=no,status=no,scrollbars=yes\')'"> -->
-			<ul class="curriculum_info" th:each="curriculum:${curlist}" data-toggle="modal" data-target="#myModal">
+			<ul class="curriculum_info" th:each="curriculum:${curlist}" data-toggle="modal" data-target="#curModal">
 			  <li class="fl tc w70 list t_line lt_line">[[${curriculum.curriculumNum}]]</li>
 			  <li class="fl tc w300 list t_line lt_line">[[${curriculum.curriculumTitle}]]</li>
 			  <li class="fl tc w300 list  lt_line t_line">[[${curriculum.curriculumInfo}]]</li>
@@ -201,7 +201,7 @@ ul.tabs li.current{
 		</div>
 		
 		<!-- Modal -->
-		<div id="myModal" class="modal fade" role="dialog">
+		<div id="curModal" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
 
     		<!-- Modal content-->
@@ -315,10 +315,16 @@ ul.tabs li.current{
 	/* curriculum selected box*/
 	function listChange(param){
 		if(param=="전체조회"){
-			$("ul li:nth-child(8):contains('')").parent().show();
+			$("ul li:nth-child(9):contains('')").parent().show();
 		}else{
-			$("ul li:nth-child(8):contains('" + param + "')").parent().show();
-			$("ul li:nth-child(8):not(:contains('" + param + "'))").parent().hide();
+			
+			$("ul li:nth-child(9)").filter(function() {
+			    return $(this).text() == param;
+			}).parent().show();
+			$("ul li:nth-child(9)").filter(function() {
+			    return $(this).text() != param;
+			}).parent().hide();
+			
 			$("ul.info_header").show();
 		}
 	}
@@ -338,7 +344,7 @@ ul.tabs li.current{
    	 $("input[name='curriculumAll']").val(ctotal);
    	 $("input[name='curriculumState']").val(ccurrent);
    	 $("input[name='curriculumTrainer']").val(ctrainer);
-   	 $("#myModal").show();   	 
+   	 $("#curModal").show();   	 
     });
 	
 	$("#curModalButton").click(function(){
@@ -351,7 +357,7 @@ ul.tabs li.current{
 		}else{
 			alert("해당 강좌는 마감되었습니다.");
 		}
-		$("#myModal").hide();
+		$("#curModal").hide();
 	})
 	
 	function printResult(responsedata){

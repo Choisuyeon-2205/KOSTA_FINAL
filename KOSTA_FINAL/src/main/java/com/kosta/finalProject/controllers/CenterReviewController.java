@@ -23,6 +23,7 @@ import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.services.CenterReviewService;
 import com.kosta.finalProject.services.CurriculumRegisterService;
 import com.kosta.finalProject.services.CurriculumService;
+import com.kosta.finalProject.services.UserService;
 
 @RestController
 @RequestMapping("/reviews/*") //reviews로 시작하는 것은 전부 받겠다.
@@ -34,6 +35,8 @@ public class CenterReviewController {
 	CurriculumRegisterService curregservice;
 	@Autowired
 	CurriculumService cservice;
+	@Autowired
+	UserService uservice;
 	
 		//댓글 상세보기 selectById
 		@GetMapping("/{rno}")
@@ -60,10 +63,8 @@ public class CenterReviewController {
 		public ResponseEntity<List<CenterReviewVO>> addReview(@PathVariable int cno,@PathVariable int curnum,
 				@RequestBody CenterReviewVO review, Authentication authentication) {
 			CenterVO center= CenterVO.builder().centerNum(cno).build();
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();		
-			UserVO user = UserVO.builder()
-					.userId(userDetails.getUsername())				
-					.build();	
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			UserVO user = uservice.selectById(userDetails.getUsername());
 			
 			CurriculumVO curriculum= cservice.selectById(curnum);
 			review.setCurriculum(curriculum);
@@ -79,10 +80,8 @@ public class CenterReviewController {
 				@RequestBody CenterReviewVO review, Authentication authentication) {
 			
 			CenterVO center= CenterVO.builder().centerNum(cno).build();
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();		
-			UserVO user = UserVO.builder()
-					.userId(userDetails.getUsername())				
-					.build();
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			UserVO user = uservice.selectById(userDetails.getUsername());
 			
 			CurriculumVO curriculum= cservice.selectById(curnum);
 			review.setCurriculum(curriculum);

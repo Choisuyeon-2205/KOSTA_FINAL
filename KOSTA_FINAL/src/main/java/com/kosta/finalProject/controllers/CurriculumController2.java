@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,6 +32,7 @@ import com.kosta.finalProject.services.CurriculumService;
 import com.kosta.finalProject.services.ExerciseTypeRefService;
 import com.kosta.finalProject.services.ExerciseTypeService;
 import com.kosta.finalProject.services.TrainerService;
+import com.kosta.finalProject.services.UserService;
 
 @RestController
 public class CurriculumController2 {
@@ -46,14 +48,20 @@ public class CurriculumController2 {
 	ExerciseTypeService etservice;
 	@Autowired
 	CenterService cservice;
+	@Autowired
+	UserService uservice;
+	
+	//센터에 등록한 사람 정보 모두 조회
+	@GetMapping("/curreg/{cnum}")
+	public ResponseEntity<List<Object[]>> selectAllByCenterNum(@PathVariable int cnum) {
+		return new ResponseEntity<>(curregservice.selectByCenterNum(cnum), HttpStatus.OK);
+	}
 
-	@PostMapping("/center/registerCurriculum/{cnum}")
+	@RequestMapping("/center/registerCurriculum/{cnum}")
 	public String registerCurriculum(@PathVariable("cnum") int curnum, RedirectAttributes rttr, Authentication authentication) {
 		System.out.println(curnum);
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();		
-		UserVO user = UserVO.builder()
-				.userId(userDetails.getUsername())				
-				.build();	
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		UserVO user = uservice.selectById(userDetails.getUsername());
 		CurriculumRegisterVOId crid= new CurriculumRegisterVOId();
 		CurriculumVO curriculum= curservice.selectById(curnum);
 		crid.setCurriculum(curriculum);
@@ -68,13 +76,11 @@ public class CurriculumController2 {
 		crvo.setId(crid);
 		
 		
-		CurriculumRegisterVO result= curregservice.insertCurriculumRegister(crvo);
-		//rttr.addFlashAttribute("resultMessage", result==null?"등록실패":"등록성공");		
+		CurriculumRegisterVO result= curregservice.insertCurriculumRegister(crvo);	
 		if(result!=null) { //등록성공했을 때만 count
 			curriculum.setCurriculumState(curriculum.getCurriculumState()+1);
 			curservice.updateCurriculum(curriculum);
 		}
-		//return new ResponseEntity<>(curservice.selectAll(), HttpStatus.CREATED);
 		return result==null?"등록실패":"등록성공";
 	}
 	

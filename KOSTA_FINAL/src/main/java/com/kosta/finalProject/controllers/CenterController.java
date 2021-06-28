@@ -32,6 +32,7 @@ import com.kosta.finalProject.services.CurriculumRegisterService;
 import com.kosta.finalProject.services.CurriculumService;
 import com.kosta.finalProject.services.ExerciseTypeService;
 import com.kosta.finalProject.services.TrainerService;
+import com.kosta.finalProject.services.UserService;
 
 @Controller
 public class CenterController {
@@ -50,6 +51,8 @@ public class CenterController {
 	CurriculumRegisterService curRegService;
 	@Autowired
 	AreasService areaService;
+	@Autowired
+	UserService uservice;
 	
 	@GetMapping("/center/centerlist")
 	public void selectAll(Model model) {
@@ -86,13 +89,12 @@ public class CenterController {
 			
 		model.addAttribute("gprefer",gprefer);
 		
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();		
-		UserVO user = UserVO.builder()
-				.userId(userDetails.getUsername())				
-				.build();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		UserVO user = uservice.selectById(userDetails.getUsername());
 		model.addAttribute("userid",user.getUserId());
 		List<CurriculumVO> userCurlist= curRegService.selectByCurRegId(cnum, user.getUserId());
 		model.addAttribute("userCurlist",userCurlist);
+		System.out.println(userCurlist);
 	}
 	
 	@PutMapping("/center/updateCenter/{cnum}")
