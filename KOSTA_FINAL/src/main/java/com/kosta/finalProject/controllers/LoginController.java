@@ -68,7 +68,7 @@ public class LoginController {
     @RequestMapping("/login/logout")
     public String logout() {
  System.out.println("로그아웃처리..");
-       return "/main";
+       return "redirect:/main";
     }
     @RequestMapping("/accessDenied")
     public void accessDenied() {
