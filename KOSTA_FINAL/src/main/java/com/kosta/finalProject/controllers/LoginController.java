@@ -81,6 +81,7 @@ public class LoginController {
     public String signup(UserVO user, String userAddress1, String userAddress2, String userAddress3, String AddNum ) { // 회원 추가
        System.out.println("PostMapping 도착");
        UserAddress userAddress = new UserAddress();
+       user.setUrole(user.getUrole().USER);
        userAddress.setAddNum(AddNum);
        userAddress.setUserAddress1(userAddress1);
        userAddress.setUserAddress2(userAddress2);
@@ -125,6 +126,7 @@ public class LoginController {
     public String BusinessSignup2(BusinessVO business, String Address1, String Address2, String Address3, String AddNum) { // 회원 추가
        System.out.println("PostMapping 도착");
        BusinessAddress  businessAddress= new BusinessAddress();
+       business.setBrole(business.getBrole().BUSINESS);
        businessAddress.setAddNum(AddNum);
        businessAddress.setAddress1(Address1);
        businessAddress.setAddress2(Address2);
