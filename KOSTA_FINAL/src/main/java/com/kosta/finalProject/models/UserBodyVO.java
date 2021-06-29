@@ -5,6 +5,7 @@ import lombok.ToString;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +57,8 @@ public class UserBodyVO {
 	int buddyCheck;
 
 	@Column(nullable = true)
-	Date insertDate; 
+	@CreationTimestamp
+	Timestamp insertDate; 
 	
 
 

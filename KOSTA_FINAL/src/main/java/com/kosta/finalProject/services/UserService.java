@@ -71,10 +71,13 @@ public class UserService implements UserDetailsService{
   	}
   	
   	
-  	public void updateBMI(UserBodyVO body) {
-  		bodyrepo.save(body);
+  	public UserBodyVO updateBMI(UserBodyVO body) {
+  		return bodyrepo.save(body);
   	}
-
+  	
+  	public UserBodyVO selectUserBody(String user) {
+  		return bodyrepo.findByUser(user);
+  	}
   	
   	
 	@Override
