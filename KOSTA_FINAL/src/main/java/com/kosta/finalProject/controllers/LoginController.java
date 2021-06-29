@@ -96,28 +96,6 @@ public class LoginController {
     public void signupget() { // 회원 추가
       
     }
-    @GetMapping("/login/profile")
-    public void profile() {
-       
-    }
-    
-    @PostMapping("/login/profile")
-    public String profilePost(UserBodyVO body, Principal principal,Authentication authentication) {
-       UserVO user = new UserVO();
-       user.setUserId(principal.getName());
-    body.setUser(user);
-       BMICalculator bmi = new BMICalculator();
-       body.setUserBmi(bmi.bmicalculator(body.getWeight(), body.getHeight()));
-       System.out.println("UserBodyVO : " + body);
-       userservice.updateBMI(body);
-       return "redirect:/main";
-    }
-    
-    @GetMapping("/login/myprofile")
-    public void myprofile() {
-       
-    }
-    
     
     
     @GetMapping("/login/BusinessSignup")
