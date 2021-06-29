@@ -3,6 +3,7 @@ package com.kosta.finalProject.models;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -41,6 +42,8 @@ public class BusinessVO {
 	BusinessAddress businessAddress;
 	String businessPhone;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = true)
 	UserRoleEnumType brole;
 	
 	@JsonIgnore

@@ -29,6 +29,7 @@ import com.kosta.finalProject.models.BusinessAddress;
 import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.UserAddress;
 import com.kosta.finalProject.models.UserBodyVO;
+import com.kosta.finalProject.models.UserRoleEnumType;
 import com.kosta.finalProject.models.UserVO;
 import com.kosta.finalProject.services.LoginService;
 import com.kosta.finalProject.services.UserService;
@@ -70,9 +71,9 @@ public class LoginController {
  System.out.println("로그아웃처리..");
        return "redirect:/main";
     }
-    @RequestMapping("/accessDenied")
+    @RequestMapping("/login/accessDenied")
     public void accessDenied() {
- 
+    	
     }
     
  
@@ -81,11 +82,12 @@ public class LoginController {
     public String signup(UserVO user, String userAddress1, String userAddress2, String userAddress3, String AddNum ) { // 회원 추가
        System.out.println("PostMapping 도착");
        UserAddress userAddress = new UserAddress();
-       user.setUrole(user.getUrole().USER);
+       user.setUrole(UserRoleEnumType.USER);
        userAddress.setAddNum(AddNum);
        userAddress.setUserAddress1(userAddress1);
        userAddress.setUserAddress2(userAddress2);
        userAddress.setUserAddress3(userAddress3);
+      
        loginservice.signup(user, userAddress); 
   
       return "redirect:/main";
@@ -126,11 +128,14 @@ public class LoginController {
     public String BusinessSignup2(BusinessVO business, String Address1, String Address2, String Address3, String AddNum) { // 회원 추가
        System.out.println("PostMapping 도착");
        BusinessAddress  businessAddress= new BusinessAddress();
-       business.setBrole(business.getBrole().BUSINESS);
+       business.setBrole(UserRoleEnumType.BUSINESS);
        businessAddress.setAddNum(AddNum);
        businessAddress.setAddress1(Address1);
        businessAddress.setAddress2(Address2);
        businessAddress.setAddress3(Address3);
+       
+       business.setBusinessAddress(businessAddress);
+       System.out.println("business 만들기:" + business);
        loginservice.businessSingup(business, businessAddress);
       return "redirect:/main";
     }

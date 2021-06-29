@@ -98,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
 			.antMatchers("/main/**","/fragments/**","/center/centerlist","/login/**","/exerciseinfoboard/boardlist","/dietdiaryboard/boardlist","/healthboard/boardlist","/sharingboard/boardlist","/naversearch/**","/auth/**", "/upload/**", "/body/**").permitAll() //   누구나 접근 허용
 			.antMatchers("/admin/**").hasRole("ADMIN") // /admin으로 시작하는 경로는  ADMIN롤을 가진 사용자만  접근 가능(자동으로 ROLE_가 삽입)
-			.antMatchers("/BUSINESS/**").hasRole("BUSINESS")
+			.antMatchers("/business/**").hasRole("BUSINESS")
 			.antMatchers("/facebook").hasAuthority(FACEBOOK.getRoleType())
 			.antMatchers("/google").hasAuthority(GOOGLE.getRoleType())
 			.antMatchers("/kakao").hasAuthority(KAKAO.getRoleType())
@@ -117,7 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			.invalidateHttpSession(true)  // 세션 지우기
 		.and()
 			.csrf().disable()
-			.exceptionHandling().accessDeniedPage("/accessDenied")// 403 예외처리 핸들링   권한이 없는 대상이 접속을시도했을 때
+			.exceptionHandling().accessDeniedPage("/login/accessDenied")// 403 예외처리 핸들링   권한이 없는 대상이 접속을시도했을 때
 	//	.and()
 	//		.csrf().disable()  //csrf(크로스사이트 위조요청에 대한 설정) 토큰 비활성화 (test시에는 disable권장)            
 	 	.and()

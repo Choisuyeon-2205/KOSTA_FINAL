@@ -107,13 +107,14 @@ public class LoginService implements UserDetailsService {
       public void businessSingup(BusinessVO business, BusinessAddress businessAddress) {
     	  BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     	  business.setBusinessPassword(passwordEncoder.encode(business.getBusinessPassword()));
-    	BusinessVO newBusiness = BusinessVO.builder()
-    			.businessId(business.getBusinessId()) 			
-    			.businessTitle(business.getBusinessTitle())
-    			.businessAddress(businessAddress)
-    			.businessPhone(business.getBusinessPhone())
-    			.businessPassword(business.getBusinessPassword()).build();
-    	repo2.save(newBusiness);
+    	  
+//    	BusinessVO newBusiness = BusinessVO.builder()
+//    			.businessId(business.getBusinessId()) 			
+//    			.businessTitle(business.getBusinessTitle())
+//    			.businessAddress(businessAddress)
+//    			.businessPhone(business.getBusinessPhone())
+//    			.businessPassword(business.getBusinessPassword()).build();
+    	repo2.save(business);
       }
       
       
