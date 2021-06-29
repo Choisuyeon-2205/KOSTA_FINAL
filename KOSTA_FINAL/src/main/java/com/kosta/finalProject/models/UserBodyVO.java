@@ -4,6 +4,8 @@ import lombok.ToString;
 
 import lombok.Setter;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,7 +53,8 @@ public class UserBodyVO {
 	@Column(nullable = true)
 	int buddyCheck;
 
-
+	@Column(nullable = true)
+	Date insertDate; 
 	
 
 
