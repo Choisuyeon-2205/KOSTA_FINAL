@@ -8,15 +8,21 @@ var curregManager= ( function(){
 		$.getJSON("/curreg/"+obj,callback);
 	};
 	
-		var remove= function(obj, callback){
-		console.log("remove .......");
+	var getByCurnum= function(obj, callback){
+		console.log("getByCurnum......."+obj);
+		$.getJSON("/curreg/getByCurnum/"+obj,callback);
+	};
+	
+	var remove= function(obj, callback){
+	console.log("remove .......");
 		$.ajax({
-			url:"/curreg/deleteCurreg/"+obj["curnum"]+obj["userid"],
+			url:"/curreg/deleteCurreg/"+obj["cnum"]+"/"+obj["curnum"]+"/"+obj["userid"],
 			type:"delete",
 			success: callback
 		});
 	};
 	
 	return { "getAll":getAll, 
-			"remove":remove };
+			"remove":remove,
+			"getByCurnum":getByCurnum };
 })();
