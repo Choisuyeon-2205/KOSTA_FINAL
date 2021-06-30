@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+body,
+html {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	display: grid;
+	background: rgb(238, 174, 202);
+	background: linear-gradient(
+		30deg,
+		rgba(238, 174, 202, 1) 0%,
+		rgba(148, 187, 233, 1) 100%
+	);
+}
+
+#container {
+	width: 300px;
+	height: 300px;
+	margin: 0 auto;
+	display: flex;
+	transform: translatex(0px);
+	transition: all 2.5s;
+}
+
+button {
+	justify-self: center;
+	align-self: flex-end;
+}
+
+button:focus {
+	outline: none;
+}
+
+#buttoun {
+	width: 300px;
+	height: 100px;
+	border-radius: 10px 10px 10px 10px;
+	border: none;
+	background-color: rgb(100, 100, 200);
+	z-index: 1;
+	transition: all 1s;
+}
+
+#mast {
+	width: 12px;
+	height: 160px;
+	transform-origin: bottom;
+	transform: translate(170px, 48px) rotatez(-90deg);
+	background-color: rgb(100, 100, 200);
+	transition: all 1s;
+}
+
+#sail-1 {
+	width: 0;
+	height: 0;
+	border-bottom: 145px solid white;
+	border-right: 60px solid transparent;
+	transform-origin: bottom;
+	transform: translatex(16px) scaley(0.001);
+	transition: all 1s;
+}
+
+#sail-2 {
+	width: 0;
+	height: 0;
+	border-bottom: 145px solid white;
+	border-left: 100px solid transparent;
+	transform-origin: bottom;
+	transform: translate(-104px, -145px) scaley(0.001);
+	transition: all 1s;
+}
+</style>
+</head>
+<body>
+<div id="container">
+	<div id="mast">
+		<div id="sail-1"></div>
+		<div id="sail-2"></div>
+	</div>
+	<button type="button" id="buttoun" th:onclick="'window.location.href=\''+@{/buddy/searchbuddy}+'\''">새로운 buddy 만나러 가기</button>
+</div>
+<script>
+const container = document.getElementById("container");
+const buttoun = document.getElementById("buttoun");
+const mast = document.getElementById("mast");
+const sail1 = document.getElementById("sail-1");
+const sail2 = document.getElementById("sail-2");
+buttoun.addEventListener("click", sail);
+
+function sail() {
+	buttoun.innerText = '매칭중 ...'
+	buttoun.style.setProperty("border-radius", "10px 10px 100px 100px");
+	mast.style.setProperty("transform", " translate(170px, 48px) rotatez(-0deg)");
+	setTimeout(hoist, 500);
+}
+
+function hoist() {
+	sail1.style.setProperty("transform", "translatex(16px) scaley(1)");
+	sail2.style.setProperty("transform", "translate(-104px, -145px) scaley(1)");
+	setTimeout(sailaway, 1000);
+}
+
+function sailaway() {
+	container.style.setProperty("transform", "translatex(calc(100vw - 150px)");
+}
+</script>
+</body>
+</html>
