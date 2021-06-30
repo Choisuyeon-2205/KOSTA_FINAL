@@ -1,10 +1,16 @@
 package com.kosta.finalProject.controllers;
 
 import java.security.Principal;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -75,7 +81,25 @@ public class MyProfileController {
 	    }
 	    
 	@GetMapping("/body/bmi")
-	public void bmiGraph() {
+	public String bmiGraph(Model model,UserBodyVO body, Principal principal) {
+//		UserVO user = userservice.selectById(principal.getName());
 		
+		JSONArray jsonArray = new JSONArray();
+
+		List<UserBodyVO> bodylist = userservice.selectGraph(principal.getName());
+		String[] one = new String[bodylist.size()];
+		 
+		bodylist.forEach(b -> { 
+			JSONObject jsonObject = new JSONObject();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			jsonObject.put("weight", b.getWeight());
+			jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
+			jsonArray.add(jsonObject);
+		});
+		JSONObject jsonObject2 = new JSONObject();
+		jsonObject2.put("data", jsonArray);
+		 
+		model.addAttribute("bodylist", jsonObject2); // userservice.selectGraph(principal.getName()));
+		return "body/bmi";
 	}
 }
