@@ -11,13 +11,13 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color: #FFD8D8">
 	<!-- 게시판 제목  -->
-	<div class="panel panel-default" layout:fragment="content1">
+	<div class="panel panel-default" layout:fragment="content1" style="background-color: #FFD8D8">
 
 		<!-- 게시판 번호  -->
 		<div class="form-group">
-			<form id="myfrm" th:action="@{/healthboard/update}" method="post">
+			<form id="myfrm" th:action="@{/healthboard/update}" method="post" style="background-color: #FFD8D8">
 				<input type="hidden" id="healthNum" name="healthNum"
 					th:value="${hboard.healthNum}"> <br>
 
@@ -29,7 +29,7 @@
 				</div>
 
 				<div class="form-inline"
-					style="padding: 0px 200px 0px 58.5%; width: 100%">
+					style="padding: 0px 200px 0px 815px; width: 100%">
 
 
 					<!-- 게시판 작성자  -->
@@ -128,11 +128,11 @@
 
 			<!-- 댓글넣기 -->
 			<div style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
-				<div style="padding-left: 93.6%">
+				<div style="padding-left: 92.6%">
 					<button data-toggle="modal" data-target="#mymyModal"
 						class="btn btn-warning" id="addReply">댓글추가</button>
 				</div>
-				<table class="table table-striped table-bordered table-hover">
+				<table class="table table-striped table-bordered table-hover" style="background-color: white;">
 					<thead>
 						<tr>
 							<th>댓글번호</th>
