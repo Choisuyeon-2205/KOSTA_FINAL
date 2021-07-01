@@ -56,7 +56,7 @@
                    
                       <!-- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
                         <div class="menu-box block"> <!-- MENU BOX (LEFT-CONTAINER) -->
-                    <h2 class="titular"><a href="../login/profile">BODY INFO</a></h2>
+                    <h2 class="titular"><a data-toggle="modal" data-target="#prfModal" >BODY INFO</a></h2> <!-- href="../login/profile" -->
                    <ul class="menu-box-menu" style="padding-top:5%; padding-left: 1.5em;">
                         <li >
                            성별 : <span class="" th:text="${body.gender}"></span>   
@@ -97,8 +97,95 @@
             <!-- RIGHT-CONTAINER -->
             <div class="right-container container">
 
-            </div> <!-- end right-container -->
+            </div> <!-- end right-ㅡㅛontainer -->
+            
+             <!-- Modal --> 
+  <div class="modal fade" id="prfModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"> UPDATE INFO </h4>
+        </div>
+        <div class="modal-body">
+          <div id="userDiv" class="form-group">
+<form id="bodyform" action="/login/profile" method="post" style="padding-bottom: 10px;">
+<label for="userAge" >나이</label> 
+<input type="number" name="userAge" class="form-group" style="width: 400px; margin-left: 24px;" > <br>
+<label for="height" >키</label> 
+<input type="number" name="height" placeholder="필수 입력입니다!" class="form-group" style="width: 400px; margin-left: 38px" > <br>
+<label for="weight">몸무게</label>
+<input type="number" name="weight" placeholder="필수 입력입니다!" class="form-group" style="width: 400px; margin-left: 10px"> <br>
+<label for="gender" style="padding-right: 24px;">성별</label>
+<span style="color: black; padding-right: 10px;"><input type="radio" name="gender" value="M" class="form-group" style="margin-right: 7px;" >남성</span>
+<span style="color: black;"><input type="radio" name="gender" value="F" class="form-group" style="margin-right: 7px;" >여성</span>
+<input type="hidden" id="userImage" name="userImage"> 
+</form>
+<form onsubmit="return false;">
+   <div class="form-group">
+      <label for="userImage">사진 등록</label> 
+      <input type="file" id="userImage2" name="userImage2" class="form-group" style="display: inline-block; margin-left: 15px;">
+   </div>
+   <button class="btn btn-primary btn-lg btn-block" id="btn-save">등록</button>
+</form>
+          		
+
+             </div>  
+             </div>
+        </div>
+        <div class="modal-footer">  
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div><!-- end Modal -->
+            
+            
+            
+            
+            
+            
+            
+            
+            
         </div> <!-- end main-container -->
     </body>
+    <th:block layout:fragment="script1">
+    <script>
+      $('#btn-save').on('click', uploadImage);
+      
+      function uploadImage() {
+         var file = $('#userImage2')[0].files[0];
+        
+         console.log(file);
+         if(typeof file != "undefined") {
+         var formData = new FormData();
+         formData.append('data', file);
+         formData.append('path', "bodyprofile");
+         console.log(formData);
+         $.ajax({
+            type : 'POST',
+            url : '/upload',
+            data : formData,
+            processData : false,
+            contentType : false
+         }).done(function(responseBody) {
+      
+        
+               var fileInput = $('#userImage2');
+               var user_image = fileInput[0].files[0].name; // 파일명 출력
+               $("#userImage").val(user_image);
+              
+               $('#bodyform').submit();
+         }).fail(function(error) {
+            alert('다시 등록해주세요');
+         })
+      }else {
+       $('#bodyform').submit();
+      }
+   }
 
+</script>
+</th:block>
 </html>

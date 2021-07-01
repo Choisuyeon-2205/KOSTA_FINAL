@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +32,8 @@ import lombok.NoArgsConstructor;
 @Setter
 @ToString
 @Entity
+@DynamicUpdate //수정한것만 업데이트
+@DynamicInsert //수정한것만 인서트
 @Table(name = "user_body_TB")
 public class UserBodyVO {
 	

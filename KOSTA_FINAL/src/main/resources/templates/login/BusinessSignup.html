@@ -2,39 +2,138 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <title>사업자 회원 가입</title>
 </head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	 
+	<style>
+    body {
+      min-height: 100vh;
+
+      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+      background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+      background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+      background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+    }
+
+    .input-form {
+      max-width: 680px;
+
+      margin-top: 80px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+    .col-3 {
+   	margin-top: 31px;
+    }
+    .mb-3{
+    text-align: center;
+    }
+  </style>
 <body>
-<form action="./BusinessSignUp" method="post">
-		<label for="businessId">사업자번호</label> 
-		<input id="businessId" name="businessId" type="text" placeholder="사업자번호를 입력하세요" /> 
-		<input type="button" id="checkId" value="사업자번호 확인"> <br> 
-		
-		<label for="businessPassword">비밀번호</label> 
-		<input id="businessPassword" name="businessPassword" type="password" placeholder="비밀번호를 입력하세요" /><br>
-		
-		<label for="businessTitle">사업자명</label> 
-		<input id="businessTitle" name="businessTitle" type="text" placeholder="이름을 입력하세요" /><br> 
-		
-		<label for="businessPhone">연락처</label> 
-		<input id="businessPhone" name="businessPhone" type="text" placeholder="'-'을 제외하고 입력하세요" />
-		<input type="button" id="sendPhoneButton" value="인증"> <br> 
-		<label for="userPhone2">인증번호</label> 
-		<input type="text" id="inputCertifiedNumber" readonly="readonly"> 
-		<input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly"><br>
-		<input type="hidden" id="numStr" name="numStr"> 
-		
-		<label for="businessAddress">주소</label> 
-		<input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum"> 
-		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" id="sample6_address" placeholder="주소" name="Address1"><br> 
-		<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="Address2">
-		<input type="text" id="sample6_extraAddress" placeholder="참고항목" name="Address3"> <br> <br> 
-		<input type="submit" class="signup-btn waves-effect waves-light btn" value="가입하기" />
-</form>	
+	<div class="container">
+	<div class="input-form-backgroud">
+	<div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
+	<h4 class="mb-3">사업자 회원가입</h4>
+	<form action="./BusinessSignUp" method="post">
+	<div class="validation-form" novalidate>
+	
+	
+	<!-- 사업자 번호 -->
+	<div class="row">
+		<div class="col">
+			<label for="businessId">사업자번호</label> 
+			<input id="businessId" name="businessId" type="text" placeholder="사업자번호를 입력하세요" class="form-control" /> 
+		</div> 
+		<div class="col-3">
+			<input type="button" id="checkId" value="번호 확인" class="form-control">
+		</div>
+	</div>	 
+	<br>
+	
+	<!-- 비밀번호 -->
+	<div class="row">
+		<div class="col">
+			<label for="businessPassword">비밀번호</label> 
+			<input id="businessPassword" name="businessPassword" type="password" placeholder="비밀번호를 입력하세요" class="form-control" />
+		</div>
+	</div>
+	<br>
+	
+	<!-- 사업자명 -->
+	<div class="row">
+		<div class="col">	
+			<label for="businessTitle">사업자명</label> 
+			<input id="businessTitle" name="businessTitle" type="text" placeholder="이름을 입력하세요" class="form-control" />
+		</div>
+	</div>
+	<br>
+	 
+	<!-- 연락처 -->		
+	<div class="row">
+		<div class="col">
+			<label for="businessPhone">연락처</label> 
+			<input id="businessPhone" name="businessPhone" type="text" placeholder="'-'을 제외하고 입력하세요" class="form-control" />
+		</div>
+		<div class="col-3">
+			<input type="button" id="sendPhoneButton" value="인증" class="form-control">
+		</div> 
+	</div>
+	<br>
+	
+	<!-- 인증번호 -->	
+	<div class="row">
+		<div class="col">
+			<label for="userPhone2">인증번호</label> 
+			<input type="text" id="inputCertifiedNumber" readonly="readonly" class="form-control">
+		</div>
+		<div class="col-3">	 
+			<input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="form-control">
+			<input type="hidden" id="numStr" name="numStr"> 
+		</div>
+	</div>
+	<br>
+	
+	<!-- 주소 -->	
+	<div class="row">
+		<div class="col">
+			<label for="businessAddress">주소</label> 
+			<input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum" class="form-control"> 
+			<input type="text" id="sample6_address" placeholder="주소" name="Address1" class="form-control"> 
+			<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="Address2" class="form-control">
+			<input type="text" id="sample6_extraAddress" placeholder="참고항목" name="Address3" class="form-control"><br> 
+		</div>
+		<div class="col-3">	
+			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="form-control"> 
+		</div>
+		<div class="col-8">	
+		</div>
+	</div>
+	<br>
+		<input type="submit" class="btn btn-primary btn-lg btn-block" value="가입하기" />
+		</div>	
+	</form>	
+</div>	
+</div>
+</div>
+
+
+
 <script>
 $('#checkId').click(function() {
 	$.ajax({
