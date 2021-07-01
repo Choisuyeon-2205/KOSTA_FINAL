@@ -2,6 +2,7 @@ package com.kosta.finalProject.services;
 
 import java.io.Console;
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +78,10 @@ public class UserService implements UserDetailsService{
   	
   	public UserBodyVO selectUserBody(String user) {
   		return bodyrepo.findByUser(user);
+  	}
+  	
+  	public List<UserBodyVO> selectGraph(String user) {
+  		return bodyrepo.findByGraph(user);
   	}
   	
   	
