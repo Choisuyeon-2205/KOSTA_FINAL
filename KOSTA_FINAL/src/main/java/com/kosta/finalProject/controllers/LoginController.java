@@ -25,6 +25,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.kosta.finalProject.BMI.BMICalculator;
+import com.kosta.finalProject.login.oauth.SessionUser;
 import com.kosta.finalProject.models.BusinessAddress;
 import com.kosta.finalProject.models.BusinessVO;
 import com.kosta.finalProject.models.UserAddress;
@@ -49,6 +50,17 @@ public class LoginController {
    
    private final HttpSession httpSession; // 로그인 여부를 확인하기 위한 세션
 
+   @GetMapping("/") // http 주소 연결
+   public String index(Model model) { 
+	   
+	   SessionUser user = (SessionUser) httpSession.getAttribute("user"); // 로그인 했으면 user에 정보 저장
+	   
+	   if(user != null) { // 로그인이 되어있다면 "logName"이라는 변수명으로 회원이름 넘기기
+		   model.addAttribute("logName", user.getName());
+	   }
+	   return "main";
+   }
+   
     @GetMapping(value = "/main")
     public void login() {
        System.out.println("login get.....");

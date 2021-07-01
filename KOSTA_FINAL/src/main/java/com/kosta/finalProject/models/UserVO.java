@@ -68,16 +68,16 @@ public class UserVO {
 	UserRoleEnumType urole;
 
 	@Builder
-	public UserVO(String userName, String userEmail, UserRoleEnumType urole) {
+	public UserVO(String name, String email, UserRoleEnumType role) {
 		super();
-		this.userName = userName;
-		this.userEmail = userEmail;
-		this.urole = urole;
+		this.userName = name;
+		this.userEmail = email;
+		this.urole = role;
 	}
 
 
-    public UserVO update(String userName){
-        this.userName = userName;
+    public UserVO update(String name){
+        this.userName = name;
         
 		return this;
     }
