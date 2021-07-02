@@ -21,6 +21,12 @@ public class AreaController {
 	@Autowired
 	CenterService centerService;
 	
+	@GetMapping("/center/getAll/{area1}")
+	public ResponseEntity<List<CenterVO>> getAll(@PathVariable int area1) {
+		
+		return new ResponseEntity<>(centerService.selectAll(), HttpStatus.OK);
+	}
+	
 	@GetMapping("/center/getArea2/{area1}")
 	public ResponseEntity<List<AreasVO>> getArea2(@PathVariable String area1) {
 		

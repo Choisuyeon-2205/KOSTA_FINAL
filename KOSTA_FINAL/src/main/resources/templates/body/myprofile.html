@@ -75,7 +75,7 @@
                         </li>
                          <li>
                            업로드 날짜 : <span class="" th:text="${#dates.format(body.insertDate,'yyyy-MM-dd HH:mm')}"></span>
-                        </li>                        
+                        </li>                       
                     </ul>
                     
                 </div>
@@ -148,7 +148,7 @@
             
             
             
-            
+           <input type="button" value="BUDDY" th:onclick="'window.location.href=\''+@{@{/buddy/newbuddy}}+'\''"> 
         </div> <!-- end main-container -->
     </body>
     <th:block layout:fragment="script1">
@@ -185,7 +185,7 @@
        $('#bodyform').submit();
       }
    }
-
+ 
 </script>
 </th:block>
 </html>

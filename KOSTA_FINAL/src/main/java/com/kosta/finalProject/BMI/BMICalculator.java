@@ -1,7 +1,5 @@
 package com.kosta.finalProject.BMI;
 
-import org.springframework.stereotype.Component;
-
 //@Component
 public class BMICalculator {
 
@@ -28,16 +26,16 @@ public class BMICalculator {
 		
 		if(result>=25.0) {
 			System.out.println("비만");
-			group = 1;
+			this.group = 1;
 		}else if(result >= 23.0 && result < 25.0) {
 			System.out.println("과체중");
-			group = 2;
+			this.group = 2;
 		}else if(result >= 18.5 && result < 23.0) {
 			System.out.println("정상");
-			group = 3;
+			this.group = 3;
 		}else {
 			System.out.println("저체중");
-			group = 4;
+			this.group = 4;
 		}
 		
 		return result;

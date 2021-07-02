@@ -204,7 +204,7 @@ ul.tabs li.current{
 	      		</select><br><br>
 		        <label>지역2</label>
 		        <select name="centerArea2" id="centerArea2">
-		        <option th:each="area:${arealist}" th:selected="${area.area2}==${center.centerArea2}" th:if="${area.area1}=='서울특별시'" th:value="${area.area2}">[[${area.area2}]]</option>
+		        <option th:each="area:${arealist}" th:selected="${area.area2}==${center.centerArea2}" th:if="${area.area1}==${center.centerArea1}" th:value="${area.area2}">[[${area.area2}]]</option>
 	      		</select>
 		      </div>
 		      <div class="modal-footer">

@@ -25,10 +25,14 @@ public class UserBodyService {
 		return (List<UserBodyVO>)ubRepository.findIsBuddy(userId, bmiGroup);
 	}
 	
+	public UserBodyVO selectByUserToday(String userid) {
+		return ubRepository.findByTodayUser(userid);
+	}
+	
 	public List<UserBodyVO> selectUserBody() {
 		return (List<UserBodyVO>)ubRepository.findAll();
 	}
-	
+
 	public UserBodyVO updateUserBody(UserBodyVO userbody) {
 		return ubRepository.save(userbody);
 	}

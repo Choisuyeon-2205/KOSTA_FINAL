@@ -1,9 +1,7 @@
 package com.kosta.finalProject.controllers;
 
 import java.security.Principal;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,13 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.kosta.finalProject.BMI.BMICalculator;
 import com.kosta.finalProject.models.UserBodyVO;
 import com.kosta.finalProject.models.UserVO;
+import com.kosta.finalProject.services.UserBodyService;
 import com.kosta.finalProject.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -38,6 +35,8 @@ public class MyProfileController {
 
 	@Autowired
 	UserService userservice;
+	@Autowired
+	UserBodyService ubservice;
 	
 	
 	@GetMapping("/login/profile")
@@ -46,18 +45,28 @@ public class MyProfileController {
 	}
 	    
 	@PostMapping("/login/profile")
-	public String profilePost(UserBodyVO body , Principal principal,Authentication authentication, RedirectAttributes rttr) {
+	public String profilePost(UserBodyVO body , Principal principal, Authentication authentication, RedirectAttributes rttr) {
 		 
-		System.out.println("body:" + body);
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		UserVO user = userservice.selectById(userDetails.getUsername());
-	   body.setUser(user);
-	   BMICalculator bmi = new BMICalculator();
-	   body.setUserBmi(bmi.bmicalculator(body.getWeight(), body.getHeight()));
-	   System.out.println("UserBodyVO : " + body);
- 
-	   rttr.addFlashAttribute("body", userservice.updateBMI(body));
-	   return "redirect:/body/myprofile";
+	   System.out.println("body:" + body);
+	   UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	   UserVO user = userservice.selectById(userDetails.getUsername());
+	   
+	   UserBodyVO userbody=  ubservice.selectByUserToday(userDetails.getUsername());
+	   
+	   if(userbody==null) {
+		   body.setUser(user);
+		   BMICalculator bmi = new BMICalculator();
+		   body.setUserBmi(bmi.bmicalculator(body.getWeight(), body.getHeight()));
+		   body.setBmiGroup(bmi.getGroup());
+		   System.out.println("UserBodyVO : " + body);
+	 
+		   rttr.addFlashAttribute("body", userservice.updateBMI(body));
+		   return "redirect:/body/myprofile";
+	   }else {
+		   rttr.addFlashAttribute("body", userservice.selectUserBody(user.getUserId())); 
+		   rttr.addAttribute("message", "하루에 한번만 등록할 수 있습니다.");
+		   return "redirect:/body/myprofile";
+	   }
 	}
 	    
 	

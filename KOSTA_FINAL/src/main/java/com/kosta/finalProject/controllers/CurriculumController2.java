@@ -56,6 +56,23 @@ public class CurriculumController2 {
 	public ResponseEntity<List<Object[]>> selectAllByCenterNum(@PathVariable int cnum) {
 		return new ResponseEntity<>(curregservice.selectByCenterNum(cnum), HttpStatus.OK);
 	}
+	
+	//센터에 등록한 특정 커리큘럼 수강자 모두 조회
+	@GetMapping("/curreg/getByCurnum/{curnum}")
+	public ResponseEntity<List<Object[]>> selectAllByCurNum(@PathVariable int curnum) {
+		return new ResponseEntity<>(curregservice.selectByCurriculumNum(curnum), HttpStatus.OK);
+	}
+	
+	//사용자 등록 취소
+	@DeleteMapping("/curreg/deleteCurreg/{cnum}/{curnum}/{userid}")
+	public ResponseEntity<List<Object[]>> deleteCurReg(@PathVariable int cnum, @PathVariable int curnum, @PathVariable String userid ) {
+		CurriculumRegisterVOId crid= new CurriculumRegisterVOId();
+		crid.setCurriculum(curservice.selectById(curnum));
+		crid.setUser(uservice.selectById(userid));
+		curregservice.deleteCurriculumRegister(crid);
+				
+		return new ResponseEntity<>(curregservice.selectByCenterNum(cnum), HttpStatus.OK);
+	}
 
 	@RequestMapping("/center/registerCurriculum/{cnum}")
 	public String registerCurriculum(@PathVariable("cnum") int curnum, RedirectAttributes rttr, Authentication authentication) {

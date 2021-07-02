@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "user")
 @Entity
 @DynamicUpdate //수정한것만 업데이트
 @DynamicInsert //수정한것만 인서트
