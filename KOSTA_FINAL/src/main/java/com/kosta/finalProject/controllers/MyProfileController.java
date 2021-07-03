@@ -77,11 +77,11 @@ public class MyProfileController {
 	       Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
 	       UserBodyVO userbody = null;
 	       
-	       // 그래프 관련
-		   JSONArray jsonArray = new JSONArray();
-		
-		   List<UserBodyVO> bodylist = userservice.selectGraph(principal.getName());
-		   String[] one = new String[bodylist.size()];
+		       // 그래프 관련 -> 날짜에 따른 체중 변화를 한 번에 제공하기 위해 키:값 형태인 JSONArray를 사용
+			   JSONArray jsonArray = new JSONArray();
+			
+			   List<UserBodyVO> bodylist = userservice.selectGraph(principal.getName());
+			   String[] one = new String[bodylist.size()];
 	       
 	       
 	       if(flashMap != null) {
@@ -99,20 +99,18 @@ public class MyProfileController {
 	       
 	       System.out.println(user);
 	       
-	       // 그래프 관련
-		   bodylist.forEach(b -> { 
-				JSONObject jsonObject = new JSONObject();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				jsonObject.put("weight", b.getWeight());
-				jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
-				jsonArray.add(jsonObject);
-				});
-			JSONObject jsonObject2 = new JSONObject();
-			jsonObject2.put("data1", jsonArray);
-					 
-			model.addAttribute("bodylist", jsonObject2);
-		       
-	       
+		       // 그래프 관련
+			   bodylist.forEach(b -> { // 개별 키:값에 대한 for문
+					JSONObject jsonObject = new JSONObject();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Timestamp로 설정한 탓에 불필요한 시간 정보까지 모두 출력됨 -> 연월일로 제한
+					jsonObject.put("weight", b.getWeight());
+					jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
+					jsonArray.add(jsonObject);
+					});
+				JSONObject jsonObject2 = new JSONObject();
+				jsonObject2.put("data1", jsonArray); // 개별 값을 배열 형태로 집어넣음
+						 
+				model.addAttribute("bodylist", jsonObject2); // 리스트 형태, 즉 유저별 체중 변화 정보
 	    }
 	    
 }

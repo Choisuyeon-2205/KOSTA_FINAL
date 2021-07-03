@@ -232,15 +232,15 @@
 		}
 	</script>
 
-		<script type="text/javascript" th:inline="javascript">
+	<script type="text/javascript" th:inline="javascript">
  			var obj = [[${bodylist}]];  
  			 
  			console.log(obj["data1"]);
-			var arr=[];
-			var labels = [];
+			var arr=[]; // y축
+			var labels = []; // x축
 			for(i=0; i<obj["data1"].length; i++){
-				arr.push(obj["data1"][i]["weight"]);
-				labels.push(obj["data1"][i]["insertDate"])
+				arr.push(obj["data1"][i]["weight"]); // 유저의 체중 정보
+				labels.push(obj["data1"][i]["insertDate"]) // 유저의 날짜 정보
 			}
 			
             var context = document
