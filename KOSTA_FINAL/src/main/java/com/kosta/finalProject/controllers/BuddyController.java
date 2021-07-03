@@ -43,6 +43,8 @@ public class BuddyController {
 			}
 			model.addAttribute("buddyInfo",user2);
 			model.addAttribute("buddybodyInfo",ubservice.selectByUser(user2.getUserId()));
+			model.addAttribute("myInfo",user);
+			model.addAttribute("mybodyInfo",ubservice.selectByUser(user.getUserId()));
 			return "/buddy/buddyprofile";
 		}else {
 			
