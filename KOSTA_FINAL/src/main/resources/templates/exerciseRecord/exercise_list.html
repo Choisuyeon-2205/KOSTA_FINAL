@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script th:inline="javascript">
+$(function() {
+	addToday(2);
+	fillUpPage();
+})	
+
+function fillUpPage() {
+	var exRecord = [[${exRecord}]];
+	var cardTitle = $(".cardNum .card-title");
+	var cardImg = $(".cardNum .card-img-top");
+	var cardText1 = $(".cardNum .text1");
+	var cardText2 = $(".cardNum .text2");
+	var cardText3 = $(".cardNum .text3");
+	$.each(exRecord.content, function(i, ex) {
+		 $.each(cardTitle, function(index, item){
+			 if(ex.exerciseId.exerciseDate.substr(8, 10) == $(item).html()){
+				$(cardTitle[index]).html(ex.exerciseId.exerciseDate);
+				$(cardImg[index]).attr("src", "https://kosta-server.s3.ap-northeast-2.amazonaws.com/exerciseRecord/" + ex.exerciseImage);
+				$(cardText1[index]).html(ex.exerciseId.user.nickName);
+				$(cardText2[index]).html(ex.exerciseType);
+				$(cardText3[index]).html(ex.exerciseTime);
+			 }
+		 });
+	})
+}
+
+
+function addToday(minusDay) {
+	var arr = $(".card-title");
+	let today = [[${today}]] - minusDay;
+	$.each(arr, function(idx, item) {
+		let num = $(item).text();
+		$(item).text((num * 1) + today);
+	});
+}
+	zoom = 0;
+	
+	$(window).on('wheel', function(e) {
+		  var delta = e.originalEvent.deltaY;
+		  zoom += delta;
+		  if (zoom >= 200) zoom = 200;
+		  else if (zoom < 0) zoom = 0;
+		  if (zoom >= 200) {
+			  // 마우스 업..+100 마우스 다운..-100
+			  $.ajax({
+					 url: "/exercise/record2",
+					 type: "get",
+					 data: {"type" : "zoom3"},
+					 success: function(responseData) {
+						 $("#here").html(responseData);
+						 fillUpPage();
+					 }
+			  });
+		  } else if (zoom >= 100) {
+			  $.ajax({
+					 url: "/exercise/record2",
+					 type: "get",
+					 data: {"type" : "zoom2"},
+					 success: function(responseData) {
+						 $("#here").html(responseData);
+						 var minus = [[${minus}]];
+						 console.log(minus);
+						 addToday(minus);
+						 fillUpPage();
+					 }
+			  });
+		  }
+		  else if (zoom >= 0) {
+			  $.ajax({
+					 url: "/exercise/record2",
+					 type: "get",
+					 data: {"type" : "zoom1"},
+					 success: function(responseData) {
+						 $("#here").html(responseData);
+						 addToday(2);
+						 fillUpPage();
+					 }
+			  });
+		  }
+	});
+</script>
+<style>
+.card-img-top {
+ 	max-height: 250px;
+	max-width: 250px;
+	margin: 10px auto;
+}
+
+.card {
+	text-align: center;
+	padding: 10px;
+	margin: 20px auto;
+	min-width: 280px;
+	min-height: 450px;
+	max-width: 450px;
+	max-height: 500px;
+}
+</style>
+</head>
+<body>
+<div id="here">
+	<div class="card-deck h-100">
+		<div th:each="num: ${#numbers.sequence(1,lastDay)}">
+			<div class="card cardNum h-100" >
+					<img class="card-img-top" src="https://kosta-server.s3.ap-northeast-2.amazonaws.com/sleep.jpg">
+					<div class="card-body">
+					<h5 class="card-title">[[${num}]]</h5>
+					<p class="card-text text1"></p>
+					<p class="card-text text2"></p>
+					<p class="card-text text3"></p>
+				</div>	
+			</div>		
+		</div>	
+	</div>
+</div>
+</body>
+</html> 

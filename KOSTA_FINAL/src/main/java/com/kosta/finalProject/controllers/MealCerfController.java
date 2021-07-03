@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,17 +16,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kosta.finalProject.models.ExerciseRecordId;
-import com.kosta.finalProject.models.ExerciseRecordVO;
+import com.kosta.finalProject.models.MealCerfVO;
+import com.kosta.finalProject.models.MealId;
 import com.kosta.finalProject.models.UserVO;
-import com.kosta.finalProject.services.ExerciseRecordService;
+import com.kosta.finalProject.services.MealService;
 import com.kosta.finalProject.services.UserService;
 
 @Controller
-@RequestMapping("/exercise/*")
-public class ExerciseRecordController {
+@RequestMapping("/meal/*")
+public class MealCerfController {
 	@Autowired
-	ExerciseRecordService service;
+	MealService service;
 	@Autowired
 	UserService userservice;
 	
@@ -41,46 +40,57 @@ public class ExerciseRecordController {
 		} else if (startDate.equals(cal.toString())) {
 			startDate = null;
 			lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		}
-		else {
+		} else {
 			Date newDate = Date.valueOf(startDate);
 			cal.setTime(newDate);
 			lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		}
+		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		UserVO user = userservice.selectById(userDetails.getUsername());
-		List<ExerciseRecordVO> result = service.selectAllWithPredicate(user, startDate);
+		
+		List<MealCerfVO> result = service.selectAllWithPredicate(user, startDate);
 		model.addAttribute("startDate", startDate);
-		model.addAttribute("exRecord", result);
+		model.addAttribute("mealRecord", result);
 		model.addAttribute("lastDay", lastDay);
-		return "exerciseRecord/record_slide";
+		return "mealCerf/record_slide";
 	}
 	
 	@PostMapping("/insertRecord")
-	public String uploadPost(Principal principal, Authentication authentication, ExerciseRecordVO exercise) throws IOException {
-		System.out.println(exercise);
+	public String uploadPost(Principal principal, Authentication authentication, MealCerfVO meal) throws IOException {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String today = sdf.format(cal.getTime());
-		ExerciseRecordId eid = new ExerciseRecordId();
-		eid.setExerciseDate(Date.valueOf(today));
+		MealId mid = new MealId();
+		mid.setMealDate(Date.valueOf(today));
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		UserVO user = userservice.selectById(userDetails.getUsername());
-		eid.setUser(user);
-		exercise.setExerciseId(eid);
-		service.insertExerciseRecord(exercise);
-		return "redirect:/exercise/records";
+		mid.setUser(user);
+		meal.setMealId(mid);;
+		service.insertMealCerf(meal);
+		return "redirect:/meal/records";
 	}
 	
 	@GetMapping("/deleteRecord")
-	public String deletePost(Principal principal, Authentication authentication, String delDate) {
-		ExerciseRecordId eid = new ExerciseRecordId();
-		eid.setExerciseDate(Date.valueOf(delDate));
+	public String deletePost(Principal principal, Authentication authentication, String meal_type) {
+		MealId mid = new MealId();
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String today = sdf.format(cal.getTime());
+		mid.setMealDate(Date.valueOf(today));
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		UserVO user = userservice.selectById(userDetails.getUsername());
-		eid.setUser(user);
-		service.deleteExerciseRecord(eid);
-		return "redirect:/exercise/records";
+		mid.setUser(user);
+		MealCerfVO meal = service.selectById(mid);
+		if (meal_type.equals("breakfast")) {
+			meal.setBreakfastImage("");
+		} else if (meal_type.equals("lunch")) {
+			meal.setLunchImage("");
+		} else {
+			meal.setDinnerImage("");
+		}
+		service.insertMealCerf(meal);
+		return "redirect:/meal/records";
 	}
 
 }

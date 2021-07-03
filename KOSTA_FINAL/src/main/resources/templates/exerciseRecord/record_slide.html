@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+<link rel="stylesheet"
+	href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script th:inline="javascript">
+var today = new Date();   
+var date = today.getDate();
+	
+$(function () {
+	
+	var swiper = new Swiper('.swiper-container', {
+		  slidesPerView: 3,
+		  spaceBetween: 10,
+		  initialSlide: date - 2,
+		  mousewheel: {
+			    invert: false,
+			  },
+		  scrollbar: {
+		    el: '.swiper-scrollbar',
+		  },
+		});
+	//console.log(swiper.activeIndex);
+	fillUpPage();
+
+	var modalCard = $(".item")[date-1];
+	
+	$(modalCard).click(function() {
+		var recImage = $($(".recImage")[date-1]).attr("src");
+		var p1val = $($(".p1")[date-1]).text();
+		var p2val = $($(".p2")[date-1]).text();
+		var p3val = $($(".p3")[date-1]).text();
+
+		$("#myModal").modal(); // 이유는 모르지만 show()가 안되고 modal() 해야 됨
+		if (p2val == "" && p3val == "") {
+			$("input[name='exerciseType']").val("");
+			$("input[name='exerciseTime']").val("");
+			$("#exercise_image").val("");
+			$(".modal-title").text("오늘의 운동 인증");
+	 	} else {
+			$("#recordInsertBtn").text("수정");
+			$("#exercise_type").val(p2val); // 아이디로 선택했을 때만 값이 바뀜			
+			$("input[name='exerciseTime']").val(p3val);
+			$(".modal-title").text("운동인증 수정/삭제"); 
+		}
+		
+		$("#recordInsertBtn").click(function() {
+			uploadImage();
+		})
+		
+		$("#recordDeleteBtn").click(function() {
+			location.href = "./deleteRecord?delDate=" + p1val;
+		});
+	});	
+})
+
+// 첫번째 카드의 p1 클래스 날짜를 parsing해 이번 달의 시작 일자를 구하는 함수
+function getPageDate(){
+	let dateString = $($(".p1")[0]).text();
+	dateString = Date.parse(dateString);
+	let pageDate = new Date(dateString);
+    return pageDate;
+}
+
+// getPageDate 함수를 통해 얻은 날짜에서 한 달을 뺀 날짜를 파라미터로 전달해주는 함수
+function oneMonthBefore() {
+	let oneMonthAgo = new Date(getPageDate().setMonth(getPageDate().getMonth() - 1));
+	    let year = oneMonthAgo.getFullYear();
+    let month = 1 + oneMonthAgo.getMonth();
+    month = month < 10 ? '0' + month : month;
+    let day = oneMonthAgo.getDate();
+    day = day < 10 ? '0' + day : day; 
+    location.href = "./records?startDate=" + year + "-" + month + "-" + day;
+}
+	
+// getPageDate 함수를 통해 얻은 날짜에서 한 달을 더한 날짜를 파라미터로 전달해주는 함수
+function oneMonthAfter() {
+	let oneMonthLater = new Date(getPageDate().setMonth(getPageDate().getMonth() + 1));
+	    let year = oneMonthLater.getFullYear();
+    let month = 1 + oneMonthLater.getMonth();
+    month = month < 10 ? '0' + month : month;
+    let day = oneMonthLater.getDate();
+    day = day < 10 ? '0' + day : day;
+    
+    let today = new Date();   
+    let today_year = today.getFullYear();
+    let today_month = 1 + today.getMonth();
+    today_month = today_month < 10 ? '0' + today_month : today_month;
+    
+    if (year + "-" + month + "-" + day == today_year + "-" + today_month + "-01") {
+		location.href = "./records";    	
+    } else {
+	    location.href = "./records?startDate=" + year + "-" + month + "-" + day;
+    }
+}
+
+// 전달받은 DB값을 카드의 날짜와 비교해 일자가 같으면 DB값을 카드 칸에 넣어주는 함수
+function fillUpPage() {
+	var exRecord = [[${exRecord}]];
+	var recImage = $(".recImage");
+	var p1 = $(".p1");
+	var p2 = $(".p2");
+	var p3 = $(".p3");
+	$.each(exRecord, function(i, ex) {
+		let idx = 1 * ex.exerciseId.exerciseDate.substr(8, 10) - 1;
+		$(recImage[idx]).attr("src", "https://kosta-server.s3.ap-northeast-2.amazonaws.com/exerciseRecord/" + ex.exerciseImage);
+		$(p1[idx]).html(ex.exerciseId.exerciseDate);
+		$(p2[idx]).html(ex.exerciseType);
+		$(p3[idx]).html(ex.exerciseTime);
+	}) 
+	// 인증 수정시 이미지를 별도로 올리지 않을 경우 현재 파일명을 그대로 form input에 저장해주는 코드
+	var lastImage = $($(".recImage")[date-1]).attr("src");
+	$("#exercise_image2").val(lastImage.replace(/^.*\//, ''));
+}
+
+// 폼을 2개로 분리해 이미지를 업로드하고 값을 전달해주는 함수
+function uploadImage() {
+	var file = $('#exercise_image')[0].files[0]; // 이미지 파일 얻기
+	if (typeof file != "undefined") {
+			var formData = new FormData();
+			formData.append('data', file); // data 안에 파일 넣기
+			formData.append('path', "exerciseRecord"); // web 서버에 만들 폴더 이름
+			$.ajax({
+				type : 'POST',
+				url : '/upload',
+				data : formData,
+				processData : false,
+				contentType : false
+			}).done(function(responseBody) {
+				var fileInput = $('#exercise_image');
+				var exercise_image = fileInput[0].files[0].name; // 파일명 출력
+				$("#exercise_image2").val(exercise_image); // 파일명 전달할 hidden input 값 넣어주기
+				$('#exform').submit();
+				$("#myModal").hide();
+			}).fail(function(error) {
+				alert('전송실패');
+			})
+		} else if ($("#recordInsertBtn").text() == "수정") {
+			$('#exform').submit(); // 수정인데 이미지를 올리지 않았을 경우
+			$("#myModal").hide();
+		} else {
+		alert("인증 이미지를 업로드 해주세요!");
+		$("#exercise_image").focus();
+	}
+}
+
+</script>
+<style>
+@font-face {
+	font-family: 'NEXON Lv1 Gothic OTF Bold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF Bold.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html, body {
+	position: relative;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+body {
+	background: #eee;
+	font-family: 'NEXON Lv1 Gothic OTF Bold', Helvetica Neue, Helvetica,
+		Arial, sans-serif;
+	font-size: 14px;
+	color: #000;
+	margin: 0;
+	padding: 0;
+}
+
+.swiper-container {
+	/*   position: fixed;
+  bottom: 50px; */
+	margin-bottom: 50px !important;
+	box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+	width: 70%;
+	height: 70%;
+	border-radius: 20px;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+
+.item {
+	width: 65%;
+	height: 70%;
+    background: linear-gradient(to top left, #ff9933 0%, #ff6600 100%);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	position: relative;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.recImage {
+	padding: 5px;
+	background-color: rgb(255, 255, 255);
+	width: 85%;
+	height: 50%;
+}
+
+.swiper-pagination-bullet {
+	width: 12px !important;
+	height: 12px !important;
+	border-radius: 5px !important;
+	background: #fd3838 !important;
+	transition: all 0.3s !important;
+}
+
+.bg {
+	animation: slide 3s ease-in-out infinite alternate;
+	background-image: linear-gradient(-35deg, #212121 50%, #FFFFFF 50%);
+	bottom: 0;
+	left: -50%;
+	opacity: .5;
+	position: fixed;
+	right: -50%;
+	top: 0;
+	z-index: -1;
+}
+
+.recText {
+	text-align: right;
+	letter-spacing: 0.1em;
+	font-size: 1.4em;
+	display: inline-block;
+	margin: 0;
+	width: 70%;
+}
+
+.textBox {
+	position: relative;
+	width: 100%;
+}
+
+.textBox:first-of-type {
+	margin-top: 30px;
+}
+
+.emoji {
+	width: 30%;
+	text-align: left;
+	font-size: 1.5em;
+}
+
+.bg2 {
+	animation-direction: alternate-reverse;
+	animation-duration: 4s;
+}
+
+.bg3 {
+	animation-duration: 5s;
+}
+
+.arrows {
+	position: relative;
+	z-index: 10;
+	font-size: 2em;
+	margin: 100px auto 0;
+	padding: 10px;
+	text-align: center;
+}
+
+.arrows p {
+	display: inline;
+}
+
+.left-arrow {
+	margin-right: 100px;
+}
+
+.hide {
+	display: none;
+}
+
+@keyframes slide { 0% {
+	transform: translateX(-25%);
+	} 
+	100%{
+		transform: translateX(25%);
+	}
+}
+</style>
+</head>
+<body>
+	<div class="arrows">
+		<p class="left-arrow">
+			<a href="javascript:oneMonthBefore();"> <span
+				class="glyphicon glyphicon-triangle-left"></span> 이전 달
+			</a>
+		</p>
+		<p th:class="right-arrow"
+			th:classappend="${startDate == null ? 'hide' : ''}">
+			<a href="javascript:oneMonthAfter();"> 다음 달 <span
+				class="glyphicon glyphicon-triangle-right"></span>
+			</a>
+		</p>
+	</div>
+
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+					<form id="exform" action="./insertRecord" method="post">
+						<div class="form-group">
+							<label for="exercise_type">운동 유형</label> <select
+								class="form-control" id="exercise_type" name="exerciseType">
+								<option value="조깅/러닝">조깅/러닝</option>
+								<option value="홈트/링피트">홈트/링피트</option>
+								<option value="헬스/PT">헬스/PT</option>
+								<option value="등산">등산</option>
+								<option value="수영">수영</option>
+								<option value="농구/축구">농구/축구</option>
+								<option value="기타">기타</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="exercise_time">운동 시간</label>
+							<input class="form-control" type="number" id="exercise_time" name="exerciseTime" placeholder="분 단위로 입력">
+						</div>
+						<div class="form-group">
+							<input class="form-control" type="hidden" id="exercise_image2" name="exerciseImage">
+						</div>
+					</form>
+					<form onsubmit="return false;">
+						<div class="form-group">
+							<label for="exercise_image">사진 등록</label>
+							<input type="file" id="exercise_image" name="exercise_image">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="recordInsertBtn" class="btn btn-default">입력</button>
+					<button type="button" id="recordDeleteBtn" class="btn btn-danger" data-dismiss="modal">삭제</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="swiper-container">
+		<div class="bg"></div>
+		<div class="bg bg2"></div>
+		<div class="bg bg3"></div>
+		<div class="swiper-wrapper">
+			<div class="swiper-slide"
+				th:each="num: ${#numbers.sequence(1,lastDay)}">
+				<div class="item">
+					<img class="recImage"
+						src=https://kosta-server.s3.ap-northeast-2.amazonaws.com/sleep.png>
+					<div class="textBox">
+						<span class="emoji">📅</span>
+						<p class="recText p1"
+							th:text="${startDate == null? #calendars.format(#calendars.createNow(), 'yyyy-MM') : #strings.substring(startDate,0,7)} + '-' + ${num < 10 ? '0' + num : num}"></p>
+					</div>
+					<div class="textBox">
+						<span class="emoji">🏃‍♀️</span>
+						<p class="recText p2"></p>
+					</div>
+					<div class="textBox">
+						<span class="emoji">⏱</span>
+						<p class="recText p3"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- If we need scrollbar -->
+		<div class="swiper-scrollbar"></div>
+	</div>
+
+
+</body>
+</html>
