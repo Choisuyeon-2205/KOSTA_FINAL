@@ -1,10 +1,13 @@
 package com.kosta.finalProject.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,9 +45,45 @@ public class BuddyController {
 				user2= buddy.getUser2();
 			}
 			model.addAttribute("buddyInfo",user2);
-			model.addAttribute("buddybodyInfo",ubservice.selectByUser(user2.getUserId()));
+			UserBodyVO buddybodyInfo= ubservice.selectByUser(user2.getUserId());
+			buddybodyInfo.setUserBmi(Math.round(buddybodyInfo.getUserBmi()));
+			model.addAttribute("buddybodyInfo",buddybodyInfo);
 			model.addAttribute("myInfo",user);
-			model.addAttribute("mybodyInfo",ubservice.selectByUser(user.getUserId()));
+			UserBodyVO mybodyInfo= ubservice.selectByUser(user.getUserId());
+			mybodyInfo.setUserBmi(Math.round(mybodyInfo.getUserBmi()));
+			model.addAttribute("mybodyInfo",mybodyInfo);
+			// 그래프 관련 1(buddy)
+			JSONArray jsonArray = new JSONArray();
+			
+			List<UserBodyVO> buddybodylist = uservice.selectGraph(user2.getUserId());
+			
+			buddybodylist.forEach(b -> { 
+					JSONObject jsonObject = new JSONObject();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					jsonObject.put("weight", b.getWeight());
+					jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
+					jsonArray.add(jsonObject);
+					});
+			JSONObject jsonObject2 = new JSONObject();
+			jsonObject2.put("data1", jsonArray);					 
+			model.addAttribute("buddybodylist", jsonObject2);
+			
+			// 그래프 관련	2(user)
+			JSONArray jsonArray2 = new JSONArray();
+			List<UserBodyVO> mybodylist = uservice.selectGraph(user.getUserId());
+			
+			mybodylist.forEach(b -> { 
+					JSONObject jsonObject = new JSONObject();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					jsonObject.put("weight", b.getWeight());
+					jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
+					jsonArray2.add(jsonObject);
+					});
+			JSONObject jsonObject3 = new JSONObject();
+			jsonObject3.put("data1", jsonArray2);
+						 
+			model.addAttribute("mybodylist", jsonObject3);
+			
 			return "/buddy/buddyprofile";
 		}else {
 			

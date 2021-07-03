@@ -16,7 +16,7 @@ public interface UserBodyRepository extends CrudRepository<UserBodyVO, Integer>,
 	@Query(value = "SELECT * FROM user_body_tb WHERE buddy_check=1 AND bmi_group=?2 AND user_id!=?1 and DATE(insert_date) = DATE(now())", nativeQuery = true)
 	List<UserBodyVO> findIsBuddy(String userId, int bmiGroup);
 
-	@Query(value = "SELECT * FROM user_body_tb WHERE user_id = ?1 ORDER BY insert_date desc", nativeQuery = true)
+	@Query(value = "SELECT * FROM user_body_tb WHERE user_id = ?1 ORDER BY insert_date asc", nativeQuery = true)
 	public List<UserBodyVO> findByGraph(String userid);
 	
 	@Query(value = "SELECT * FROM user_body_tb WHERE user_id=?1 and DATE(insert_date) = DATE(now())", nativeQuery = true)

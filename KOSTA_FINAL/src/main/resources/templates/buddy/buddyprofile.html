@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <style>
 /*===== GOOGLE FONTS =====*/
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
@@ -54,11 +61,10 @@ img {
   justify-content: space-evenly;
 }
 .card {
-
   text-align: center;
-  padding: 1rem;
+  padding: 2rem;
   width: 350px;
-  height: 450px;
+  height: 600px;
   box-shadow: -1px 15px 30px -12px rgb(32, 32, 32);
   border-radius: 0.9rem;
   background-color: var(--red-card);
@@ -68,6 +74,7 @@ img {
 
 .card-blue {
   background: var(--blue-card);
+  margin-left:200px;
 }
 
 .product-image {
@@ -127,6 +134,14 @@ h1 {
 .label{
 	font-size: 10px;
 }
+
+#buddyChart {
+	padding-top: 30px;
+}
+
+#userChart {
+	padding-top: 30px;
+}
 </style>
 </head>
 <body>
@@ -145,6 +160,10 @@ h1 {
 	  <div class="price"><span class="label">몸무게: </span>[[${mybodyInfo.weight}]]</div>
 	  <div class="price"><span class="label">BMI: </span>[[${mybodyInfo.userBmi}]]</div>
     </div>
+    <!-- MIDDLE-CONTAINER -->
+	<!--차트가 그려질 부분-->
+	<canvas id="userChart"></canvas>
+	
   </section>
   <section class="card card-blue">
     <div class="product-image">
@@ -159,7 +178,91 @@ h1 {
 	  <div class="price"><span class="label">몸무게: </span>[[${buddybodyInfo.weight}]]</div>
 	  <div class="price"><span class="label">BMI: </span>[[${buddybodyInfo.userBmi}]]</div>
     </div>
+    <!-- MIDDLE-CONTAINER -->
+	<!--차트가 그려질 부분-->
+	<canvas id="buddyChart"></canvas>
   </section>
 </main>
+<script type="text/javascript" th:inline="javascript">
+ 		var obj = [[${buddybodylist}]];  
+ 			 
+ 		console.log(obj["data1"]);
+		var arr=[];
+		var labels = [];
+		for(i=0; i<obj["data1"].length; i++){
+			arr.push(obj["data1"][i]["weight"]);
+			labels.push(obj["data1"][i]["insertDate"])
+		}
+			
+        var context = document
+             .getElementById('buddyChart')
+             .getContext('2d');
+        var myChart = new Chart(context, {
+             type: 'line', // 차트의 형태
+             data: { // 차트에 들어갈 데이터'
+                 labels: labels , 
+                 datasets: [
+                     { //데이터
+                        label: '버디 체중 변화 그래프', //차트 제목
+                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                        data: arr,
+                        borderColor:"black",
+                         borderWidth: 1 //경계선 굵기
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+        
+ 		var obj2 = [[${mybodylist}]];  
+		
+ 		console.log(obj2["data1"]);
+		var arr2=[];
+		var labels2 = [];
+		for(i=0; i<obj2["data1"].length; i++){
+			arr2.push(obj2["data1"][i]["weight"]);
+			labels2.push(obj2["data1"][i]["insertDate"])
+		}
+			
+        var context2 = document
+             .getElementById('userChart')
+             .getContext('2d');
+        var myChart2 = new Chart(context2, {
+             type: 'line', // 차트의 형태
+             data: { // 차트에 들어갈 데이터'
+                 labels: labels2 , 
+                 datasets: [
+                     { //데이터
+                        label: '사용자 체중 변화 그래프', //차트 제목
+                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                        data: arr2,
+                        borderColor: "black",
+                        borderWidth: 1 //경계선 굵기
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+</script>
 </body>
 </html>

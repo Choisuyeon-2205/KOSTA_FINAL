@@ -77,11 +77,11 @@ public class MyProfileController {
 	       Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
 	       UserBodyVO userbody = null;
 	       
-	       			// 그래프 관련
-			        JSONArray jsonArray = new JSONArray();
+	       // 그래프 관련
+		   JSONArray jsonArray = new JSONArray();
 		
-					List<UserBodyVO> bodylist = userservice.selectGraph(principal.getName());
-					String[] one = new String[bodylist.size()];
+		   List<UserBodyVO> bodylist = userservice.selectGraph(principal.getName());
+		   String[] one = new String[bodylist.size()];
 	       
 	       
 	       if(flashMap != null) {
@@ -89,6 +89,7 @@ public class MyProfileController {
 	    	   System.out.println(userbody);
 	       }else {
 	    	   userbody = userservice.selectUserBody(user.getUserId());
+	    	   userbody.setUserBmi(Math.round(userbody.getUserBmi()));
 	       }
 	       model.addAttribute("user", user);
 	       
@@ -98,18 +99,18 @@ public class MyProfileController {
 	       
 	       System.out.println(user);
 	       
-	       			// 그래프 관련
-			       bodylist.forEach(b -> { 
-						JSONObject jsonObject = new JSONObject();
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-						jsonObject.put("weight", b.getWeight());
-						jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
-						jsonArray.add(jsonObject);
-					});
-					JSONObject jsonObject2 = new JSONObject();
-					jsonObject2.put("data1", jsonArray);
+	       // 그래프 관련
+		   bodylist.forEach(b -> { 
+				JSONObject jsonObject = new JSONObject();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				jsonObject.put("weight", b.getWeight());
+				jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
+				jsonArray.add(jsonObject);
+				});
+			JSONObject jsonObject2 = new JSONObject();
+			jsonObject2.put("data1", jsonArray);
 					 
-					model.addAttribute("bodylist", jsonObject2);
+			model.addAttribute("bodylist", jsonObject2);
 		       
 	       
 	    }
