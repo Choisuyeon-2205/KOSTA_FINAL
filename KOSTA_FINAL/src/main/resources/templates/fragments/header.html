@@ -191,38 +191,7 @@ background-color: rgba(255,255,255,0.5)
              	<input type="submit" value="BUSINESS SIGNUP"  class="btn btn-default"/>
              </form>   
              </div>  
-             
-             <br>
-             
-
-             
-	       	<a href="https://www.facebook.com/dialog/oauth" class="btn_social" data-social="facebook"><img alt="Facebook Login" src="/image/facebook.png"></a><br/> 
-			<a href="https://accounts.google.com/o/oauth2/v2/auth" class="btn_social" data-social="google" role="button"><img alt="Google Login" src="/image/google.png"></a><br/> 
-			<a href="https://kauth.kakao.com/oauth/authorize" class="btn_social" data-social="kakao" role="button"><img alt="Kakao Login" src="/image/kakao.png"></a><br/> 
-			<a href="https://nid.naver.com/oauth2.0/authorize" class="btn_social" data-social="naver" role="button"><img alt="Naver Login" src="/image/naver.png"></a><br/> 
-
-			<br><br><br>
-			
-			<a href="http://localhost:8888/login/oauth2/authorization/google" class="btn_social" role="button"><img alt="Google Login" src="/image/google.png"></a><br>
-			<a href="http://localhost:8888/login/oauth2/authorization/kakao" class="btn_social" role="button"><img alt="Kakao Login" src="/image/kakao.png"></a><br>
-			<a href="http://localhost:8888/login/oauth2/authorization/naver" class="btn_social" role="button"><img alt="Naver Login" src="/image/naver.png"></a><br>
-		
-			<br><br><br>
-			
-			<a href="/oauth2/authorization/google" class="btn_social" role="button"><img alt="Google Login" src="/image/google.png"></a><br>
-			<a href="/oauth2/authorization/kakao" class="btn_social" role="button"><img alt="Kakao Login" src="/image/kakao.png"></a><br>
-			<a href="/oauth2/authorization/naver" class="btn_social" role="button"><img alt="Naver Login" src="/image/naver.png"></a><br>
-	
-		
-		
-			<p th:text="${userName}"></p>
-			<p th:text="${userEmail}"></p>
-			
-			<tr>
-				<td class="userName" th:text="${logName}"></td>
-				<td th:if="${logName == null}"><a href="login.html" th:href="@{/login/login}">소셜 로그인</a></td>
-			</tr>
-             
+    
              
              </div>
         </div>

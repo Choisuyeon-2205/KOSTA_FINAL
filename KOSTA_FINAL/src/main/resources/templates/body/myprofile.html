@@ -5,189 +5,259 @@
 <head>
 <meta charset="UTF-8">
 <title>User Profile Test</title>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/myprofile.css}">
 </head>
-    <body>
+<body>
 
-        <div class="main-container" layout:fragment="content1">
+	<div class="main-container" layout:fragment="content1">
 
-            <!-- HEADER -->
-            <header class="block" style="font-size: 60px; color: white;">
-               그래 어서오고
-            </header>
+		<!-- HEADER -->
+		<header class="block" style="font-size: 60px; color: white;">
+			그래 어서오고 </header>
 
-            <!-- LEFT-CONTAINER --> <!-- 살려!!!!!!!!!!! -->
-            <div class="left-container container">
-	            <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
-                    <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a>
-                    <div class="profile-picture big-profile-picture clear" style="text-align: center;" th:if="${body !=null  and body.userImage!=null }">
-                        <img  style="color: white;" width="160px" height="160px" alt="이미지야"  
-                        th:src="@{${'https://kosta-server.s3.ap-northeast-2.amazonaws.com/bodyprofile/' + body.userImage}}" >            
-                    </div>
-                    <h1 class="user-name"><span class="" th:text="${user.nickName}"></span></h1>
+		<!-- LEFT-CONTAINER -->
+		<!-- 살려!!!!!!!!!!! -->
+		<div class="left-container container">
+			<div class="profile block">
+				<!-- PROFILE (MIDDLE-CONTAINER) -->
+				<a class="add-button" href="#28"><span
+					class="icon entypo-plus scnd-font-color"></span></a>
+				<div class="profile-picture big-profile-picture clear"
+					style="text-align: center;"
+					th:if="${body !=null  and body.userImage!=null }">
+					<img style="color: white;" width="160px" height="160px" alt="이미지야"
+						th:src="@{${'https://kosta-server.s3.ap-northeast-2.amazonaws.com/bodyprofile/' + body.userImage}}">
+				</div>
+				<h1 class="user-name">
+					<span class="" th:text="${user.nickName}"></span>
+				</h1>
 
-                    <div class="profile-description">
-                        <p class="scnd-font-color">↑이게 닉네임이야 </p>
-                    </div>
-                </div>
-                <div class="menu-box block"> <!-- MENU BOX (LEFT-CONTAINER) -->
-                    <h2 class="titular">USER INFO</h2>
-                    
-                    <ul class="menu-box-menu" style="padding-top:9%; padding-left: 1.5em;">
-                        <li >
-                            아이디 : <span class="" th:text="${user.userId}"></span>   
-                            
-                        <li>
-                            이름 : <span class="" th:text="${user.userName}"></span>                           
-                        </li>
-                        <li>
-                           주소 : <span class="" th:text="${user.userAddress.userAddress1}"></span>
-                        </li>
-                        <li>
-                           전화번호 : <span class="" th:text="${user.userPhone}"></span>
-                        </li>
-                        <li>
-                           이메일 : <span class="" th:text="${user.userEmail}"></span>
-                        </li>                        
-                    </ul>
-                </div>
+				<div class="profile-description">
+					<p class="scnd-font-color">↑이게 닉네임이야</p>
+				</div>
+			</div>
+			<div class="menu-box block">
+				<!-- MENU BOX (LEFT-CONTAINER) -->
+				<h2 class="titular">USER INFO</h2>
 
-                <div class="line-chart-block block clear"> <!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
-                   
-                      <!-- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
-                        <div class="menu-box block"> <!-- MENU BOX (LEFT-CONTAINER) -->
-                    <h2 class="titular"><a data-toggle="modal" data-target="#prfModal" >BODY INFO</a></h2> <!-- href="../login/profile" -->
-                   <ul class="menu-box-menu" style="padding-top:5%; padding-left: 1.5em;">
-                        <li >
-                           성별 : <span class="" th:text="${body.gender}"></span>   
-                            
-                        <li>
-                           연령 : <span class="" th:text="${body.userAge}"></span>                           
-                        </li>
-                        <li>
-                           신장 : <span class="" th:text="${body.height}"></span>
-                        </li>
-                        <li>
-                           몸무게 : <span class="" th:text="${body.weight}"></span>
-                        </li>
-                        <li>
-                           BMI : <span class="" th:text="${body.userBmi}"></span>
-                        </li>
-                         <li>
-                           업로드 날짜 : <span class="" th:text="${#dates.format(body.insertDate,'yyyy-MM-dd HH:mm')}"></span>
-                        </li>                       
-                    </ul>
-                    
-                </div>
-                        <!-- END LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
-                   
-                    
-                    
-                </div>
+				<ul class="menu-box-menu"
+					style="padding-top: 9%; padding-left: 1.5em;">
+					<li>아이디 : <span class="" th:text="${user.userId}"></span>
+					<li>이름 : <span class="" th:text="${user.userName}"></span>
+					</li>
+					<li>주소 : <span class=""
+						th:text="${user.userAddress.userAddress1}"></span>
+					</li>
+					<li>전화번호 : <span class="" th:text="${user.userPhone}"></span>
+					</li>
+					<li>이메일 : <span class="" th:text="${user.userEmail}"></span>
+					</li>
+				</ul>
+			</div>
 
-            </div>
+			<div class="line-chart-block block clear">
+				<!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
 
-            <!-- MIDDLE-CONTAINER -->
-            <div class="middle-container container">
-                
-               
-                
-            </div>
+				<!-- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
+				<div class="menu-box block">
+					<!-- MENU BOX (LEFT-CONTAINER) -->
+					<h2 class="titular">
+						<a data-toggle="modal" data-target="#prfModal">BODY INFO</a>
+					</h2>
+					<!-- href="../login/profile" -->
+					<ul class="menu-box-menu"
+						style="padding-top: 5%; padding-left: 1.5em;">
+						<li>성별 : <span class="" th:text="${body.gender}"></span>
+						<li>연령 : <span class="" th:text="${body.userAge}"></span>
+						</li>
+						<li>신장 : <span class="" th:text="${body.height}"></span>
+						</li>
+						<li>몸무게 : <span class="" th:text="${body.weight}"></span>
+						</li>
+						<li>BMI : <span class="" th:text="${body.userBmi}"></span>
+						</li>
+						<li>업로드 날짜 : <span class=""
+							th:text="${#dates.format(body.insertDate,'yyyy-MM-dd HH:mm')}"></span>
+						</li>
+					</ul>
 
-            <!-- RIGHT-CONTAINER -->
-            <div class="right-container container">
+				</div>
+				<!-- END LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
 
-            </div> <!-- end right-ㅡㅛontainer -->
-            
-             <!-- Modal --> 
-  <div class="modal fade" id="prfModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"> UPDATE INFO </h4>
-        </div>
-        <div class="modal-body">
-          <div id="userDiv" class="form-group">
-<form id="bodyform" action="/login/profile" method="post" style="padding-bottom: 10px;">
-<label for="userAge" >나이</label> 
-<input type="number" name="userAge" class="form-group" style="width: 400px; margin-left: 24px;" > <br>
-<label for="height" >키</label> 
-<input type="number" name="height" placeholder="필수 입력입니다!" class="form-group" style="width: 400px; margin-left: 38px" > <br>
-<label for="weight">몸무게</label>
-<input type="number" name="weight" placeholder="필수 입력입니다!" class="form-group" style="width: 400px; margin-left: 10px"> <br>
-<label for="gender" style="padding-right: 24px;">성별</label>
-<span style="color: black; padding-right: 10px;"><input type="radio" name="gender" value="M" class="form-group" style="margin-right: 7px;" >남성</span>
-<span style="color: black;"><input type="radio" name="gender" value="F" class="form-group" style="margin-right: 7px;" >여성</span>
-<input type="hidden" id="userImage" name="userImage"> 
-</form>
-<form onsubmit="return false;">
-   <div class="form-group">
-      <label for="userImage">사진 등록</label> 
-      <input type="file" id="userImage2" name="userImage2" class="form-group" style="display: inline-block; margin-left: 15px;">
-   </div>
-   <button class="btn btn-primary btn-lg btn-block" id="btn-save">등록</button>
-</form>
-          		
 
-             </div>  
-             </div>
-        </div>
-        <div class="modal-footer">  
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div><!-- end Modal -->
-            
-            
-            
-            
-            
-            
-            
-            
-           <input type="button" value="BUDDY" th:onclick="'window.location.href=\''+@{@{/buddy/newbuddy}}+'\''"> 
-           <input type="button" value="식단 관리" th:onclick="'window.location.href=\''+@{@{/meal/records}}+'\''"> 
-           <input type="button" value="운동 관리" th:onclick="'window.location.href=\''+@{@{/exercise/records}}+'\''"> 
-        </div> <!-- end main-container -->
-    </body>
-    <th:block layout:fragment="script1">
-    <script>
-      $('#btn-save').on('click', uploadImage);
-      
-      function uploadImage() {
-         var file = $('#userImage2')[0].files[0];
-        
-         console.log(file);
-         if(typeof file != "undefined") {
-         var formData = new FormData();
-         formData.append('data', file);
-         formData.append('path', "bodyprofile");
-         console.log(formData);
-         $.ajax({
-            type : 'POST',
-            url : '/upload',
-            data : formData,
-            processData : false,
-            contentType : false
-         }).done(function(responseBody) {
-      
-        
-               var fileInput = $('#userImage2');
-               var user_image = fileInput[0].files[0].name; // 파일명 출력
-               $("#userImage").val(user_image);
-              
-               $('#bodyform').submit();
-         }).fail(function(error) {
-            alert('다시 등록해주세요');
-         })
-      }else {
-       $('#bodyform').submit();
-      }
-   }
- 
-</script>
+
+			</div>
+
+		</div>
+
+		<!-- MIDDLE-CONTAINER -->
+		<div style="width: 500px; height: 500px;" class="middle-container container">
+			<!--차트가 그려질 부분-->
+			<canvas id="myChart"></canvas>
+		</div>
+
+		<!-- RIGHT-CONTAINER -->
+		<div class="right-container container"></div>
+		<!-- end right-ㅡㅛontainer -->
+
+		<!-- Modal -->
+		<div class="modal fade" id="prfModal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">UPDATE INFO</h4>
+					</div>
+					<div class="modal-body">
+						<div id="userDiv" class="form-group">
+							<form id="bodyform" action="/login/profile" method="post"
+								style="padding-bottom: 10px;">
+								<label for="userAge">나이</label> <input type="number"
+									name="userAge" class="form-group"
+									style="width: 400px; margin-left: 24px;"> <br> <label
+									for="height">키</label> <input type="number" name="height"
+									placeholder="필수 입력입니다!" class="form-group"
+									style="width: 400px; margin-left: 38px"> <br> <label
+									for="weight">몸무게</label> <input type="number" name="weight"
+									placeholder="필수 입력입니다!" class="form-group"
+									style="width: 400px; margin-left: 10px"> <br> <label
+									for="gender" style="padding-right: 24px;">성별</label> <span
+									style="color: black; padding-right: 10px;"><input
+									type="radio" name="gender" value="M" class="form-group"
+									style="margin-right: 7px;">남성</span> <span
+									style="color: black;"><input type="radio" name="gender"
+									value="F" class="form-group" style="margin-right: 7px;">여성</span>
+								<input type="hidden" id="userImage" name="userImage">
+							</form>
+							<form onsubmit="return false;">
+								<div class="form-group">
+									<label for="userImage">사진 등록</label> <input type="file"
+										id="userImage2" name="userImage2" class="form-group"
+										style="display: inline-block; margin-left: 15px;">
+								</div>
+								<button class="btn btn-primary btn-lg btn-block" id="btn-save">등록</button>
+							</form>
+
+
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+		<!-- end Modal -->
+
+
+
+
+
+
+
+
+		<input type="button" value="BUDDY"
+			th:onclick="'window.location.href=\''+@{@{/buddy/newbuddy}}+'\''">
+		<input type="button" value="식단 관리"
+			th:onclick="'window.location.href=\''+@{@{/meal/records}}+'\''">
+		<input type="button" value="운동 관리"
+			th:onclick="'window.location.href=\''+@{@{/exercise/records}}+'\''">
+	</div>
+	<!-- end main-container -->
+</body>
+<th:block layout:fragment="script1">
+	<script>
+		$('#btn-save').on('click', uploadImage);
+
+		function uploadImage() {
+			var file = $('#userImage2')[0].files[0];
+
+			console.log(file);
+			if (typeof file != "undefined") {
+				var formData = new FormData();
+				formData.append('data', file);
+				formData.append('path', "bodyprofile");
+				console.log(formData);
+				$.ajax({
+					type : 'POST',
+					url : '/upload',
+					data : formData,
+					processData : false,
+					contentType : false
+				}).done(function(responseBody) {
+
+					var fileInput = $('#userImage2');
+					var user_image = fileInput[0].files[0].name; // 파일명 출력
+					$("#userImage").val(user_image);
+
+					$('#bodyform').submit();
+				}).fail(function(error) {
+					alert('다시 등록해주세요');
+				})
+			} else {
+				$('#bodyform').submit();
+			}
+		}
+	</script>
+
+		<script type="text/javascript" th:inline="javascript">
+ 			var obj = [[${bodylist}]];  
+ 			 
+ 			console.log(obj["data1"]);
+			var arr=[];
+			var labels = [];
+			for(i=0; i<obj["data1"].length; i++){
+				arr.push(obj["data1"][i]["weight"]);
+				labels.push(obj["data1"][i]["insertDate"])
+			}
+			
+            var context = document
+                .getElementById('myChart')
+                .getContext('2d');
+            var myChart = new Chart(context, {
+                type: 'line', // 차트의 형태
+                data: { // 차트에 들어갈 데이터'
+                    labels: labels , 
+                    datasets: [
+                        { //데이터
+                            label: '사용자 체중 변화 그래프', //차트 제목
+                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            data: arr,
+                            borderColor: [
+                                //경계선 색상
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1 //경계선 굵기
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+        </script>
 </th:block>
 </html>

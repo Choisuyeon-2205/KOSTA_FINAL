@@ -71,11 +71,19 @@ public class MyProfileController {
 	    
 	
 	@GetMapping("/body/myprofile")
-	    public void myprofile(Model model, Principal principal, Authentication authentication, HttpServletRequest request) {
+	    public void myprofile(Model model, UserBodyVO body, Principal principal, Authentication authentication, HttpServletRequest request) {
 	       UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 	       UserVO user = userservice.selectById(userDetails.getUsername());
 	       Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
 	       UserBodyVO userbody = null;
+	       
+	       			// 그래프 관련
+			        JSONArray jsonArray = new JSONArray();
+		
+					List<UserBodyVO> bodylist = userservice.selectGraph(principal.getName());
+					String[] one = new String[bodylist.size()];
+	       
+	       
 	       if(flashMap != null) {
 	    	   userbody = (UserBodyVO)flashMap.get("body");
 	    	   System.out.println(userbody);
@@ -90,29 +98,20 @@ public class MyProfileController {
 	       
 	       System.out.println(user);
 	       
+	       			// 그래프 관련
+			       bodylist.forEach(b -> { 
+						JSONObject jsonObject = new JSONObject();
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						jsonObject.put("weight", b.getWeight());
+						jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
+						jsonArray.add(jsonObject);
+					});
+					JSONObject jsonObject2 = new JSONObject();
+					jsonObject2.put("data1", jsonArray);
+					 
+					model.addAttribute("bodylist", jsonObject2);
+		       
 	       
 	    }
 	    
-	@GetMapping("/body/bmi")
-	public String bmiGraph(Model model,UserBodyVO body, Principal principal) {
-//		UserVO user = userservice.selectById(principal.getName());
-		
-		JSONArray jsonArray = new JSONArray();
-
-		List<UserBodyVO> bodylist = userservice.selectGraph(principal.getName());
-		String[] one = new String[bodylist.size()];
-		 
-		bodylist.forEach(b -> { 
-			JSONObject jsonObject = new JSONObject();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			jsonObject.put("weight", b.getWeight());
-			jsonObject.put("insertDate", sdf.format(b.getInsertDate()));
-			jsonArray.add(jsonObject);
-		});
-		JSONObject jsonObject2 = new JSONObject();
-		jsonObject2.put("data", jsonArray);
-		 
-		model.addAttribute("bodylist", jsonObject2); // userservice.selectGraph(principal.getName()));
-		return "body/bmi";
-	}
 }
