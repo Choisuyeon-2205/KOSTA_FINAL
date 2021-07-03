@@ -100,8 +100,37 @@
 		<!-- MIDDLE-CONTAINER -->
 		<div style="width: 500px; height: 500px;" class="middle-container container">
 			<!--차트가 그려질 부분-->
-			<canvas id="myChart"></canvas>
+			<canvas id="myChart" style="display: block; height: 235px; width: 600px; border: 1px solid red;"></canvas>
+		<div>
+			<!-- 버튼 3개 들어가는곳 -->
+		<input type="button" value="BUDDY"
+			th:onclick="'window.location.href=\''+@{@{/buddy/newbuddy}}+'\''">
+	
+	
+		<input type="button" value="식단 관리"
+			th:onclick="'window.location.href=\''+@{@{/meal/records}}+'\''">
+	
+			
+		<input type="button" value="운동 관리"
+			th:onclick="'window.location.href=\''+@{@{/exercise/records}}+'\''">
+			
+		
 		</div>
+		
+			<div style="border: 1px solid red; background-color: pink; border-radius: 20px; text-align: center; width: 260px; height: 250px;" th:onclick="'window.location.href=\''+@{@{/meal/records}}+'\''">
+				<br>
+				<img alt="안여호세여" src="../image/foood.jpg" style="width: 160px;">
+				<br>
+				<br>
+				<div style="background-color: aqua;">
+				<label style="margin: auto;">이건 밥?</label>
+				
+				</div>
+			</div>
+	</div>
+	
+	
+		
 
 		<!-- RIGHT-CONTAINER -->
 		<div class="right-container container"></div>
@@ -166,13 +195,6 @@
 
 
 
-		<input type="button" value="BUDDY"
-			th:onclick="'window.location.href=\''+@{@{/buddy/newbuddy}}+'\''">
-		<input type="button" value="식단 관리"
-			th:onclick="'window.location.href=\''+@{@{/meal/records}}+'\''">
-		<input type="button" value="운동 관리"
-			th:onclick="'window.location.href=\''+@{@{/exercise/records}}+'\''">
-	</div>
 	<!-- end main-container -->
 </body>
 <th:block layout:fragment="script1">

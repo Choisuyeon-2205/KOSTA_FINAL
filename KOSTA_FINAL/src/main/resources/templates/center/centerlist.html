@@ -62,13 +62,18 @@ ul li {
 	margin: 30px;
 	float: right;
 }
+
+#products {
+	padding-left: 80px;
+}
+
 </style>
 </head>
-<body>
+<body style="background-color: slategray;">
 <div class="panel panel-default" layout:fragment="content1" >
 	<input type="button" id="selectMyCur" value="내 커리큘럼 조회"  th:onclick="'window.location.href=\''+@{/center/myCurriculum}+'\''"><br><br>
 	<div id="content">
-		<div class="real-select group">
+		<div class="real-select group" style="padding-left: 76px;">
 	      <div id="select-wrap1">
 	      	<h4>지역1</h4>
 	        <select name="selectArea1" id="selectArea1">
