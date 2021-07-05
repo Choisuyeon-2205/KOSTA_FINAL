@@ -168,7 +168,7 @@ $("#centerInsert").click(function(){
 	var centerArea2=$("#centerArea2 option:selected").val();
 	var centerPhone=$("input[name='centerPhone']");
 	var centerAddress= $("#sample6_address").val()+" "+$("#sample6_detailAddress").val()+"("+$("#sample6_postcode").val()+")";
-	alert(centerAddress);
+	
 	var obj={ "centerTitle":centerTitle.val() , "centerInfo":centerInfo.val(),"centerPhone":centerPhone.val(), "centerArea1":centerArea1, "centerArea2":centerArea2, "centerAddress":centerAddress};
 	
 	if(centerTitle.val()==null){
