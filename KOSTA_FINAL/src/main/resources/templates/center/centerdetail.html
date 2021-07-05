@@ -9,7 +9,9 @@ layout:decorate="~{layout/layout1}">
 body{
 	
 	font-family: 'Trebuchet MS', serif;
-	line-height: 1.6
+	line-height: 1.6;
+	background-color: slategray;
+	
 }
 .container{
 	width: 1500px;
@@ -116,7 +118,18 @@ ul.tabs li.current{
 	border: 2px solid gray;
 	border-radius: 5px;
 }
-
+.mapbutton{
+width: 400px;
+margin-left: 40px;
+}
+.detail_info {
+ display: inline-block;
+}
+.healthclub{
+	width: 800px;
+	height: 450px;
+	margin-left: 150px;
+}
 </style>
 </head>
 <body>
@@ -152,7 +165,8 @@ ul.tabs li.current{
 				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
 				<li><span class="detail_title">사업자번호:</span> [[${center.business.businessId}]]</li>
 			</ul>
-			<input type="button" value="지도 검색" th:onClick="call(this);" th:data2 ="${center.centerAddress}" >
+				<img class="healthclub" alt="사진" src="../image/healthclub.jpg">
+			<input class="mapbutton" type="button" value="지도 검색" th:onClick="call(this);" th:data2 ="${center.centerAddress}" >
 		</div>
 		<div id="tab-2" class="tab-content">
 		 	<table style="border: 1px solid black" class="table table-striped table-bordered table-hover">
