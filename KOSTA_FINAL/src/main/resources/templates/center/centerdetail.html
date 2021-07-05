@@ -204,7 +204,7 @@ ul.tabs li.current{
 			  <td>[[${curriculum.curriculumTime}]]</td>
 			  <td>[[${curriculum.curriculumPrice}]]</td>
 			  <td>[[${curriculum.curriculumAll}]]</td>
-			  <td id="current">[[${curriculum.curriculumState}]]</td>
+			  <td class="current">[[${curriculum.curriculumState}]]</td>
 			  <td>[[${curriculum.etyperef.id.etype.exerciseTypeNum}]]</td>
 			  <td>[[${curriculum.trainer.trainerName}]]</td>
 			</tr>
@@ -313,6 +313,7 @@ ul.tabs li.current{
 	<script th:src="@{/js/external2.js}"></script>
 	<script>
 	$(document).ready(function(){
+		
 		/* tab */
 		$('ul.tabs li').click(function(){
 			var tab_id = $(this).attr('data-tab');
@@ -328,23 +329,22 @@ ul.tabs li.current{
 	/* curriculum selected box*/
 	function listChange(param){
 		if(param=="전체조회"){
-			$("ul li:nth-child(9):contains('')").parent().show();
+			$("tr td:nth-child(9):contains('')").parent().show();
 		}else{
 			
-			$("ul li:nth-child(9)").filter(function() {
+			$("tr td:nth-child(9)").filter(function() {
 			    return $(this).text() == param;
 			}).parent().show();
-			$("ul li:nth-child(9)").filter(function() {
+			$("tr td:nth-child(9)").filter(function() {
 			    return $(this).text() != param;
 			}).parent().hide();
 			
-			$("ul.info_header").show();
 		}
 	}
 	
 	/* modal */
 	$(".curriculum_info").on("click", function(){
-   	 var tds = $(this).find("li");
+   	 var tds = $(this).find("td");
    	 cno = tds[0].innerHTML;
    	 var ctitle = tds[1].innerHTML;
    	 var cinfo = tds[2].innerHTML;
@@ -380,12 +380,16 @@ ul.tabs li.current{
 			url:"/center/curriculumstate/"+cno,
 			type:"get",
 			success: function(data) {
-				var s= $(".curriculum_info li:first-child(:contains('"+cno+"'))").next();
-				console.log(s);
-		    	//$(".all_star :nth-child("+Math.round(data)+")").addClass("on2").prevAll("a").addClass("on2");
+				$(".curriculum_info td:first-child").each(function(index){
+		 			if ($(this).text() == cno) {
+		 				$(this).siblings(".current").text(data);
+		 			}
+		    	 });
 		    	}
 			});
 	}
+
+
 	
 	/* review modal */
 	var mode="";

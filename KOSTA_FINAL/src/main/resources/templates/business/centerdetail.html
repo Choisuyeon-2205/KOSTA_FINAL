@@ -20,6 +20,10 @@ ul.tabs{
 	margin: 0px;
 	padding: 0px;
 	list-style: none;
+	margin-right: 453px;
+	background-color: wheat;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
 ul.tabs li{
 	background: none;
@@ -31,7 +35,7 @@ ul.tabs li{
 }
 
 ul.tabs li.current{
-	background: #ededed;
+	background:#dc143c;
 	color: #222;
 }
 
@@ -40,12 +44,15 @@ ul.tabs li.current{
 	background: #ededed;
 	padding: 15px;
 	margin-bottom: 100px;
-	padding-bottom: 150px;
 	padding-top: 50px;
 }
 
 .tab-content.current{
 	display: inherit;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border-top-right-radius: 10px;
+	 
 }
 
 #title {
@@ -125,10 +132,36 @@ ul.tabs li.current{
 .all_star {
 	display: inline-block;
 }
+.fullpage {
+background-color: lightblue;
+}
+.detail_info {
+ display: inline-block;
+}
+.healthclub{
+	width: 800px;
+	height: 450px;
+	margin-left: 150px;
+}
+#cdetailButton{
+width: 500px;
+}
+#tab-2{
+padding-bottom: 150px;
+}
+#tab-3{
+padding-bottom: 300px;
+}
+#tab-4{
+padding-bottom: 220px;
+}
+#tab-5{
+padding-bottom: 110px;
+}
 </style>
 </head>
 <body>
-<div>
+<div class="fullpage">
 	<div id="title">
 		<h3>[[${center.centerTitle}]]<br>
 		<div class="all_star">
@@ -154,7 +187,9 @@ ul.tabs li.current{
 		</ul>
 	
 		<div id="tab-1" class="tab-content current">
+			
 			<ul class="detail_info">
+			
 				<li><span class="detail_title">센터번호:</span> [[${center.centerNum}]]</li>
 				<li><span class="detail_title">센터명:</span> [[${center.centerTitle}]]</li>
 				<li><span class="detail_title">정보:</span> [[${center.centerInfo}]]</li>
@@ -164,7 +199,10 @@ ul.tabs li.current{
 				<li><span class="detail_title">지역명2:</span> [[${center.centerArea2}]]</li>
 				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
 				<li><span class="detail_title">사업자번호:</span> [[${center.business.businessId}]]</li>
+				
 			</ul>
+			
+			<img class="healthclub" alt="사진" src="../image/healthclub.jpg">
 			<br>
 			<button type="button" id="cdetailButton" data-toggle="modal" data-target="#cdetailModal">수정하기</button>
 		</div>
@@ -346,7 +384,7 @@ ul.tabs li.current{
 		</div>
 		
 		<div id="tab-4" class="tab-content">
-		<table style="border: 1px solid black" class="table table-striped table-bordered table-hover">
+		<table style="border: 1px solid black; margin-top: 40px;" class="table table-striped table-bordered table-hover">
 		<thead>
 		 	<tr>
 			  	<th>번호</th>
