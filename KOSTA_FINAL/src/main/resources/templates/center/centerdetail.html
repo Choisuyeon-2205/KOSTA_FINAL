@@ -95,9 +95,7 @@ ul.tabs li.current{
 	width: 1470px;
 }
 
-#etypelist {
-	margin-left: 40px;
-}
+
 
 /* star rating */
 .star_rating, .all_star {font-size:0; letter-spacing:-4px;}
@@ -114,6 +112,11 @@ ul.tabs li.current{
 .all_star {
 	display: inline-block;
 }
+.hrstyle {
+	border: 2px solid gray;
+	border-radius: 5px;
+}
+
 </style>
 </head>
 <body>
@@ -138,7 +141,7 @@ ul.tabs li.current{
 		</ul>
 	
 		<div id="tab-1" class="tab-content current">
-			<ui class="detail_info">
+			<ul class="detail_info">
 				<li><span class="detail_title">센터번호:</span> [[${center.centerNum}]]</li>
 				<li><span class="detail_title">센터명:</span> [[${center.centerTitle}]]</li>
 				<li><span class="detail_title">정보:</span> [[${center.centerInfo}]]</li>
@@ -148,59 +151,66 @@ ul.tabs li.current{
 				<li><span class="detail_title">지역명2:</span> [[${center.centerArea2}]]</li>
 				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
 				<li><span class="detail_title">사업자번호:</span> [[${center.business.businessId}]]</li>
-			</ui>
+			</ul>
 			<input type="button" value="지도 검색" th:onClick="call(this);" th:data2 ="${center.centerAddress}" >
 		</div>
 		<div id="tab-2" class="tab-content">
-		 	<ul class="teacher_info">
-			  	<li class="fl tc w70 title t_line">번호</li>
-			  	<li class="fl tc w100 title t_line">이름</li>
-			  	<li class="fl tc w100 title t_line">사진</li>
-			  	<li class="fl tc w120 title t_line">연락처</li>
-			  	<li class="fl tc w200 title t_line">이메일</li>
-			  	<li class="fl tc w300 title ">자기소개</li>
-	  		</ul>
-		    <ul class="teacher_info" th:each="trainer:${trainerlist}">
-		  	  <li class="fl tc w70 list t_line lt_line">[[${trainer.trainerNum}]]</li>
-		  	  <li class="fl tc w100 list t_line lt_line">[[${trainer.trainerName}]]</li>
-		  	  <li class="fl tc w100 list  lt_line t_line">[[${trainer.trainerPhoto}]]</li>
-		  	  <li class="fl tc w120 list t_line lt_line">[[${trainer.trainerPhone}]]</li>
-		  	  <li class="fl tc w200 list t_line lt_line">[[${trainer.trainerEmail}]]</li>
-		  	  <li class="fl tc w300 list  lt_line">[[${trainer.trainerInfo}]]</li><br>
-		    </ul>
+		 	<table style="border: 1px solid black" class="table table-striped table-bordered table-hover">
+		 	<thead>
+		 	<tr>
+			  	<th>번호</th>
+			  	<th>이름</th>
+			  	<th>연락처</th>
+			  	<th>이메일</th>
+			  	<th>자기소개</th>
+	  		</tr>
+	  		</thead>
+		    <tr th:each="trainer:${trainerlist}">
+		  	  <td>[[${trainer.trainerNum}]]</td>
+		  	  <td>[[${trainer.trainerName}]]</td>
+		  	  <td>[[${trainer.trainerPhone}]]</td>
+		  	  <td>[[${trainer.trainerEmail}]]</td>
+		  	  <td>[[${trainer.trainerInfo}]]</td>
+		    </tr>
+		    </table>
 		</div>
 		<div id="tab-3" class="tab-content">
 			<select id="etypelist" onchange="listChange(this.value);">
 				<option selected="selected" th:value="전체조회">전체조회</option>
 			    <option  th:each="etype:${etypelist}" th:value="${etype.exerciseTypeNum}">[[${etype.exerciseTypeName}]]</option>
 			</select><br><br>
-			<ul class="curriculum_info info_header">
-			  <li class="fl tc w70 title t_line">번호</li>
-			  <li class="fl tc w300 title t_line">이름</li>
-			  <li class="fl tc w300 title t_line">정보</li>
-			  <li class="fl tc w120 title t_line">날짜</li>
-			  <li class="fl tc w200 title t_line">시간</li>
-			  <li class="fl tc w70 title t_line">가격</li>
-			  <li class="fl tc w70 title t_line">총 정원수</li>
-			  <li class="fl tc w70 title t_line">현재 정원수</li>
-			  <li class="fl tc w100 title t_line">운동유형</li>
-			  <li class="fl tc w100 title">강사</li>
-			</ul>
+			<table style="border: 1px solid black" class="table table-striped table-bordered table-hover">
+			<thead>
+			<tr>
+			  <th>번호</th>
+			  <th>이름</th>
+			  <th>정보</th>
+			  <th>날짜</th>
+			  <th>시간</th>
+			  <th>가격</th>
+			  <th>총 정원수</th>
+			  <th>현재 정원수</th>
+			  <th>운동유형</th>
+			  <th>강사</th>
+			</tr>
+			</thead>
 			
 			<!--  <ul class="curriculum_info" th:each="curriculum:${curlist}" th:target="_blank" th:onclick="'window.open(\''+@{/center/curriculumdetail(crnum=${curriculum.curriculumNum})}+'\',\'window_name\',\'width=450,height=500,location=no,status=no,scrollbars=yes\')'"> -->
-			<ul class="curriculum_info" th:each="curriculum:${curlist}" data-toggle="modal" data-target="#curModal">
-			  <li class="fl tc w70 list t_line lt_line">[[${curriculum.curriculumNum}]]</li>
-			  <li class="fl tc w300 list t_line lt_line">[[${curriculum.curriculumTitle}]]</li>
-			  <li class="fl tc w300 list  lt_line t_line">[[${curriculum.curriculumInfo}]]</li>
-			  <li class="fl tc w120 list t_line lt_line">[[${curriculum.curriculumDate}]]</li>
-			  <li class="fl tc w200 list t_line lt_line">[[${curriculum.curriculumTime}]]</li>
-			  <li class="fl tc w70 list  t_line lt_line">[[${curriculum.curriculumPrice}]]</li>
-			  <li class="fl tc w70 list  t_line lt_line">[[${curriculum.curriculumAll}]]</li>
-			  <li class="fl tc w70 list  t_line lt_line" id="current">[[${curriculum.curriculumState}]]</li>
-			  <li class="fl tc w100 list  t_line lt_line">[[${curriculum.etyperef.id.etype.exerciseTypeNum}]]</li>
-			  <li class="fl tc w100 list   lt_line">[[${curriculum.trainer.trainerName}]]</li>
-			</ul>
+			<tr class="curriculum_info" th:each="curriculum:${curlist}" data-toggle="modal" data-target="#curModal">
+			  <td>[[${curriculum.curriculumNum}]]</td>
+			  <td>[[${curriculum.curriculumTitle}]]</td>
+			  <td>[[${curriculum.curriculumInfo}]]</td>
+			  <td>[[${curriculum.curriculumDate}]]</td>
+			  <td>[[${curriculum.curriculumTime}]]</td>
+			  <td>[[${curriculum.curriculumPrice}]]</td>
+			  <td>[[${curriculum.curriculumAll}]]</td>
+			  <td id="current">[[${curriculum.curriculumState}]]</td>
+			  <td>[[${curriculum.etyperef.id.etype.exerciseTypeNum}]]</td>
+			  <td>[[${curriculum.trainer.trainerName}]]</td>
+			</tr>
+			</table>
 		</div>
+		<hr class="hrstyle">
 		
 		<!-- Modal -->
 		<div id="curModal" class="modal fade" role="dialog">
@@ -235,6 +245,7 @@ ul.tabs li.current{
 		
 		  </div>
 		</div>
+		
 		
 		<div>
 	  		<button class="btn btn-warning" id="addReview" data-toggle="modal" data-target="#reviewModal">
@@ -278,7 +289,7 @@ ul.tabs li.current{
 		
 		  </div>
 		</div>
-		<table border="1px solid black" class="table table-striped table-bordered table-hover">
+		<table style="border: 1px solid black" class="table table-striped table-bordered table-hover">
 	  		<thead>
 		  		<tr>
 		  			<th>댓글번호</th>

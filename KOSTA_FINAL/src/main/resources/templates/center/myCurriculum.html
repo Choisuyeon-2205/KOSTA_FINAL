@@ -41,30 +41,30 @@ layout:decorate="~{layout/layout1}">
 <body>
 <div class="panel panel-default" layout:fragment="content1">
 	<div id="content">
-	<ul class="mycurlist">
-		<li class="fl tc w50 title t_line">번호</li>
-		<li class="fl tc w300 title t_line">교육과정명</li>
-		<li class="fl tc w400 title t_line">설명</li>
-		<li class="fl tc w70 title t_line">날짜</li>
-		<li class="fl tc w70 title t_line">시간</li>
-		<li class="fl tc w50 title t_line">전체정원수</li>
-		<li class="fl tc w50 title t_line">현재정원수</li>
-		<li class="fl tc w70 title t_line">가격</li>
-		<li class="fl tc w100 title t_line">등록일</li>
-		<li class="fl tc w100 title t_line">변경일</li>
-	</ul>
-	<ul class="mycurlist" th:each="curriculum:${mycurlist}">
-		<li class="fl tc w50 list t_line lt_line">[[${curriculum.curriculumNum}]]</li>
-		<li class="fl tc w300 list t_line lt_line">[[${curriculum.curriculumTitle}]]</li>
-		<li class="fl tc w400 list t_line lt_line">[[${curriculum.curriculumInfo}]]</li>
-		<li class="fl tc w70 list t_line lt_line">[[${curriculum.curriculumDate}]]</li>
-		<li class="fl tc w70 list t_line lt_line">[[${curriculum.curriculumTime}]]</li>
-		<li class="fl tc w50 list t_line lt_line">[[${curriculum.curriculumAll}]]</li>
-		<li class="fl tc w50 list t_line lt_line">[[${curriculum.curriculumState}]]</li>
-		<li class="fl tc w50 list t_line lt_line">[[${curriculum.curriculumPrice}]]</li>
-		<li class="fl tc w100 list t_line lt_line">[[${curriculum.curriculumFirst}]]</li>
-		<li class="fl tc w100 list t_line lt_line">[[${curriculum.curriculumUpdate}]]</li>
-	</ul>
+	<table style="border: 1px solid black" class="table table-striped table-bordered table-hover">
+	<tr>
+		<th>번호</th>
+		<th>교육과정명</th>
+		<th>설명</th>
+		<th>날짜</th>
+		<th>시간</th>
+		<th>전체정원수</th>
+		<th>현재정원수</th>
+		<th>가격</th>
+		<th>등록일</th>
+	</tr>
+	<tr th:each="curriculum:${mycurlist}">
+		<td>[[${curriculum.curriculumNum}]]</td>
+		<td>[[${curriculum.curriculumTitle}]]</td>
+		<td>[[${curriculum.curriculumInfo}]]</td>
+		<td>[[${curriculum.curriculumDate}]]</td>
+		<td>[[${curriculum.curriculumTime}]]</td>
+		<td>[[${curriculum.curriculumAll}]]</td>
+		<td>[[${curriculum.curriculumState}]]</td>
+		<td>[[${curriculum.curriculumPrice}]]</td>
+		<td>[[${curriculum.curriculumUpdate}]]</td>
+	</tr>
+	</table>
 	</div><br><br>
 </div>
 </body>

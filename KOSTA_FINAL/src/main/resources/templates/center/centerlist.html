@@ -56,39 +56,121 @@ ul li {
 /*select box */
 #select-wrap1, #select-wrap2 {
 	display: inline-block;
+	font-family: inherit;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 }
+#select-wrap1 {
+	padding-right: 20px;
+}
+
+
 
 #selectMyCur {
 	margin: 30px;
 	float: right;
+	margin-right: 190px;
+	margin-top:40px;
+	border-radius: 5px;
 }
 
 #products {
 	padding-left: 80px;
+	overflow: scroll;
+	height: 390px;
+	overflow-x:hidden; 
 }
+#selectArea1, #selectArea2 {
+	box-shadow: 5px 5px grey;
+	border-radius: 5px;
+}
+#selectArea1 {
+width: 150px;
+}
+@import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+.snip1535 {
+  background-color: white;
+  border: none;
+  color: gray;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'BenchNine', Arial, sans-serif;
+  font-size: 1em;
+  font-size: 22px;
+  line-height: 1em;
+  margin: 15px 40px;
+  outline: none;
+  padding: 12px 40px 10px;
+  position: relative;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.snip1535:before,
+.snip1535:after {
+  border-color: transparent;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+  border-style: solid;
+  border-width: 0;
+  content: "";
+  height: 24px;
+  position: absolute;
+  width: 24px;
+}
+.snip1535:before {
+  border-color: gray;
+  border-right-width: 2px;
+  border-top-width: 2px;
+  right: -5px;
+  top: -5px;
+}
+.snip1535:after {
+  border-bottom-width: 2px;
+  border-color: gray;
+  border-left-width: 2px;
+  bottom: -5px;
+  left: -5px;
+}
+.snip1535:hover,
+.snip1535.hover {
+  background-color: gray;
+  color: white;
+}
+.snip1535:hover:before,
+.snip1535.hover:before,
+.snip1535:hover:after,
+.snip1535.hover:after {
+  height: 100%;
+  width: 100%;
+}
+
+
 
 </style>
 </head>
 <body style="background-color: slategray;">
 <div class="panel panel-default" layout:fragment="content1" >
-	<input type="button" id="selectMyCur" value="내 커리큘럼 조회"  th:onclick="'window.location.href=\''+@{/center/myCurriculum}+'\''"><br><br>
+	<button class="snip1535" id="selectMyCur" th:onclick="'window.location.href=\''+@{/center/myCurriculum}+'\''">내 커리큘럼 조회</button><br><br>
 	<div id="content">
 		<div class="real-select group" style="padding-left: 76px;">
 	      <div id="select-wrap1">
-	      	<h4>지역1</h4>
+	      	<h4>시/도</h4>
 	        <select name="selectArea1" id="selectArea1">
 		        <option th:value=0>모두 조회</option>
 		        <option th:each="area1:${area1s}" th:value="${area1}">[[${area1}]]</option>
 	      	</select>
       	  </div>
       	  <div id="select-wrap2">
-	      	<h4>지역2</h4>
+	      	<h4>군/구</h4>
 	        <select name="selectArea2" id="selectArea2">
 	        	<option th:value=0>모두 조회</option>
 		        <option th:each="area:${arealist}" th:if="${area.area1}=='서울특별시'" th:value="${area.area2}">[[${area.area2}]]</option>
 	      	</select>
       	  </div>
       	 </div>
+      	 <br>
 	    <div id="products" class="row list-group">
 		<ul class="item" th:each="center:${centerlist}"
 		         th:onClick="call(this);" th:data2 ="${center.centerNum}" >
@@ -101,6 +183,7 @@ ul li {
 		</div>
 	</div><br><br>
 </div>
+<br>
 <th:block layout:fragment="script1">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script th:src="@{/js/getArea.js}"></script>
@@ -143,7 +226,6 @@ ul li {
 			str+= "<ul class='item'  onClick='call(this);' data2 ="+item["centerNum"]+">"
 			str+= "<li><h4>"+item["centerTitle"]+"</h4></li>"
 			str+= "<li>"+item["centerArea1"]+" "+item["centerArea2"]+"</li>"
-			str+= "<li>"+item["centerPreferance"]+"</li>"
 			str+= "<li><span class='star'>"
 			if(item["centerPreferance"]==0){
 				str+="☆☆☆☆☆";
@@ -161,6 +243,14 @@ ul li {
 		$("#products").append(str);
 		
 	}
+	
+	/* Demo purposes only */
+	$(".hover").mouseleave(
+	  function() {
+	    $(this).removeClass("hover");
+	  }
+	);
+	
 	</script>
 </th:block>
 </body>
