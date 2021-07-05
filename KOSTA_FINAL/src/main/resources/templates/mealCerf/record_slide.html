@@ -45,22 +45,32 @@ $(function () {
 		var dinnerContent = $(dinnerCard).attr("src");
 		var meal_type = '';
 		if (event.target.className.indexOf("breakfastImage") > -1) {
-			$(".modal-title").text("아침 식단 인증");
+			if (typeof breakfastContent != "undefined") {
+				$(".modal-title").text("아침 식단 수정");
+				$("#recordInsertBtn").text("수정");
+			} else {
+				$(".modal-title").text("아침 식단 인증");
+			}
 			meal_type = "breakfast";
 		} else if (event.target.className.indexOf("lunchImage") > -1) {
-			$(".modal-title").text("점심 식단 인증");
+			if (typeof lunchContent != "undefined") {
+				$(".modal-title").text("점심 식단 수정");
+				$("#recordInsertBtn").text("수정");
+			} else {
+				$(".modal-title").text("점심 식단 인증");
+			}
 			meal_type = "lunch";
 		} else if (event.target.className.indexOf("dinnerImage") > -1) {
-			$(".modal-title").text("저녁 식단 인증");
+			if (typeof dinnerContent != "undefined") {
+				$(".modal-title").text("저녁 식단 수정");
+				$("#recordInsertBtn").text("수정");
+			} else {
+				$(".modal-title").text("저녁 식단 인증");
+			}
 			meal_type = "dinner";
 		}
 		
 		$("#myModal").modal();
-
-	
-		if (breakfastContent == "undefined" || lunchContent == "undefined" || dinnerContent == "undefined") {
-			$("#recordInsertBtn").text("수정");
-		}
 		
 		$("#recordInsertBtn").click(function() {
 			uploadImage(meal_type);
@@ -257,8 +267,6 @@ body {
 	z-index: -1;
 }
 
-
-
 .imageBox {
 	position: relative;
 	height: 100%;
@@ -268,7 +276,7 @@ body {
 	position: relative;
 	padding: 5px;
 	background-color: rgb(255, 255, 255);
-	width: 80%;
+ 	width: 80%;
 	height: 90%;
 }
 

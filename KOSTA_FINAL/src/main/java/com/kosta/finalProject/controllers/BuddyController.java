@@ -97,15 +97,19 @@ public class BuddyController {
 		UserVO user = uservice.selectById(userDetails.getUsername());
 		
 		UserBodyVO mybody= ubservice.selectByUser(user.getUserId());
-		System.out.println("userid= "+user.getUserId()+", myBMI: "+mybody.getBmiGroup());
+		//내 body 정보가 없으면 매칭 불가능!
+		if(mybody==null) {
+			model.addAttribute("message","바디프로필 정보를 먼저 입력하세요.");
+			return "/buddy/buddyfail";
+		}
+	
 		List<UserBodyVO> buddys= ubservice.findIsBuddy(user.getUserId(), mybody.getBmiGroup());
-		System.out.println(buddys);
-		System.out.println(buddys.size());
 		//매칭할 list가 없으면 실시간 매칭 불가능 !
 		if(buddys.size()==0) {
 			UserBodyVO userbody= ubservice.selectByUser(user.getUserId());
 			userbody.setBuddyCheck(userbody.getBuddyCheck()+1);
 			ubservice.updateUserBody(userbody);
+			model.addAttribute("message","매칭할 사람을 찾지 못하였습니다.");
 			return "/buddy/buddyfail";
 		}
 		
@@ -120,7 +124,7 @@ public class BuddyController {
 				.startDate(date)
 				.endDate(cal.getTime())
 				.build();
-		bservice.insertOrUpdateBuddy(buddy); //이까지만 됌
+		bservice.insertOrUpdateBuddy(buddy);
 		
 		UserBodyVO userbody= ubservice.selectByUser(buddys.get(0).getUser().getUserId());
 		userbody.setBuddyCheck(userbody.getBuddyCheck()-1);
