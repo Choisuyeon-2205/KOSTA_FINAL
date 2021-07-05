@@ -4,10 +4,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
-body {
-	background-image: url('/image/maxresdefault.jpg');
-}
 div {
 	margin-top: 30px;
 	padding-top: 10px;
@@ -20,7 +16,8 @@ div {
 <body>
 <div>
 <h1>[[${message}]]</h1>
-<input type="button" value="이전화면으로 돌아가기" th:onclick="'window.location.href=\''+@{@{/body/myprofile}}+'\''">
+<input type="button" value="이전화면으로 돌아가기" th:onclick="'window.location.href=\''+@{@{/body/myprofile}}+'\''"><br><br><br>
+<img width="1000px" height="500px" alt="실패이미지" src="/image/maxresdefault.gif">
 </div>
 </body>
 </html>
