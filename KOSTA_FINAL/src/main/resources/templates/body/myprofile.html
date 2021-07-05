@@ -16,7 +16,7 @@
 </head>
 <style layout:fragment="style2">
 .buddybox{
-	background-color: #394264; border-radius: 20px; text-align: center;  height: 250px;
+	background-color: #394264; border-radius: 5px; text-align: center;  height: 250px;
 }	
 .inbuddybox {
 	background-color: #11a8ab;
@@ -29,7 +29,7 @@
 	color: white;
 }
 .mealbox {
-	background-color: #394264; border-radius: 20px; text-align: center; width: 260px; height: 250px; float: right;
+	background-color: #394264; border-radius: 5px; text-align: center; width: 260px; height: 250px; float: right;
 }
 .inmealbox{
 	background-color: #11a8ab;
@@ -42,7 +42,7 @@
 	color: white;
 }
 .exermanager {
-	 background-color: #394264; border-radius: 20px; text-align: center; width: 260px; height: 250px;
+	 background-color: #394264; border-radius: 5px; text-align: center; width: 260px; height: 250px;
 }
 .inexermanager {
 	background-color: #11a8ab;
@@ -119,7 +119,7 @@
 					</h2>
 					<!-- href="../login/profile" -->
 					<ul class="menu-box-menu"
-						style="padding-top: 5%; padding-left: 1.5em;">
+						style="padding-top: 5%; padding-left: 1.5em;"th:if="${body!=null}">
 						<li>성별 : <span class="" th:text="${body.gender}"></span>
 						<li>연령 : <span class="" th:text="${body.userAge}"></span>
 						</li>
