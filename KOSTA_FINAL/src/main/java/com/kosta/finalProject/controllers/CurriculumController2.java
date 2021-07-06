@@ -69,7 +69,12 @@ public class CurriculumController2 {
 		CurriculumRegisterVOId crid= new CurriculumRegisterVOId();
 		crid.setCurriculum(curservice.selectById(curnum));
 		crid.setUser(uservice.selectById(userid));
-		curregservice.deleteCurriculumRegister(crid);
+		int result= curregservice.deleteCurriculumRegister(crid);
+		if(result==1) {
+			CurriculumVO curriculum= curservice.selectById(curnum);
+			curriculum.setCurriculumState(curriculum.getCurriculumState()-1);
+			curservice.updateCurriculum(curriculum);
+		}
 				
 		return new ResponseEntity<>(curregservice.selectByCenterNum(cnum), HttpStatus.OK);
 	}
@@ -81,6 +86,9 @@ public class CurriculumController2 {
 		UserVO user = uservice.selectById(userDetails.getUsername());
 		CurriculumRegisterVOId crid= new CurriculumRegisterVOId();
 		CurriculumVO curriculum= curservice.selectById(curnum);
+		if(curriculum.getCurriculumAll()==curriculum.getCurriculumState())
+			return "등록 인원 마감되었습니다.";
+		
 		crid.setCurriculum(curriculum);
 		crid.setUser(user);
 		

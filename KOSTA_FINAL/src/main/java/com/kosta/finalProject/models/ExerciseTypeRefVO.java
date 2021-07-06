@@ -22,13 +22,4 @@ import lombok.ToString;
 public class ExerciseTypeRefVO {
 	@EmbeddedId
 	ExerciseTypeRefVOId id;
-	
-	/*
-	@JsonIgnore
-	@OneToMany(mappedBy = "etyperef", //fk이름 "메여있다"
-			cascade = CascadeType.ALL,
-			fetch = FetchType.LAZY) //fetch = FetchType.EAGER
-	List<TrainerVO> trainers;
-	*/
-	
 }

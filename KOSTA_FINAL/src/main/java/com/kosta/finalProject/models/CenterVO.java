@@ -42,12 +42,4 @@ public class CenterVO {
 	//여러 개의 center은 하나의 사업자(business)을 참조한다.
 	@ManyToOne
 	BusinessVO business; //fk  business_business 칼럼 추가된다.
-
-	/*
-	@JsonIgnore
-	@OneToMany(mappedBy = "center", //fk이름 "메여있다"
-			cascade = CascadeType.ALL,
-			fetch = FetchType.LAZY) //fetch = FetchType.EAGER
-	List<ExerciseTypeRefVO> etypes;
-	*/
 }

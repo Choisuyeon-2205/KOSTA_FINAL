@@ -605,6 +605,7 @@ padding-bottom: 110px;
 		str+= "<li><span class='detail_title'>상세주소:</span>"+center.centerAddress+"</li>";
 		str+= "<li><span class='detail_title'>사업자번호:</span>"+center.business.businessId+"</li>";
 		str+= "</ul>"
+		str+="<img class='healthclub' alt='사진' src='../image/healthclub.jpg'>"
 		str+="<br><button type='button' id='cdetailButton' data-toggle='modal' data-target='#cdetailModal'>수정하기</button>"
 		$("#tab-1").html(str);
 	}
@@ -629,6 +630,10 @@ padding-bottom: 110px;
 	 var tmode="";
 	    
 		$("#addTrainer").click(function(){
+			$("input[name='trainerName']").val("");
+			$("input[name='trainerPhone']").val("");
+			$("input[name='trainerEmail']").val("");
+			$("input[name='trainerInfo']").val("");
 			$("#trainerModal").show();
 			$(".modal-title").text("트레이너를 추가합니다.");
 			tmode="ADD";

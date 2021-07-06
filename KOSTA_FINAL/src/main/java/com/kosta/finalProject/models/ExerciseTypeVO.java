@@ -28,11 +28,4 @@ public class ExerciseTypeVO {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int exerciseTypeNum;
 	String exerciseTypeName;
-	/*
-	//@JsonIgnore
-	@OneToMany(mappedBy = "etype", //fk이름 "메여있다"
-			cascade = CascadeType.ALL,
-			fetch = FetchType.LAZY) //fetch = FetchType.EAGER
-	List<ExerciseTypeRefVO> etypes;
-	*/
 }
