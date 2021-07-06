@@ -29,7 +29,7 @@
 	header ul li ul:hover { display:block !important; }
 	<!--header ul li:hover ul { display:block !important; }-->
 	header ul li ul li { display: block;} 
-	header ul li ul li:hover {background-color: rgb(116,116,116)} 
+	header ul li ul li:hover {background-color: rgb(116,116,116); width: -webkit-fill-available;} 
 	ul.sub2 {text-align: center; padding: 20px;}	
 	.ac {
 background-color: rgba(255,255,255,0.5)
@@ -102,6 +102,9 @@ background-color: rgba(255,255,255,0.5)
 	.signup{
 	display: inline-flex;
 	}	
+	.page-header {
+	border : none;
+	}
 	</style>
 </head>
 
@@ -122,8 +125,8 @@ background-color: rgba(255,255,255,0.5)
 		<ul style=" background-color: rgba(140,140,140,0.5); ">
 			<li><a href="#a" class="fit" th:href="@{/body/myprofile}">MyFitPle</a></li>		 
 			<li><a th:href="@{/center/centerlist}"  class="fit">FitnessCenter</a></li>		 
-			<li><a href="#a"  class="fit">Community</a>		
-				<ul class="sub2"style="width: 185px; z-index: 2">
+			<li><a href="#a"  class="fit" style="width: 185.5px;">Community</a>		
+				<ul class="sub2"style="width: 185.5px; z-index: 2">
 					<li class="fit2"><a th:href="@{/dietdiaryboard/boardlist}">DietDiary</a></li>
 					<li class="fit2"><a th:href="@{/exerciseinfoboard/boardlist}">ExerciseInfo</a></li>
 					<li class="fit2"><a th:href="@{/healthboard/boardlist}">Health</a></li>

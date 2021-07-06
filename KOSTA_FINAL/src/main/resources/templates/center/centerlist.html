@@ -40,7 +40,7 @@ layout:decorate="~{layout/layout1}">
 	background-color: gray;
 }
 
-ul li {
+.licss {
  	align-content: center;
  	padding-left: 65px;
 }
@@ -147,7 +147,6 @@ width: 150px;
 }
 
 
-
 </style>
 </head>
 <body style="background-color: slategray;">
@@ -174,10 +173,10 @@ width: 150px;
 	    <div id="products" class="row list-group">
 		<ul class="item" th:each="center:${centerlist}"
 		         th:onClick="call(this);" th:data2 ="${center.centerNum}" >
-			<li><h4><b>[[${center.centerTitle}]]</b></h4></li>
-			<li>[[${center.centerArea1}]] [[${center.centerArea2}]]</li>
-			<li><span class="star" th:if="${center.centerPreferance}==0" th:each="num:${#numbers.sequence(1,5)}">☆</span></li>
-			<li><span class="star" th:if="${center.centerPreferance}!=0" th:each="num:${#numbers.sequence(1,center.centerPreferance)}">★</span><!--
+			<li class="licss"><h4><b>[[${center.centerTitle}]]</b></h4></li>
+			<li class="licss" >[[${center.centerArea1}]] [[${center.centerArea2}]]</li>
+			<li class="licss"><span class="star" th:if="${center.centerPreferance}==0" th:each="num:${#numbers.sequence(1,5)}">☆</span></li>
+			<li class="licss"><span class="star" th:if="${center.centerPreferance}!=0" th:each="num:${#numbers.sequence(1,center.centerPreferance)}">★</span><!--
 			--><span class="star" th:if="${center.centerPreferance}!=0" th:each="num:${#numbers.sequence(1,5-center.centerPreferance)}">☆</span></li>
 		</ul>
 		</div>

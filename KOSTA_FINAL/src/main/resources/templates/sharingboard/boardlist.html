@@ -21,7 +21,6 @@
 			<tr>
 				<th>게시글 번호</th>
 				<th>게시글 제목</th>
-				<th>게시글 내용</th>
 				<th>게시글 작성자</th>
 				<th>게시글 사진</th>
 				<th>게시글 작성일</th>
@@ -31,7 +30,6 @@
 				th:onclick="'window.location.href=\'' + @{/sharingboard/boarddetail(shareNum=${sboard.shareNum})} +'\' '">
 				<td th:text="${sboard.shareNum}"></td>
 				<td th:text="${sboard.title}"></td>
-				<td th:text="${sboard.content}"></td>
 				<td th:text="${sboard.user.nickName}"></td>
 				<td th:text="${sboard.photo}"></td>
 				<td th:text="${sboard.creationDate}"></td>

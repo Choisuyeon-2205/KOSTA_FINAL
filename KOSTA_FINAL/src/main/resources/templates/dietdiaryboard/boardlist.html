@@ -22,7 +22,6 @@
 			<tr>
 				<th>게시글 번호</th>
 				<th>게시글 제목</th>
-				<th>게시글 내용</th>
 				<th>게시글 작성자</th>
 				<th>게시글 사진</th>
 				<th>게시글 작성일</th>
@@ -31,7 +30,6 @@
 			<tr th:each="dboard:${boardResult}" th:onclick="'window.location.href=\'' + @{/dietdiaryboard/boarddetail(diaryNum=${dboard.diaryNum})} +'\' '">
 				<td th:text="${dboard.diaryNum}"></td>
 				<td th:text="${dboard.title}"></td>
-				<td th:text="${dboard.content}"></td>
 				<td th:text="${dboard.user.nickName}"></td>
 				<td th:text="${dboard.photo}"></td>
 				<td th:text="${dboard.creationDate}"></td>
