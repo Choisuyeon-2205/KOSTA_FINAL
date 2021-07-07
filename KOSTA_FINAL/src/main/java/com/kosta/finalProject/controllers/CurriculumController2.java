@@ -81,7 +81,6 @@ public class CurriculumController2 {
 
 	@RequestMapping("/center/registerCurriculum/{cnum}")
 	public String registerCurriculum(@PathVariable("cnum") int curnum, RedirectAttributes rttr, Authentication authentication) {
-		System.out.println(curnum);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		UserVO user = uservice.selectById(userDetails.getUsername());
 		CurriculumRegisterVOId crid= new CurriculumRegisterVOId();
@@ -99,7 +98,6 @@ public class CurriculumController2 {
 		
 		crvo= new CurriculumRegisterVO();
 		crvo.setId(crid);
-		
 		
 		CurriculumRegisterVO result= curregservice.insertCurriculumRegister(crvo);	
 		if(result!=null) { //등록성공했을 때만 count
@@ -165,7 +163,6 @@ public class CurriculumController2 {
 		TrainerVO trainer= tservice.selectById(trainerNum);
 		curriculum.setTrainer(trainer);
 		curriculum.setCurriculumNum(curnum);
-		
 		curservice.updateCurriculum(curriculum);
 				
 		return new ResponseEntity<>(curservice.selectByCenter(cnum), HttpStatus.OK);

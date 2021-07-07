@@ -58,7 +58,6 @@ public class ExerciseRecordController {
 	
 	@PostMapping("/insertRecord")
 	public String uploadPost(Principal principal, Authentication authentication, ExerciseRecordVO exercise) throws IOException {
-		System.out.println(exercise);
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String today = sdf.format(cal.getTime());

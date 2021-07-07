@@ -12,8 +12,6 @@ import lombok.ToString;
 @Embeddable
 @ToString
 public class UserAddress {
-
-
 		private String AddNum;
 		private String userAddress1;
 		private String userAddress2;

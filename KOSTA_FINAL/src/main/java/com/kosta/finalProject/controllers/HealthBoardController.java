@@ -40,8 +40,7 @@ public class HealthBoardController {
 	}
 	
 	@GetMapping("/healthboard/boarddetail")
-	public void selectById(Model model, Integer healthNum, Principal principal, Authentication authentication,
-			PageVO pagevo) {
+	public void selectById(Model model, Integer healthNum, Principal principal, Authentication authentication, PageVO pagevo) {
 		model.addAttribute("hboard", service.selectById(healthNum));
 		model.addAttribute("pagevo", pagevo);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -57,7 +56,6 @@ public class HealthBoardController {
 	@PostMapping("/healthboard/register")
 	public String boardRegisterPost(HealthBoardVO board, RedirectAttributes rttr, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		//UserVO user = UserVO.builder().userId(userDetails.getUsername()).build();
 		UserVO user = uservice.selectById(userDetails.getUsername());
 		board.setUser(user);
 		HealthBoardVO ins_board = service.insertBoard(board);
@@ -74,8 +72,7 @@ public class HealthBoardController {
 	}
 
 	@PostMapping("/healthboard/update")
-	public String boardUpdate(HealthBoardVO board, String userId, RedirectAttributes rttr,
-			Authentication authentication, Integer page, Integer size, String type, String keyword) {
+	public String boardUpdate(HealthBoardVO board, String userId, RedirectAttributes rttr, Authentication authentication, Integer page, Integer size, String type, String keyword) {
 		board.setUser(uservice.selectById(userId));
 		HealthBoardVO update_board = service.updateBoard(board);
 

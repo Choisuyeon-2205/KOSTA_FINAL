@@ -38,19 +38,21 @@ public class MyProfileController {
 	@Autowired
 	UserBodyService ubservice;
 	
-	
 	@GetMapping("/login/profile")
-	public void profile() {
-	       
+	public void profile(HttpServletRequest request, Model model) {
+		Map<String, ?> flashMap =RequestContextUtils.getInputFlashMap(request);
+		String message= null;
+        if(flashMap!=null) {
+        	message =(String)flashMap.get("message");
+       }   
+       model.addAttribute("message",message);
 	}
 	    
 	@PostMapping("/login/profile")
 	public String profilePost(UserBodyVO body , Principal principal, Authentication authentication, RedirectAttributes rttr) {
 		 
-	   System.out.println("body:" + body);
 	   UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 	   UserVO user = userservice.selectById(userDetails.getUsername());
-	   
 	   UserBodyVO userbody=  ubservice.selectByUserToday(userDetails.getUsername());
 	   
 	   if(userbody==null) {
@@ -58,13 +60,13 @@ public class MyProfileController {
 		   BMICalculator bmi = new BMICalculator();
 		   body.setUserBmi(bmi.bmicalculator(body.getWeight(), body.getHeight()));
 		   body.setBmiGroup(bmi.getGroup());
-		   System.out.println("UserBodyVO : " + body);
 	 
 		   rttr.addFlashAttribute("body", userservice.updateBMI(body));
+		   rttr.addFlashAttribute("message", "입력 성공");
 		   return "redirect:/body/myprofile";
 	   }else {
 		   rttr.addFlashAttribute("body", userservice.selectUserBody(user.getUserId())); 
-		   rttr.addAttribute("message", "하루에 한번만 등록할 수 있습니다.");
+		   rttr.addFlashAttribute("message", "하루에 한번만 등록할 수 있습니다.");
 		   return "redirect:/body/myprofile";
 	   }
 	}
@@ -79,26 +81,17 @@ public class MyProfileController {
 	       
 	       // 그래프 관련
 		   JSONArray jsonArray = new JSONArray();
-		
 		   List<UserBodyVO> bodylist = userservice.selectGraph(principal.getName());
-		   String[] one = new String[bodylist.size()];
-	       
 	       
 	       if(flashMap != null) {
 	    	   userbody = (UserBodyVO)flashMap.get("body");
-	    	   System.out.println(userbody);
 	       }else {
 	    	   userbody = userservice.selectUserBody(user.getUserId());
 	    	   if(userbody!=null)
 	    		   userbody.setUserBmi(Math.round(userbody.getUserBmi()));
 	       }
 	       model.addAttribute("user", user);
-	       
-	       
 	       model.addAttribute("body", userbody);
-	       System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@" + userbody);
-	       
-	       System.out.println(user);
 	       
 	       // 그래프 관련
 		   bodylist.forEach(b -> { 

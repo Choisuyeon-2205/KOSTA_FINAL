@@ -31,10 +31,8 @@ public class HealthBoardReplyController {
 
 	@Autowired
 	HealthReplyService service;
-	
 	@Autowired
 	UserService uservice;
-	
 	@Autowired
 	HealthBoardService healthservice;
 	
@@ -50,8 +48,7 @@ public class HealthBoardReplyController {
 	}
 	
 	@PostMapping("/{healthNum}")
-	public ResponseEntity<List<HealthReplyVO>> addReply(@PathVariable Integer healthNum,
-			Authentication authentication, @RequestBody HealthReplyVO hreply) {
+	public ResponseEntity<List<HealthReplyVO>> addReply(@PathVariable Integer healthNum, Authentication authentication, @RequestBody HealthReplyVO hreply) {
 
 		log.info("addReply-------------------------------------------------------");
 		log.info("healthNum" + healthNum);
@@ -68,8 +65,7 @@ public class HealthBoardReplyController {
 	}
 		
 	@DeleteMapping("/{healthNum}/{healthRplNum}")
-	public ResponseEntity<List<HealthReplyVO>> deleteByRplno(@PathVariable Integer healthRplNum,
-			@PathVariable Integer healthNum) {
+	public ResponseEntity<List<HealthReplyVO>> deleteByRplno(@PathVariable Integer healthRplNum, @PathVariable Integer healthNum) {
 		service.deleteReply(healthRplNum);
 		HealthBoardVO hboard = HealthBoardVO.builder().healthNum(healthNum).build();
 		return new ResponseEntity<>(service.selectAll(hboard), HttpStatus.OK);

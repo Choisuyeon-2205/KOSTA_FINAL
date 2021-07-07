@@ -41,8 +41,7 @@ public class ExerciseInfoBoardController {
 	}
 
 	@GetMapping("/exerciseinfoboard/boarddetail")
-	public void selectById(Model model, Integer infoNum, Principal principal, Authentication authentication,
-			PageVO pagevo) {
+	public void selectById(Model model, Integer infoNum, Principal principal, Authentication authentication, PageVO pagevo) {
 		model.addAttribute("eboard", service.selectById(infoNum));
 		model.addAttribute("pagevo", pagevo);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -52,13 +51,11 @@ public class ExerciseInfoBoardController {
 
 	@GetMapping("/exerciseinfoboard/register")
 	public void boardRegister() {
-
 	}
 
 	@PostMapping("/exerciseinfoboard/register")
 	public String boardRegisterPost(ExerciseInfoBoardVO board, RedirectAttributes rttr, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		//UserVO user = UserVO.builder().userId(userDetails.getUsername()).build();
 		UserVO user = uservice.selectById(userDetails.getUsername());
 		board.setUser(user);
 		ExerciseInfoBoardVO ins_board = service.insertBoard(board);

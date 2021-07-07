@@ -39,18 +39,9 @@ public class DietDiaryBoardController {
 	@GetMapping("/dietdiaryboard/boardlist")
 	public void selectAll(Model model, HttpServletRequest request, PageVO pagevo) {
 		model.addAttribute("dboardlist", service.selectAll());
-//		
-//		Map<String, ?> flashMap =RequestContextUtils.getInputFlashMap(request);
-//        
-//        if(flashMap!=null) {
-//            
-//            PageVO p =(PageVO)flashMap.get("pagevo");
-//            System.out.println("flashMap p:" + p);
-//        }
+
 		Page<DietDiaryBoardVO> result = service.selectAll(pagevo);
-		 
-//		List<DietDiaryBoardVO> boardlist = result.getContent();
-				
+
 		model.addAttribute("boardResult", result);
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMaker<>(result));
@@ -60,14 +51,12 @@ public class DietDiaryBoardController {
 	
 	@GetMapping("/dietdiaryboard/boarddetail")
 	public void selectById(Model model, Integer diaryNum, Principal principal, Authentication authentication, PageVO pagevo ) {
-			//System.out.println(service.selectById(diaryNum));
 		model.addAttribute("dboard", service.selectById(diaryNum));
 		model.addAttribute("pagevo", pagevo);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		UserVO user =  uservice.selectById(userDetails.getUsername());
 		model.addAttribute("user",user);
-	      //System.out.println("******************************" + user);
-		  //System.out.println("로그인한사람:" + userDetails);
+
 	}
 
 	@GetMapping("/dietdiaryboard/register")
@@ -78,7 +67,6 @@ public class DietDiaryBoardController {
 	@PostMapping("/dietdiaryboard/register")
 	public String boardRegisterPost(DietDiaryBoardVO board, RedirectAttributes rttr, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		//UserVO user = UserVO.builder().userId(userDetails.getUsername()).build();
 		UserVO user = uservice.selectById(userDetails.getUsername());
 		board.setUser(user); 
 		DietDiaryBoardVO ins_board = service.insertBoard(board);
@@ -96,11 +84,8 @@ public class DietDiaryBoardController {
 	
 	@PostMapping("/dietdiaryboard/update")
 	public String boardUpdate(DietDiaryBoardVO board, String userId, RedirectAttributes rttr, Authentication authentication, Integer page, Integer size, String type, String keyword) {
-		//System.out.println("업데이트###############" + userId);
-		//System.out.println("업데이트###############" + board);
 		board.setUser(uservice.selectById(userId));
-		DietDiaryBoardVO update_board = service.updateBoard(board);
-		
+		DietDiaryBoardVO update_board = service.updateBoard(board);	
 		rttr.addFlashAttribute("resultMessage", update_board==null?"수정실패":"수정성공");
 		
 		//방법1...주소창에 안보이기 

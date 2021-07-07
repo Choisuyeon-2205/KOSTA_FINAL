@@ -268,6 +268,13 @@
 </body>
 <th:block layout:fragment="script1">
 	<script>
+		$(function(){
+			var msg= "[[${message}]]";
+			if(msg!="")
+				alert(msg);
+		});
+	</script>
+	<script>
 		$('#btn-save').on('click', uploadImage);
 
 		function uploadImage() {

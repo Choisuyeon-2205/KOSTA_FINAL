@@ -94,7 +94,6 @@ public class CenterController {
 		model.addAttribute("userid",user.getUserId());
 		List<CurriculumVO> userCurlist= curRegService.selectByCurRegId(cnum, user.getUserId());
 		model.addAttribute("userCurlist",userCurlist);
-		System.out.println(userCurlist);
 	}
 	
 	@PutMapping("/center/updateCenter/{cnum}")
@@ -107,7 +106,6 @@ public class CenterController {
 				.build();
 		center.setBusiness(business);
 		center.setCenterNum(cnum);
-		
 		centerservice.updateCenter(center);
 		
 		return new ResponseEntity<>(center, HttpStatus.OK);

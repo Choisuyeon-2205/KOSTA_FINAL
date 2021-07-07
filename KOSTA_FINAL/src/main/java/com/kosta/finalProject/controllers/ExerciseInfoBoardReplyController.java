@@ -31,10 +31,8 @@ public class ExerciseInfoBoardReplyController {
 
 	@Autowired
 	ExerciseInfoReplyService service;
-
 	@Autowired
 	UserService uservice;
-
 	@Autowired
 	ExerciseInfoBoardService infoservice;
 
@@ -50,8 +48,7 @@ public class ExerciseInfoBoardReplyController {
 	}
 
 	@PostMapping("/{infoNum}")
-	public ResponseEntity<List<ExerciseInfoReplyVO>> addReply(@PathVariable Integer infoNum,
-			Authentication authentication, @RequestBody ExerciseInfoReplyVO ereply) {
+	public ResponseEntity<List<ExerciseInfoReplyVO>> addReply(@PathVariable Integer infoNum, Authentication authentication, @RequestBody ExerciseInfoReplyVO ereply) {
 
 		log.info("addReply-------------------------------------------------------");
 		log.info("infoNum" + infoNum);
@@ -68,8 +65,7 @@ public class ExerciseInfoBoardReplyController {
 	}
 
 	@DeleteMapping("/{infoNum}/{infoRplNum}")
-	public ResponseEntity<List<ExerciseInfoReplyVO>> deleteByRplno(@PathVariable Integer infoRplNum,
-			@PathVariable Integer infoNum) {
+	public ResponseEntity<List<ExerciseInfoReplyVO>> deleteByRplno(@PathVariable Integer infoRplNum, @PathVariable Integer infoNum) {
 		service.deleteReply(infoRplNum);
 		ExerciseInfoBoardVO eboard = ExerciseInfoBoardVO.builder().infoNum(infoNum).build();
 		return new ResponseEntity<>(service.selectAll(eboard), HttpStatus.OK);

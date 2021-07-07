@@ -29,14 +29,10 @@ import lombok.extern.java.Log;
 @RequestMapping("/replies/*")
 public class DietDiaryBoardReplyController {
 
-	
-	
 	@Autowired
 	DietDiaryReplyService service;
-	
 	@Autowired
 	UserService uservice;
-	
 	@Autowired
 	DietDiaryBoardService dietservice;
 	
@@ -44,12 +40,9 @@ public class DietDiaryBoardReplyController {
 	@GetMapping("/dboard/{diaryNum}")
 	public ResponseEntity<List<DietDiaryReplyVO>> selectAll(@PathVariable int diaryNum) {
 		DietDiaryBoardVO dboard = DietDiaryBoardVO.builder().diaryNum(diaryNum).build();
-		
-		System.out.println("controller");
+
 		return new ResponseEntity<>(service.selectAll(dboard), HttpStatus.OK);
 	}
-	
-	
 	
 	//특정댓글 조회
 	@GetMapping("/{diaryRplNum}")
@@ -57,15 +50,9 @@ public class DietDiaryBoardReplyController {
 		return new ResponseEntity<>(service.selectById(diaryRplNum),HttpStatus.OK);
 	}
 
-	
-	
-	
 	//특정보드 댓글 입력 후 재조회
 	@PostMapping("/{diaryNum}")
-	public ResponseEntity<List<DietDiaryReplyVO>> addReply(@PathVariable Integer diaryNum,
-			Authentication authentication,
-			@RequestBody DietDiaryReplyVO dreply) {
-		
+	public ResponseEntity<List<DietDiaryReplyVO>> addReply(@PathVariable Integer diaryNum, Authentication authentication, @RequestBody DietDiaryReplyVO dreply) {	
 		log.info("addReply-------------------------------------------------------");
 		log.info("diaryNum" + diaryNum);
 		log.info("dreply" + dreply);
@@ -84,7 +71,6 @@ public class DietDiaryBoardReplyController {
 	//댓글 삭제
 	@DeleteMapping("/{diaryNum}/{diaryRplNum}")
 	public ResponseEntity<List<DietDiaryReplyVO>> deleteByRplno(@PathVariable Integer diaryRplNum , @PathVariable Integer diaryNum) {
-		//System.out.println("test" + diaryNum + diaryRplNum);
 		service.deleteReply(diaryRplNum);
 		DietDiaryBoardVO dboard = DietDiaryBoardVO.builder().diaryNum(diaryNum).build();
 		return new ResponseEntity<>(service.selectAll(dboard), HttpStatus.OK);

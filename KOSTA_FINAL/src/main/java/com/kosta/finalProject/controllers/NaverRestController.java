@@ -27,16 +27,13 @@ public class NaverRestController {
 	
 	@RequestMapping("/{word}")
 	public String store (@PathVariable String word) {
-		System.out.println(word);
 		return start(word);
-		
 	}
 	
 	
 	public static String start(String word) {
         String clientId = "OeOg0wwJF533ZGPwwCNt"; //애플리케이션 클라이언트 아이디값"
         String clientSecret = "BFGkVKyNQN"; //애플리케이션 클라이언트 시크릿값"
-
 
         String text = null;
         try {
@@ -45,18 +42,13 @@ public class NaverRestController {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }
 
-
         String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text;    // json 결과
-        //String apiURL = "https://openapi.naver.com/v1/search/shop.xml?query="+ text; // xml 결과
-
 
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL,requestHeaders);
 
-
-        System.out.println(responseBody);
         return responseBody; 
     }
 
@@ -68,7 +60,6 @@ public class NaverRestController {
             for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
                 con.setRequestProperty(header.getKey(), header.getValue());
             }
-
 
             int responseCode = con.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
@@ -82,7 +73,6 @@ public class NaverRestController {
             con.disconnect();
         }
     }
-
 
     private static HttpURLConnection connect(String apiUrl){
         try {
@@ -99,16 +89,13 @@ public class NaverRestController {
     private static String readBody(InputStream body){
         InputStreamReader streamReader = new InputStreamReader(body);
 
-
         try (BufferedReader lineReader = new BufferedReader(streamReader)) {
             StringBuilder responseBody = new StringBuilder();
-
 
             String line;
             while ((line = lineReader.readLine()) != null) {
                 responseBody.append(line);
             }
-
 
             return responseBody.toString();
         } catch (IOException e) {

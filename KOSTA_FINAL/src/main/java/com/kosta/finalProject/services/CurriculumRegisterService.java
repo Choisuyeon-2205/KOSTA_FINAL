@@ -24,9 +24,7 @@ public class CurriculumRegisterService {
    CurriculumRegisterRepository curregRepo;
    
    public List<CurriculumVO> selectByCurRegId(int center_num, String user_id) {
-      System.out.println("Center:"+center_num+", userid: "+user_id);
       List<Object[]> objects= curregRepo.findByCurRegId(center_num, user_id);
-      System.out.println("service"+objects);
       List<CurriculumVO> curriculums= new ArrayList<>();
       objects.forEach(arr->{
          CurriculumVO curriculum= CurriculumVO.builder()

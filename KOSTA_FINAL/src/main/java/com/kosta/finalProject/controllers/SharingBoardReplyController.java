@@ -33,10 +33,8 @@ public class SharingBoardReplyController {
 	
 	@Autowired
 	SharingReplyService service;
-	
 	@Autowired
 	UserService uservice;
-	
 	@Autowired
 	SharingBoardService shareservice;
 	
@@ -52,8 +50,7 @@ public class SharingBoardReplyController {
 	}
 	
 	@PostMapping("/{shareNum}")
-	public ResponseEntity<List<SharingReplyVO>> addReply(@PathVariable Integer shareNum,
-			Authentication authentication, @RequestBody SharingReplyVO sreply) {
+	public ResponseEntity<List<SharingReplyVO>> addReply(@PathVariable Integer shareNum, Authentication authentication, @RequestBody SharingReplyVO sreply) {
 
 		log.info("addReply-------------------------------------------------------");
 		log.info("shareNum" + shareNum);
@@ -70,8 +67,7 @@ public class SharingBoardReplyController {
 	}
 	
 	@DeleteMapping("/{shareNum}/{shareRplNum}")
-	public ResponseEntity<List<SharingReplyVO>> deleteByRplno(@PathVariable Integer shareRplNum,
-			@PathVariable Integer shareNum) {
+	public ResponseEntity<List<SharingReplyVO>> deleteByRplno(@PathVariable Integer shareRplNum, @PathVariable Integer shareNum) {
 		service.deleteReply(shareRplNum);
 		SharingBoardVO sboard = SharingBoardVO.builder().shareNum(shareNum).build();
 		return new ResponseEntity<>(service.selectAll(sboard), HttpStatus.OK);

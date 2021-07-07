@@ -1,20 +1,12 @@
  package com.kosta.finalProject.services;
 
-import java.io.Console;
-import java.security.Principal;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kosta.finalProject.login.SecurityUser;
 import com.kosta.finalProject.models.UserBodyVO;
@@ -23,20 +15,15 @@ import com.kosta.finalProject.persistences.LoginRepository;
 import com.kosta.finalProject.persistences.UserBodyRepository;
 import com.kosta.finalProject.persistences.UserRepository;
 
-import lombok.extern.java.Log;
-
 @Service
 public class UserService implements UserDetailsService{
 
 	@Autowired
 	LoginRepository repo;
-	
 	@Autowired
 	UserRepository repository;
-	
 	@Autowired
 	UserBodyRepository bodyrepo;
-	
 	
 	// 수정하기 ..  결과값이1이면 ㅇㅋ 0 이면 오류
 	public int updateBody(UserBodyVO body) {

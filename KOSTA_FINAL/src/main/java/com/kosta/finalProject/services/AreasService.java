@@ -23,7 +23,6 @@ public class AreasService {
 	}
 	
 	public String[] selectAllArea1() {
-		
 		return Arrays.copyOf(areaRepo.findAllArea1(), areaRepo.findAllArea1().length, String[].class);
 	}
 	

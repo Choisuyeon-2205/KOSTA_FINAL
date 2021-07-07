@@ -35,29 +35,20 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class LoginService implements UserDetailsService {
 	@Autowired
 	private LoginRepository repo;
-
 	@Autowired
 	private BusinessRepository repo2;
-
 	@Autowired
 	UserBodyRepository bodyrepo;
-
 	@Autowired
 	UserRepository userrpo;
-        
-      @Autowired
-      private PasswordEncoder passwordEncoder;
-
-  
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
   	public UserVO selectById(String userId) {
   		return userrpo.findById(userId).get();
   	}
   	
 	public void profileSave(UserBodyVO body) {
-		System.out.println("프로필저장 여기");
-
-		
 		  UserBodyVO newbody =UserBodyVO.builder()
 			  .userAge(body.getUserAge())
 			  .gender(body.getGender())
@@ -69,12 +60,8 @@ public class LoginService implements UserDetailsService {
 		 
 	}
 
-      
-      
-      @Override
-      public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException { 
-    	  System.out.println(userId);
-    	  
+    @Override
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException { 
     	  UserDetails user = null;
     	  Optional<UserVO> obj =  repo.findById(userId) ;
     	  if(!(obj.isEmpty())) {
@@ -84,43 +71,26 @@ public class LoginService implements UserDetailsService {
     		  user = repo2.findById(userId)
                       .filter(u ->u!=null).map(u->new SecurityBusiness(u)).get();
     	  }
- 
-            return user;
+          return user;
       }
-      
-      public void signup(UserVO user, UserAddress userAddress) {
+ 
+    public void signup(UserVO user, UserAddress userAddress) {
          BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
          user.setUserPw(passwordEncoder.encode(user.getUserPw()));
          user.setUrole(UserRoleEnumType.USER);
-         System.out.println(user);
-         System.out.println(userAddress);
          user.setUserAddress(userAddress);
-			/*
-			 * UserVO newUser = UserVO.builder() .userId(user.getUserId())
-			 * .userName(user.getUserName()) .nickName(user.getNickName())
-			 * .userAddress(userAddress) .userEmail(user.getUserEmail())
-			 * .userPhone(user.getUserPhone()) .userPw(user.getUserPw()).build();
-			 */
+         
         repo.save(user);		
       }
       
-      public void businessSingup(BusinessVO business, BusinessAddress businessAddress) {
-    	  BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    	  business.setBusinessPassword(passwordEncoder.encode(business.getBusinessPassword()));
+    public void businessSingup(BusinessVO business, BusinessAddress businessAddress) {
+    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    	business.setBusinessPassword(passwordEncoder.encode(business.getBusinessPassword()));
     	  
-//    	BusinessVO newBusiness = BusinessVO.builder()
-//    			.businessId(business.getBusinessId()) 			
-//    			.businessTitle(business.getBusinessTitle())
-//    			.businessAddress(businessAddress)
-//    			.businessPhone(business.getBusinessPhone())
-//    			.businessPassword(business.getBusinessPassword()).build();
     	repo2.save(business);
       }
       
-      
-      
       public void certifiedPhoneNumber(String user_phone, String cerNum) {
-
            String api_key = "NCS6FQ4VTRUTGQQT";
            String api_secret = "7PJ87LGTUYGTHHIIXUW1V119FZN590EF";
            Message coolsms = new Message(api_key, api_secret);
@@ -133,7 +103,6 @@ public class LoginService implements UserDetailsService {
 
            try {
                JSONObject obj = (JSONObject) coolsms.send(params);
-               System.out.println("**********" + obj.toString());
            } catch (CoolsmsException e) {
                System.out.println(e.getMessage());
                System.out.println(e.getCode());
@@ -141,9 +110,7 @@ public class LoginService implements UserDetailsService {
 
        } 
       
-      
       public void certifiedPhoneNumber2(String businessPhone, String cerNum) {
-
            String api_key = "NCS6FQ4VTRUTGQQT";
            String api_secret = "7PJ87LGTUYGTHHIIXUW1V119FZN590EF";
            Message coolsms = new Message(api_key, api_secret);
@@ -156,13 +123,13 @@ public class LoginService implements UserDetailsService {
 
            try {
                JSONObject obj = (JSONObject) coolsms.send(params);
-               System.out.println("**********" + obj.toString());
            } catch (CoolsmsException e) {
                System.out.println(e.getMessage());
                System.out.println(e.getCode());
            }
-
        }
+      
+      
       public boolean checkName(String userId) {
     	  return repo.findById(userId).isPresent();
       }
