@@ -10,10 +10,10 @@
 <style>
 
 .buddybox{
-	background-color: #394264; border-radius: 5px; text-align: center;  height: 250px;
+ border-radius: 5px; text-align: center;  height: 250px; border: 2px solid;
 }	
 .inbuddybox {
-	background-color: #11a8ab;
+	background-color: orange;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	height: 60px;
@@ -23,10 +23,10 @@
 	color: white;
 }
 .mealbox {
-	background-color: #394264; border-radius: 5px; text-align: center; width: 260px; height: 250px; float: right;
+	border : 2px solid; border-radius: 5px; text-align: center; width: 260px; height: 250px; float: right;
 }
 .inmealbox{
-	background-color: #11a8ab;
+	background-color: orange;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	height: 60px;
@@ -36,10 +36,10 @@
 	color: white;
 }
 .exermanager {
-	 background-color: #394264; border-radius: 5px; text-align: center; width: 260px; height: 250px;
+	 border : 2px solid; border-radius: 5px; text-align: center; width: 260px; height: 250px;
 }
 .inexermanager {
-	background-color: #11a8ab;
+	background-color: orange;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	height: 60px;
@@ -49,7 +49,7 @@
 	color: white;
 }
 .myChart{
-	display: block; height: 235px; width: 600px; border: 1px solid red;
+	display: block; height: 235px; width: 600px; 
 }
 .buddyimg {
 	width: 400px;
@@ -98,7 +98,7 @@
 			</div>
 			<div class="menu-box block">
 				<!-- MENU BOX (LEFT-CONTAINER) -->
-				<h2 class="titular">USER INFO</h2>
+				<h2 class="titular" style="font-weight: 700;">USER INFO</h2>
 
 				<ul class="menu-box-menu"
 					style="padding-top: 9%; padding-left: 1.5em;">
@@ -119,10 +119,10 @@
 				<!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
 
 				<!-- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
-				<div class="menu-box block">
+				<div class="menu-box block" style="border: none">
 					<!-- MENU BOX (LEFT-CONTAINER) -->
 					<h2 class="titular">
-						<a data-toggle="modal" data-target="#prfModal">BODY INFO</a>
+						<a data-toggle="modal" data-target="#prfModal" style="font-weight: 700; color: white;">BODY INFO</a>
 					</h2>
 					<!-- href="../login/profile" -->
 					<ul class="menu-box-menu"
@@ -153,7 +153,7 @@
 		<!-- MIDDLE-CONTAINER -->
 		<div style="width: 600px; height: 1165px;" class="middle-container container">
 			<!--차트가 그려질 부분-->
-			<canvas id="myChart" ></canvas>
+			<canvas id="myChart" style="border: 2px solid; border-radius: 5px;"></canvas>
 			<br>
 			<!-- 버디 -->
 			<div class="buddybox"  th:onclick="'window.location.href=\''+@{@{/buddy/newbuddy}}+'\''">

@@ -3,26 +3,21 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- 공통 layout만들기 -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<!-- 하위 HTML에서 CSS 재정의할 예정 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+  	<th:block layout:fragment="style2" ></th:block>
 </head>
 
 <body>
-  	<header th:replace="/fragments/header::header1"> </header>
-  	<!-- 하위 HTML에서 content 재정의할 예정 -->
-  	<div class="panel panel-default" layout:fragment="content1" style="border:none	">
+  	<header th:replace="/fragments/header::header1">
+  		<link rel="stylesheet" href="css/main.css" />
+  	 </header>
+  	<div class="panel panel-default" layout:fragment="content1" >
   	</div>
-  	<th:block layout:fragment="style2">
-    </th:block>
-<!-- 	<footer th:replace="/fragments/footer::footer1"></footer> -->
-	<!-- 하위 HTML에서 javascript 재정의할 예정  th:block은 없어지는 태그-->
+
 	<th:block layout:fragment="script1">
 	</th:block>
 </body>

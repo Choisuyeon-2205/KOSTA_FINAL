@@ -20,6 +20,10 @@ ul.tabs{
 	margin: 0px;
 	padding: 0px;
 	list-style: none;
+	margin-right: 453px;
+	background-color: wheat;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
 ul.tabs li{
 	background: none;
@@ -27,12 +31,15 @@ ul.tabs li{
 	display: inline-block;
 	padding: 10px 15px;
 	cursor: pointer;
-	width: 300px;
+	width: 200px;
 }
 
 ul.tabs li.current{
-	background: #ededed;
+	background:#dc143c;
 	color: #222;
+}
+ul.tabs li:hover{
+	color: #fff;
 }
 
 .tab-content{
@@ -40,12 +47,15 @@ ul.tabs li.current{
 	background: #ededed;
 	padding: 15px;
 	margin-bottom: 100px;
-	padding-bottom: 150px;
 	padding-top: 50px;
 }
 
 .tab-content.current{
 	display: inherit;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border-top-right-radius: 10px;
+	 
 }
 
 #title {
@@ -58,7 +68,6 @@ ul.tabs li.current{
 
 #deleteButton {
 	display: inline-block;
-	margin-left: 20px;
 }
 
 .detail_info{
@@ -77,6 +86,7 @@ ul.tabs li.current{
 .tc {text-align:center; }
 
 /* 게시판 목록 */
+.board{width: 959px;}
 .w70 {width:70px; }
 .w300 {width:300px; }
 .w200 {width:200px; }
@@ -102,10 +112,7 @@ ul.tabs li.current{
 	width: 1450px;
 }
 
-.review_info{
-	list-style: none;
-	width: 1000px;
-}
+
 
 
 #etypelist {
@@ -127,10 +134,36 @@ ul.tabs li.current{
 .all_star {
 	display: inline-block;
 }
+.fullpage {
+background-color: lightblue;
+}
+.detail_info {
+ display: inline-block;
+}
+.healthclub{
+	width: 800px;
+	height: 450px;
+	margin-left: 70px;
+}
+#tab-2{
+padding-bottom: 150px;
+}
+#tab-3{
+padding-bottom: 300px;
+}
+#tab-4{
+padding-bottom: 220px;
+}
+#tab-5{
+padding-bottom: 140px;
+}
+#cdetailButton {
+margin-left: 20px;
+}
 </style>
 </head>
 <body>
-<div>
+<div class="fullpage">
 	<div id="title">
 		<h3>[[${center.centerTitle}]]<br>
 		<div class="all_star">
@@ -143,19 +176,30 @@ ul.tabs li.current{
 		<small id="prefer">( [[${gprefer}]] )</small>
 		</h3>
 	</div>
+	<button type="button" id="cdetailButton" class="btn btn-default" data-toggle="modal" data-target="#cdetailModal">수정</button>
+	
 	<div id="deleteButton">
 		<button type="button" id="centerDelete" class="btn btn-default" data-dismiss="modal">삭제</button>
 	</div>
+	
+		
+	
+	
 	<div class="container">
 		<ul class="tabs">
 			<li class="tab-link current" data-tab="tab-1">Detail</li>
 			<li class="tab-link" data-tab="tab-2">Trainer</li>
 			<li class="tab-link" data-tab="tab-3">Curriculum</li>
 			<li class="tab-link" data-tab="tab-4">Review</li>
+			<li class="tab-link" data-tab="tab-5">User</li>
 		</ul>
 	
 		<div id="tab-1" class="tab-content current">
-			<ui class="detail_info">
+			<div >
+			<img class="healthclub" alt="사진" src="../image/healthclub.jpg">
+			<div style="display: inline;">
+			<ul class="detail_info">
+			
 				<li><span class="detail_title">센터번호:</span> [[${center.centerNum}]]</li>
 				<li><span class="detail_title">센터명:</span> [[${center.centerTitle}]]</li>
 				<li><span class="detail_title">정보:</span> [[${center.centerInfo}]]</li>
@@ -165,9 +209,13 @@ ul.tabs li.current{
 				<li><span class="detail_title">지역명2:</span> [[${center.centerArea2}]]</li>
 				<li><span class="detail_title">상세주소:</span> [[${center.centerAddress}]]</li>
 				<li><span class="detail_title">사업자번호:</span> [[${center.business.businessId}]]</li>
-			</ui>
+				
+			</ul>
+			</div>
+			</div>
+			
 			<br>
-			<button type="button" id="cdetailButton" data-toggle="modal" data-target="#cdetailModal">수정하기</button>
+			
 		</div>
 		
 		<!-- Modal -->
@@ -203,7 +251,7 @@ ul.tabs li.current{
 	      		</select><br><br>
 		        <label>지역2</label>
 		        <select name="centerArea2" id="centerArea2">
-		        <option th:each="area:${arealist}" th:selected="${area.area2}==${center.centerArea2}" th:if="${area.area1}=='서울특별시'" th:value="${area.area2}">[[${area.area2}]]</option>
+		        <option th:each="area:${arealist}" th:selected="${area.area2}==${center.centerArea2}" th:if="${area.area1}==${center.centerArea1}" th:value="${area.area2}">[[${area.area2}]]</option>
 	      		</select>
 		      </div>
 		      <div class="modal-footer">
@@ -218,10 +266,10 @@ ul.tabs li.current{
 		<div id="tab-2" class="tab-content">
 		    <!-- 트레이너 추가 -->
 		  	<div>
-		  		<button class="btn btn-warning" id="addTrainer" data-toggle="modal" data-target="#trainerModal">
+		  		<button class="btn btn-default" id="addTrainer" data-toggle="modal" data-target="#trainerModal">
 		  		트레이너 추가</button>
 		  	</div>
-		  	<table border="1px solid black" class="table table-striped table-bordered table-hover">
+		  	<table  style="border: 1px solid black" class="table table-striped table-bordered table-hover">
 		  		<thead>
 			  		<tr>
 			  			<th>트레이너 번호</th>
@@ -277,10 +325,10 @@ ul.tabs li.current{
 		<div id="tab-3" class="tab-content">
 			<!-- 커리큘럼 추가 -->
 		  	<div>
-		  		<button class="btn btn-warning" id="addCurriculum" data-toggle="modal" data-target="#curriculumModal">
+		  		<button class="btn btn-default" id="addCurriculum" data-toggle="modal" data-target="#curriculumModal">
 		  		커리큘럼 추가</button>
 		  	</div>
-		  	<table border="1px solid black" class="table table-striped table-bordered table-hover">
+		  	<table style="border: 1px solid black" class="table table-striped table-bordered table-hover">
 		  		<thead>
 			  		<tr>
 			  			<th>번호</th>
@@ -347,22 +395,83 @@ ul.tabs li.current{
 		</div>
 		
 		<div id="tab-4" class="tab-content">
-		 	<ul class="review_info">
-			  	<li class="fl tc w70 title t_line">번호</li>
-			  	<li class="fl tc w300 title t_line">내용</li>
-			  	<li class="fl tc w70 title t_line">평점</li>
-			  	<li class="fl tc w200 title t_line">작성일</li>
-			  	<li class="fl tc w200 title t_line">수정일</li>
-			  	<li class="fl tc w100 title ">작성자</li>
-	  		</ul>
-		    <ul class="review_info" th:each="review:${revlist}">
-		  	  <li class="fl tc w70 list t_line lt_line">[[${review.crNum}]]</li>
-		  	  <li class="fl tc w300 list t_line lt_line">[[${review.crContents}]]</li>
-		  	  <li class="fl tc w70 list  lt_line t_line">[[${review.crPreference}]]</li>
-		  	  <li class="fl tc w200 list t_line lt_line">[[${review.crFirst}]]</li>
-		  	  <li class="fl tc w200 list t_line lt_line">[[${review.crUpdate}]]</li>
-		  	  <li class="fl tc w100 list  lt_line">[[${review.user.userId}]]</li>
-		    </ul>
+		<table style="border: 1px solid black; margin-top: 40px;" class="table table-striped table-bordered">
+		<thead>
+		 	<tr>
+			  	<th>번호</th>
+			  	<th>내용</th>
+			  	<th>평점</th>
+			  	<th>작성일</th>
+			  	<th>수정일</th>
+			  	<th>작성자</th>
+	  		</tr>
+	  		</thead>
+		    <tr th:each="review:${revlist}">
+		  	  <td>[[${review.crNum}]]</td>
+		  	  <td>[[${review.crContents}]]</td>
+		  	  <td>[[${review.crPreference}]]</td>
+		  	  <td>[[${review.crFirst}]]</td>
+		  	  <td>[[${review.crUpdate}]]</td>
+		  	  <td>[[${review.user.userId}]]</td>
+		    </tr>
+		   </table>
+		</div>
+		<div id="tab-5" class="tab-content">
+			<select name="selectCurReg" id="selectCurReg">
+		       <option th:value=0 th:selected="selected">모두 조회</option>
+		       <option th:each="cur:${curlist}" th:value="${cur.curriculumNum}">[[${cur.curriculumTitle}]]</option>
+	      	</select><br><br>
+			<!-- 사용자 관리 -->
+		  	<table style="border: 1px solid black" class="table table-striped table-bordered table-hover">
+		  		<thead>
+			  		<tr>
+			  			<th>커리큘럼번호</th>
+			  			<th>회원ID</th>
+			  			<th>이름</th>
+			  			<th>닉네임</th>
+			  			<th>주소</th>
+			  			<th>핸드폰</th>
+			  			<th>이메일</th>
+			  		</tr>
+		  		</thead>
+		  		<tbody id="curregTable" data-toggle="modal" data-target="#curregModal">
+		  		</tbody>
+		  	</table>
+		</div>
+		
+		<!-- Modal -->
+		<div id="curregModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+    		<!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">등록 취소</h4>
+		      </div>
+		      <div class="modal-body">
+			        <label>커리큘럼번호</label>
+			        <input type="text" name="ucurriculumNum" class="form-control">
+			        <label>회원ID</label>
+			        <input type="text" name="userId" class="form-control">
+			        <label>이름</label>
+			        <input type="text" name="userName" class="form-control">
+			        <label>닉네임</label>
+			        <input type="text" name="nickName" class="form-control">
+			        <label>주소</label>
+			        <input type="text" name="userAddress" class="form-control">
+			        <label>핸드폰</label>
+			        <input type="text" name="userPhone" class="form-control">
+			        <label>이메일</label>
+		        	<input type="text" name="userEmail" class="form-control"><br>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" id="curregDeleteButton" class="btn btn-default" data-dismiss="modal">삭제</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		
+		  </div>
 		</div>
 	</div>
 </div>
@@ -373,6 +482,7 @@ ul.tabs li.current{
 <script th:src="@{/js/center.js}"></script>
 <script th:src="@{/js/trainer.js}"></script>
 <script th:src="@{/js/curriculum.js}"></script>
+<script th:src="@{/js/userreg.js}"></script>
 <script>
 
 	$(document).ready(function(){
@@ -506,6 +616,7 @@ ul.tabs li.current{
 		str+= "<li><span class='detail_title'>상세주소:</span>"+center.centerAddress+"</li>";
 		str+= "<li><span class='detail_title'>사업자번호:</span>"+center.business.businessId+"</li>";
 		str+= "</ul>"
+		str+="<img class='healthclub' alt='사진' src='../image/healthclub.jpg'>"
 		str+="<br><button type='button' id='cdetailButton' data-toggle='modal' data-target='#cdetailModal'>수정하기</button>"
 		$("#tab-1").html(str);
 	}
@@ -530,6 +641,10 @@ ul.tabs li.current{
 	 var tmode="";
 	    
 		$("#addTrainer").click(function(){
+			$("input[name='trainerName']").val("");
+			$("input[name='trainerPhone']").val("");
+			$("input[name='trainerEmail']").val("");
+			$("input[name='trainerInfo']").val("");
 			$("#trainerModal").show();
 			$(".modal-title").text("트레이너를 추가합니다.");
 			tmode="ADD";
@@ -736,6 +851,68 @@ ul.tabs li.current{
 				});
 				$("#curriculumTable").html(str);
 			}
+			
+			
+			//curReg modal
+			 var crmode="";
+
+			$("#curregDeleteButton").click(function(){				
+				 var obj = { "cnum":"[[${center.centerNum}]]", "curnum": curnum, "userid":userid };
+				 curregManager.remove(obj, printCrlist);
+				 alert("등록취소 완료");
+				 $("#curregModal").hide();
+		  	});
+				
+			$("#curregTable").on("click", "tr", function(){
+			    var tds = $(this).find("td");
+			    curnum = tds[0].innerHTML;
+			    userid = tds[1].innerHTML;
+			    var username = tds[2].innerHTML;
+			    var nickname = tds[3].innerHTML;
+			    var uaddress = tds[4].innerHTML;
+			    var uphone= tds[5].innerHTML;
+			    var uemail= tds[6].innerHTML;
+			   
+			    $("input[name='ucurriculumNum']").val(curnum);
+			    $("input[name='userId']").val(userid);
+			    $("input[name='userName']").val(username);
+			    $("input[name='nickName']").val(nickname);
+			    $("input[name='userAddress']").val(uaddress);
+			    $("input[name='userPhone']").val(uphone);
+			    $("input[name='userEmail']").val(uemail);
+			
+			    $("#curregModal").show();
+			    $(".modal-title").text("등록정보 삭제")
+			    	 
+			});
+			
+			curregManager.getAll("[[${center.centerNum}]]", printCrlist);
+				
+			function printCrlist(crlist){
+				console.log(crlist);
+				var str=""
+				$.each(crlist, function(idx, item){
+					str+="<tr>";
+					str+="<td>"+item[0]+"</td>";
+					str+="<td>"+item[1]+"</td>";
+					str+="<td>"+item[2]+"</td>";
+					str+="<td>"+item[3]+"</td>";
+					str+="<td>"+item[5]+" "+item[6]+" "+item[7]+" ("+item[4]+")</td>";
+					str+="<td>"+item[8]+"</td>";
+					str+="<td>"+item[9]+"</td>";
+					str+="</tr>";
+				});
+				$("#curregTable").html(str);
+			}
+			
+	/* select box */	
+	$("#selectCurReg").on('change',function(){		
+		if(this.value==0){
+			curregManager.getAll("[[${center.centerNum}]]", printCrlist);
+		}else{
+			curregManager.getByCurnum(this.value, printCrlist); //list 변경
+		}		
+	});
 </script>
 </body>
 </html>

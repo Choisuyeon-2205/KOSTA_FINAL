@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" style="background-color: skyblue">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -8,25 +8,73 @@
 .item {
 	list-style: none;
 	border: 1px solid black;
+	background-color: white;
+	width: 50%;
+	border-radius:10px;
+	box-shadow: 1px 1px 0px #DC143C,
+	2px 2px 0px #DC143C,
+	3px 3px 0px #DC143C,
+	4px 4px 0px #DC143C;
+	
 }
-.item li {
-	display: inline-block;
-
+ul.item:hover {
+background-color: rgb(255,255,255,0.8);
+color: black;
+}
+.headerName {
+	background-color: skyblue;
+	color: white;
+	margin-bottom: 0px;
+	text-align: center;
+	text-shadow: 1px 1px 0px #DC143C,
+	2px 2px 0px #DC143C,
+	3px 3px 0px #DC143C,
+	4px 4px 0px #DC143C;
+	padding-bottom: 20px;
+}
+.row list-group {
+background-color: skyblue;	
+}
+.headerdiv {
+background-color: skyblue;
+}
+.list-group {
+padding-left: 540px;
+}
+#addCenter {
+width: 51%;
+height: 58px;
+border-radius: 10px;
+box-shadow: 1px 1px 0px gray,
+	2px 2px 0px gray,
+	3px 3px 0px gray,
+	4px 4px 0px gray;
+	font-size: 20px;
+	font-weight: bolder;
+	background-color: lightgray;
+	margin-bottom: 100px;
+}
+#addCenter:hover{
+background-color: rgb(255,255,255,0.8);
+}
+.buttondiv {
+padding-left: 526px;
 }
 </style>
 </head>
 <body>
-<h1>내 센터 관리</h1>
-<div>
+<h1 class="headerName">내 센터 관리</h1>
+
+<div class="headerdiv">
 	<div id="products" class="row list-group">
-		<ul class="item" th:each="center:${centerlist}" th:onClick="call(this);" th:data2 ="${center.centerNum}" ><br>
-			<li><h4>[[${center.centerTitle}]]</h4></li><br>
-			<li>[[${center.centerPhone}]]</li><br>
-			<li>[[${center.centerArea1}]] [[${center.centerArea2}]]</li><br>
+		<ul class="item" th:each="center:${centerlist}" th:onClick="call(this);" th:data2 ="${center.centerNum}" >
+			<li><h4>[[${center.centerTitle}]]</h4></li>
+			<li>[[${center.centerPhone}]]</li>
+			<li>[[${center.centerArea1}]] [[${center.centerArea2}]]</li>
 			<li class="star">평점 [[${center.centerPreferance}]]</li>
-		</ul>
+		</ul><br>
 	</div>
-	<div>
+	<div class="buttondiv">
 	  	<button id="addCenter" data-toggle="modal" data-target="#centerModal">
 	  		추가하기</button>
 	</div>
@@ -171,7 +219,7 @@ $("#centerInsert").click(function(){
 	var centerArea2=$("#centerArea2 option:selected").val();
 	var centerPhone=$("input[name='centerPhone']");
 	var centerAddress= $("#sample6_address").val()+" "+$("#sample6_detailAddress").val()+"("+$("#sample6_postcode").val()+")";
-	alert(centerAddress);
+	
 	var obj={ "centerTitle":centerTitle.val() , "centerInfo":centerInfo.val(),"centerPhone":centerPhone.val(), "centerArea1":centerArea1, "centerArea2":centerArea2, "centerAddress":centerAddress};
 	
 	if(centerTitle.val()==null){
@@ -191,12 +239,12 @@ $("#centerInsert").click(function(){
 	function printCenter(center){
 			console.log(center);
 			var str=""
-			str+="<ul class='item' th:onClick='call(this);' th:data2 ='"+center["centerNum"]+"' ><br>";
-			str+="<li><h4>"+center.centerTitle+"</h4></li><br>";
-			str+="<li>"+center.centerPhone+"</li><br>";
-			str+="<li>"+center.centerArea1+" "+center.centerArea2+"</td><br>";
+			str+="<ul class='item' th:onClick='call(this);' th:data2 ='"+center["centerNum"]+"' >";
+			str+="<li><h4>"+center.centerTitle+"</h4></li>";
+			str+="<li>"+center.centerPhone+"</li>";
+			str+="<li>"+center.centerArea1+" "+center.centerArea2+"</td>";
 			str+="<li class='star'> 평점 "+center.centerPreferance+"</td>";
-			str+="</ul>";
+			str+="</ul><br>";
 		
 			$("#products").append(str);
 		}

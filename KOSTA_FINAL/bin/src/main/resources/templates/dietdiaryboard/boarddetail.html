@@ -11,14 +11,14 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color: #D9E5FF">
 	<!-- 게시판 제목  -->
-	<div class="panel panel-default" layout:fragment="content1">
+	<div class="panel panel-default" layout:fragment="content1" style="background-color: #D9E5FF">
 
 		
 		<!-- 게시판 번호  -->
 		<div class="form-group">
-			<form id="myfrm" th:action="@{/dietdiaryboard/update}" method="post">
+			<form id="myfrm" th:action="@{/dietdiaryboard/update}" method="post" style="background-color: #D9E5FF">
 				<input type="hidden" id="diaryNum" name="diaryNum"
 					th:value="${dboard.diaryNum}"> <br>
 				
@@ -28,14 +28,14 @@
 			style="padding: 0px 200px 0px 200px; width: 100%;">
 			<label for="title"></label> <input type="text" class="form-control"
 				id="title" name="title" th:value="${dboard.title}"
-				style="text-align: center; font-size: xx-large;">
+				style="text-align: center; font-size: x-large; padding-top: 25px; padding-bottom: 25px;">
 			</div>
 					
 					
 			
 					
 					<div class="form-inline"
-					style="padding: 0px 200px 0px 58.5%; width: 100%">
+					style="padding: 0px 200px 0px 815px; width: 100%">
 					
 					<!-- 게시판 작성자  -->
 					<div class="form-group">
@@ -59,10 +59,10 @@
 				</div>
 				
 				<!-- 게시판 사진  -->
-				<div class="form-group">
+				<div class="form-group" style="text-align: center;">
 					<img
 						th:src="@{${'https://kosta-server.s3.ap-northeast-2.amazonaws.com/dietdiaryboard/' + dboard.photo}}"
-						width="100%" height="5%" style="padding: 30px 200px 10px 200px">
+						width="50%" height="5%" style="padding: 30px 200px 10px 200px">
 				</div>
 
 				<!-- 게시판 내용  -->
@@ -94,7 +94,7 @@
 
 			<!-- 모달 사용 -->
 
-			<div id="myModal" class="modal fade" role="dialog">
+			<div id="mymyModal" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 
 					<!-- 모달 내용 -->
@@ -132,11 +132,11 @@
 
 			<!-- 댓글넣기 -->
 			<div style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
-				<div style="padding-left: 93.6%">
-					<button data-toggle="modal" data-target="#myModal"
+				<div style="padding-left: 92.6%">
+					<button data-toggle="modal" data-target="#mymyModal"
 						class="btn btn-warning" id="addReply">댓글추가</button>
 				</div>
-				<table class="table table-striped table-bordered table-hover">
+				<table class="table table-condensed table-bordered table-hover" style="background-color: white;">
 					<thead>
 						<tr>
 							<th>댓글번호</th>
@@ -145,7 +145,7 @@
 							<th>작성날짜</th>
 						</tr>
 					</thead>
-					<tbody id="replyTable" data-toggle="modal" data-target="#myModal">
+					<tbody id="replyTable" data-toggle="modal" data-target="#mymyModal">
 
 					</tbody>
 				</table>
@@ -160,7 +160,7 @@
 				//alert("ADD클릭");
 				$("input[name='modalcontent']").val("");
 				$("input[name='modalNum']").val("");
-				$("#myModal").show();
+				$("#mymyModal").show();
 				$(".modal-title").text("댓글 적어");
 				document.getElementById("modalButton").style.display = "";
 				mode = "ADD"
@@ -177,7 +177,7 @@
 				replyManager.add(obj, printList);
 				alert("입력완료");
 
-				$("#myModal").hide();
+				$("#mymyModal").hide();
 				content.val("");
 				writer.val("");
 			});
@@ -208,7 +208,7 @@
 
 									document.getElementById("delButton").style.display = "";
 								}
-								$("#myModal").show();
+								$("#mymyModal").show();
 
 							});
 
@@ -222,7 +222,7 @@
 				replyManager.remove(obj, printList);
 
 				alert("삭제완료");
-				$("#myModal").hide();
+				$("#mymyModal").hide();
 				//content.val("");
 				//userId.val("");
 

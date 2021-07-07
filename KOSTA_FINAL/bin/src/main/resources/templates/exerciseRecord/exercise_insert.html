@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>운동 인증 업로드 페이지</title>
+<link rel="stylesheet" href="./normalize.css" />
+<link rel="stylesheet" href="./style.css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1>운동 인증 등록</h1>
+	<div class="col-md-12">
+		<div class="col-md-2">
+			<form id="exform" action="./insertRecord" method="post">
+				<div class="form-group">
+					<label for="exercise_type">운동 유형</label> <select
+						class="form-control" id="exercise_type" name="exerciseType">
+						<option>조깅/러닝</option>
+						<option>홈트/링피트</option>
+						<option>헬스/PT</option>
+						<option>등산</option>
+						<option>수영</option>
+						<option>농구/축구</option>
+						<option>기타</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="exercise_time">운동 시간</label><input class="form-control"
+						type="number" id="exercise_time" name="exerciseTime"
+						placeholder="분 단위로 입력">
+				</div>
+				<div class="form-group">
+					<label for="exercise_image">사진</label><input class="form-control"
+						type="hidden" id="exercise_image2" name="exerciseImage">
+				</div>
+			</form>
+			<form onsubmit="return false;">
+				<div class="form-group">
+					<label for="exercise_image">사진 등록</label> <input type="file"
+						id="exercise_image" name="exercise_image">
+				</div>
+				<button class="btn btn-primary" id="btn-save">등록</button>
+			</form>
+		</div>
+	</div>
+	<script>
+		$('#btn-save').on('click', uploadImage);
+
+		function uploadImage() {
+			var file = $('#exercise_image')[0].files[0]; // 이미지 파일 얻기
+			console.log(file);
+			if (typeof file != "undefined") {
+				var formData = new FormData();
+				formData.append('data', file); // data 안에 파일 넣기
+				formData.append('path', "exerciseRecord"); // web 서버에 만들 폴더 이름
+				$.ajax({
+					type : 'POST',
+					url : '/upload',
+					data : formData,
+					processData : false,
+					contentType : false
+				}).done(function(responseBody) {
+					var fileInput = $('#exercise_image');
+					var exercise_image = fileInput[0].files[0].name; // 파일명 출력
+					$("#exercise_image2").val(exercise_image); // 파일명 전달할 hidden input 값 넣어주기
+					$('#exform').submit();
+				}).fail(function(error) {
+					alert('전송실패');
+				})
+			} else {
+				$('#exform').submit();
+			}
+		}
+	</script>
+</body>
+</html>

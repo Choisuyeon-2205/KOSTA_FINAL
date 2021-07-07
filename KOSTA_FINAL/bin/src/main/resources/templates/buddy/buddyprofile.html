@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<style>
+/*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+/*===== VARIABLES CSS =====*/
+:root {
+  --dark-color-lighten: #f2f5ff;
+  --red-card: #B7F0B1;
+  --blue-card: #B2CCFF;
+  --text: #fbf7f7;
+}
+
+/*===== RESET =====*/
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--dark-color-lighten);
+  font-family: "Montserrat", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  user-select: none;
+}
+
+/*===== CARD =====*/
+.container {
+  height: 100%;
+  width: 850px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.card {
+  text-align: center;
+  padding: 2rem;
+  width: 350px;
+  height: 600px;
+  box-shadow: -1px 15px 30px -12px rgb(32, 32, 32);
+  border-radius: 0.9rem;
+  background-color: var(--red-card);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.card-blue {
+  background: var(--blue-card);
+  margin-left:200px;
+}
+
+.product-image {
+  padding-top:30px;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  transform: translate(0, -1.5rem);
+  transition: transform 500ms ease-in-out;
+  filter: drop-shadow(5px 10px 15px rgba(8, 9, 13, 0.4));
+}
+.product-info {
+  padding-top:10px;
+  display: inline-block;
+  top: 50%;
+  text-align: center;
+}
+
+.card:hover .product-image {
+  transform: translate(-1.5rem, -7rem) rotate(-20deg);
+}
+
+.product-info h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.product-info p {
+  margin: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.price {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 800px) {
+  body {
+    height: auto;
+  }
+  .container {
+    padding: 2rem 0;
+    width: 100%;
+    flex-direction: column;
+    gap: 3rem;
+  }
+}
+
+h1 {
+	margin: 30px;
+	text-align: center;
+	font-family: Cooper Black, Helvetica, Arial;
+	font-size: 4.69em;
+	color: #FFA7A7;
+}
+
+.label{
+	font-size: 10px;
+}
+
+#buddyChart {
+	padding-top: 30px;
+}
+
+#userChart {
+	padding-top: 30px;
+}
+</style>
+</head>
+<body>
+<h1>buddy</h1>
+<main class="container">
+  <section class="card">
+    <div class="product-image">
+      <img  style="color: white;" width="200px" height="160px" alt="이미지야"  
+                        th:src="@{${'https://kosta-server.s3.ap-northeast-2.amazonaws.com/bodyprofile/' + mybodyInfo.userImage}}" >     
+    </div>
+    <div class="product-info">
+      <h2>[[${myInfo.nickName}]]</h2>
+      <p><span class="label">성별: </span>[[${mybodyInfo.gender}]]</p>
+      <p><span class="label">나이: </span>[[${mybodyInfo.userAge}]]</p>
+	  <div class="price"><span class="label">키: </span>[[${mybodyInfo.height}]]</div>
+	  <div class="price"><span class="label">몸무게: </span>[[${mybodyInfo.weight}]]</div>
+	  <div class="price"><span class="label">BMI: </span>[[${mybodyInfo.userBmi}]]</div>
+    </div>
+    <!-- MIDDLE-CONTAINER -->
+	<!--차트가 그려질 부분-->
+	<canvas id="userChart"></canvas>
+	
+  </section>
+  <section class="card card-blue">
+    <div class="product-image">
+       <img  style="color: white;" width="200px" height="160px" alt="이미지야"  
+                        th:src="@{${'https://kosta-server.s3.ap-northeast-2.amazonaws.com/bodyprofile/' + buddybodyInfo.userImage}}" >  
+    </div>
+    <div class="product-info">
+	  <h2>[[${buddyInfo.nickName}]]</h2>
+      <p><span class="label">성별: </span>[[${buddybodyInfo.gender}]]</p>
+      <p><span class="label">나이: </span>[[${buddybodyInfo.userAge}]]</p>
+	  <div class="price"><span class="label">키: </span>[[${buddybodyInfo.height}]]</div>
+	  <div class="price"><span class="label">몸무게: </span>[[${buddybodyInfo.weight}]]</div>
+	  <div class="price"><span class="label">BMI: </span>[[${buddybodyInfo.userBmi}]]</div>
+    </div>
+    <!-- MIDDLE-CONTAINER -->
+	<!--차트가 그려질 부분-->
+	<canvas id="buddyChart"></canvas>
+  </section>
+</main>
+<script type="text/javascript" th:inline="javascript">
+ 		var obj = [[${buddybodylist}]];  
+ 			 
+ 		console.log(obj["data1"]);
+		var arr=[];
+		var labels = [];
+		for(i=0; i<obj["data1"].length; i++){
+			arr.push(obj["data1"][i]["weight"]);
+			labels.push(obj["data1"][i]["insertDate"])
+		}
+			
+        var context = document
+             .getElementById('buddyChart')
+             .getContext('2d');
+        var myChart = new Chart(context, {
+             type: 'line', // 차트의 형태
+             data: { // 차트에 들어갈 데이터'
+                 labels: labels , 
+                 datasets: [
+                     { //데이터
+                        label: '버디 체중 변화 그래프', //차트 제목
+                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                        data: arr,
+                        borderColor:"black",
+                         borderWidth: 1 //경계선 굵기
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+        
+ 		var obj2 = [[${mybodylist}]];  
+		
+ 		console.log(obj2["data1"]);
+		var arr2=[];
+		var labels2 = [];
+		for(i=0; i<obj2["data1"].length; i++){
+			arr2.push(obj2["data1"][i]["weight"]);
+			labels2.push(obj2["data1"][i]["insertDate"])
+		}
+			
+        var context2 = document
+             .getElementById('userChart')
+             .getContext('2d');
+        var myChart2 = new Chart(context2, {
+             type: 'line', // 차트의 형태
+             data: { // 차트에 들어갈 데이터'
+                 labels: labels2 , 
+                 datasets: [
+                     { //데이터
+                        label: '사용자 체중 변화 그래프', //차트 제목
+                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                        data: arr2,
+                        borderColor: "black",
+                        borderWidth: 1 //경계선 굵기
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+</script>
+</body>
+</html>

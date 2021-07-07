@@ -60,7 +60,7 @@
 }
 
 body {
-	background: #1f253d;
+	background: oldlace;
 }
 
 ul {
@@ -89,7 +89,7 @@ a {
 	}
 
 h1, h2, p, a, span{
-	color: #fff;
+	color: black;
 }
 	.scnd-font-color {
 		color: #9099b7;
@@ -316,7 +316,7 @@ h1, h2, p, a, span{
 	}
 		.block {
 			margin-bottom: 25px;
-			background: #394264;
+			border: 2px solid;
 			border-radius: 5px;
 		}
 		/******************************************** LEFT CONTAINER *****************************************/
@@ -325,7 +325,7 @@ h1, h2, p, a, span{
 				height: 360px;
 			}
 				.menu-box .titular {
-					background: #11a8ab;
+					background: orange;
 				}
 				.menu-box-menu .icon {
 					display: inline-block;
@@ -349,7 +349,7 @@ h1, h2, p, a, span{
 				.menu-box-menu li{
 					height: 60px;
 					position: relative;
-					color : red;										
+					color :#ff5500;										
 				}
 				.menu-box-tab {
 					line-height: 60px;
@@ -435,7 +435,7 @@ h1, h2, p, a, span{
 					    transform: rotate(76deg);
 					  }
 					#porcion2 .quesito {
-					    background-color: #11A8AB;
+					    background-color: orange;
 					    -webkit-transform: rotate(140deg);
 					    transform: rotate(140deg);
 					  }

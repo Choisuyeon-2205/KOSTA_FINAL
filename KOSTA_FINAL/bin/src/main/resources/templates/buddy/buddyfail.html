@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+div {
+	margin-top: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: white;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+<div>
+<h1>[[${message}]]</h1>
+<input type="button" value="이전화면으로 돌아가기" th:onclick="'window.location.href=\''+@{@{/body/myprofile}}+'\''"><br><br><br>
+<img width="1000px" height="500px" alt="실패이미지" src="/image/maxresdefault.gif">
+</div>
+</body>
+</html>
