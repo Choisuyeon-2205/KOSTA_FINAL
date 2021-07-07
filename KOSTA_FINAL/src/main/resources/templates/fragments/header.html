@@ -101,6 +101,7 @@ background-color: rgba(255,255,255,0.5)
 	}
 	.signup{
 	display: inline-flex;
+	border-top: 3px solid black; padding-top: 20px; width: 500px;
 	}	
 	.page-header {
 	border : none;
@@ -182,18 +183,18 @@ background-color: rgba(255,255,255,0.5)
           			<div class="form-group">
           	  <label> UserID </label> <input type="text" name="username"  class="form-control" required="required"/>
           	  		</div>
-          	  		<div class="form-group">
+          	  		<div class="form-group" style="margin-bottom: 30px;">
               <label> Password  </label> <input type="password" name="password" class="form-control" required="required"/>
-             		</div><br>
-            <label class="checkbox-inline pull-left" >  <input type="radio"  name="loginType" id="user" value="user" checked="checked">USER LOGIN  </label>
+             		</div>
+            <label class="checkbox-inline pull-left" style="margin-left:150px;">  <input type="radio"  name="loginType" id="user" value="user" checked="checked">USER LOGIN  </label>
          	 <label class="checkbox-inline pull-left"> <input type="radio"  name="loginType" id="business" value="business">BUSINESS LOGIN</label>
          	 <br>
-              <input type="submit" id="loginbutton" value="LOGIN" class="btn btn-primary pull-right">
+              <input type="submit" id="loginbutton" value="LOGIN" class="btn btn-primary pull-right" style="margin-top: 5px;">
           		</form>	
           		</div><br>
           	<div class="signup">
           	 <form th:action="@{/login/signup}" method="get">
-            	 <input type="submit" value="USER SIGNUP" id="loginButton"  class="btn btn-default"/>
+            	 <input type="submit" value="USER SIGNUP" id="loginButton"  class="btn btn-default" style="margin-left: 90px;"/>
              </form>
              <form th:action="@{/login/BusinessSignup}" method="get">
              	<input type="submit" value="BUSINESS SIGNUP"  class="btn btn-default"/>
