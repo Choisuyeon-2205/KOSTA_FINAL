@@ -140,7 +140,9 @@ function oneMonthAfter() {
 
 // 전달받은 DB값을 카드의 날짜와 비교해 일자가 같으면 DB값을 카드 칸에 넣어주는 함수
 function fillUpPage() {
-	var mealRecord = [[${mealRecord}]];
+	  /*<![CDATA[*/
+	var mealRecord = /*[[${mealRecord}]]*/ "";
+	/*]]>*/
 	var breakfastImage = $(".breakfastImage");
 	var lunchImage = $(".lunchImage");
 	var dinnerImage = $(".dinnerImage");

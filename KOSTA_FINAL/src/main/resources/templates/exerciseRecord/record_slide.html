@@ -107,7 +107,9 @@ function oneMonthAfter() {
 
 // 전달받은 DB값을 카드의 날짜와 비교해 일자가 같으면 DB값을 카드 칸에 넣어주는 함수
 function fillUpPage() {
-	var exRecord = [[${exRecord}]];
+	 /*<![CDATA[*/
+	var exRecord = /*[[${exRecord}]]*/ "";
+	/*]]>*/
 	var recImage = $(".recImage");
 	var p1 = $(".p1");
 	var p2 = $(".p2");

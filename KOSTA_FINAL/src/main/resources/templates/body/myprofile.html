@@ -5,16 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>User Profile Test</title>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<th:block layout:fragment="style2">
 <link rel="stylesheet" type="text/css" th:href="@{/css/myprofile.css}">
-</head>
-<style layout:fragment="style2">
+<style>
+
 .buddybox{
 	background-color: #394264; border-radius: 5px; text-align: center;  height: 250px;
 }	
@@ -70,13 +64,16 @@
 
 
 </style>
-<body>
+</th:block>
+</head>
 
+<body>
+<!-- HEADER -->
+	
 
 	<div class="main-container" layout:fragment="content1">
 
-		<!-- HEADER -->
-		<header class="block" style="font-size: 60px; color: white;">My FitPle</header>
+		
 
 		<!-- LEFT-CONTAINER -->
 		<!-- 살려!!!!!!!!!!! -->
@@ -255,8 +252,8 @@
 				</div>
 			</div>
 		</div>
+		</div>
 		<!-- end Modal -->
-
 
 
 
@@ -267,6 +264,14 @@
 	<!-- end main-container -->
 </body>
 <th:block layout:fragment="script1">
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
 	<script>
 		$(function(){
 			var msg= "[[${message}]]";
@@ -309,8 +314,9 @@
 	</script>
 
 		<script type="text/javascript" th:inline="javascript">
- 			var obj = [[${bodylist}]];  
- 			 
+		 /*<![CDATA[*/
+			var obj = /*[[${bodylist}]]*/ "";  
+		/*]]>*/
  			console.log(obj["data1"]);
 			var arr=[];
 			var labels = [];
