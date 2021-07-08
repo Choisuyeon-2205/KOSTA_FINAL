@@ -130,7 +130,7 @@ public class BuddyController {
 		userbody.setBuddyCheck(userbody.getBuddyCheck()-1);
 		ubservice.updateUserBody(userbody);
 		
-		return "/buddy/newbuddy";	
+		return "redirect:/buddy/newbuddy";	
 	}
 
 }
