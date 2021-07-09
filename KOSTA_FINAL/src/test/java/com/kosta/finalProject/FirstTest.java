@@ -141,7 +141,7 @@ public class FirstTest {
 	
 	}
 	
-	@Test
+	//@Test
 	public void insertCurriculum() {
 		IntStream.range(1,3).forEach(i->{
 			ExerciseTypeRefVO etr= new ExerciseTypeRefVO();

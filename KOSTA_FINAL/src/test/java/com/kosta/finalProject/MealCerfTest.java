@@ -18,7 +18,7 @@ public class MealCerfTest {
 	@Autowired
 	MealCerfRepository repo;
 	
-	@Test
+	//@Test
 	public void insertMealCerfs() {
 		IntStream.range(1, 6).forEach(i -> {
 			MealId mealId = new MealId();

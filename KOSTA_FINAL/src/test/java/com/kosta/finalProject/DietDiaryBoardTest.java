@@ -24,7 +24,7 @@ public class DietDiaryBoardTest {
 	@Autowired
 	DietDiaryBoardRepository repo;
 	
-	@Test // 보드입력하기
+	//@Test // 보/입력하기
 	public void insertBoard() {
 		IntStream.range(10, 170).forEach(i->{
 			UserVO user = new UserVO();
