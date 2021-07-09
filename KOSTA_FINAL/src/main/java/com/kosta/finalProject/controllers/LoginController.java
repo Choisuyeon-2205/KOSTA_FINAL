@@ -52,7 +52,7 @@ public class LoginController {
     
     @PostMapping(value = "/login/login")
     public String logins() {
-        return "/main";
+        return "main";
     }
 
     @RequestMapping("/login/logout")

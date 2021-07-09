@@ -84,10 +84,10 @@ public class BuddyController {
 						 
 			model.addAttribute("mybodylist", jsonObject3);
 			
-			return "/buddy/buddyprofile";
+			return "buddy/buddyprofile";
 		}else {
 			
-			return "/buddy/newbuddy";
+			return "buddy/newbuddy";
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class BuddyController {
 		//내 body 정보가 없으면 매칭 불가능!
 		if(mybody==null) {
 			model.addAttribute("message","바디프로필 정보를 먼저 입력하세요.");
-			return "/buddy/buddyfail";
+			return "buddy/buddyfail";
 		}
 	
 		List<UserBodyVO> buddys= ubservice.findIsBuddy(user.getUserId(), mybody.getBmiGroup());
@@ -110,7 +110,7 @@ public class BuddyController {
 			userbody.setBuddyCheck(userbody.getBuddyCheck()+1);
 			ubservice.updateUserBody(userbody);
 			model.addAttribute("message","매칭할 사람을 찾지 못하였습니다.");
-			return "/buddy/buddyfail";
+			return "buddy/buddyfail";
 		}
 		
 		Collections.shuffle(buddys); // 랜덤 재배치

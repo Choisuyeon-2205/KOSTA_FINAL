@@ -20,7 +20,7 @@ public class ExceptionHandlingController implements ErrorController {
     
     public String getErrorPath() {
         // TODO Auto-generated method stub
-        return "/error";
+        return "error";
     }
     
     @RequestMapping(value = PATH)
