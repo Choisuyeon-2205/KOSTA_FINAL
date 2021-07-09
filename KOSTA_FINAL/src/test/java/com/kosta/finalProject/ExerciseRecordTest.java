@@ -18,7 +18,7 @@ public class ExerciseRecordTest {
 	@Autowired
 	ExerciseRecordRepository repo;
 	
-	@Test
+	//@Test
 	public void insertExerciseRecords() {
 		IntStream.range(1, 6).forEach(i -> {
 			ExerciseRecordId exerciseId = new ExerciseRecordId();

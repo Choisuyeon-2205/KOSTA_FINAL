@@ -18,7 +18,7 @@ public class UserBodyTest {
 	@Autowired
 	UserBodyRepository repo;
 	
-	@Test
+	//@Test
 	public void test1() {
 		UserVO user = UserVO.builder().userId("oh2").build();
 		 UserBodyVO body = UserBodyVO.builder()
