@@ -7,9 +7,9 @@ Final Project
 따라서 fitple 프로젝트에서는 각 애플리케이션마다 좋은 기능들을 반영하여 운동 관련 여러 정보 및 기능을 통합된 운동 관련 웹사이트를 제공하는 것이 목표이다. <br>
 
 ## Environment
-JAVA 1.8 
-SpringToolSuite4 
-
+JAVA 1.8<br>
+SpringToolSuite4<br>
+AWS EC2<br>
 ## Prerequisite
 
 작성한 코드를 실행하기 전에 설치해야할 pakage나 의존성이 걸리는 문제들을 설명하면 된다.
